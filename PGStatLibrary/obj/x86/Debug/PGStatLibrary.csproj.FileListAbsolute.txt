@@ -1,0 +1,7 @@
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatLibrary\bin\x86\Debug\PGStatLibrary.dll
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatLibrary\bin\x86\Debug\PGStatLibrary.pdb
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatLibrary\obj\x86\Debug\PGStatLibrary.Properties.Resources.resources
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatLibrary\obj\x86\Debug\PGStatLibrary.csproj.GenerateResource.cache
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatLibrary\obj\x86\Debug\PGStatLibrary.csproj.CoreCompileInputs.cache
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatLibrary\obj\x86\Debug\PGStatLibrary.dll
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatLibrary\obj\x86\Debug\PGStatLibrary.pdb

@@ -1,0 +1,5 @@
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatLibrary\bin\x64\Release\PGStatLibrary.dll
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatLibrary\bin\x64\Release\PGStatLibrary.pdb
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatLibrary\obj\x64\Release\PGStatLibrary.csproj.CoreCompileInputs.cache
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatLibrary\obj\x64\Release\PGStatLibrary.dll
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatLibrary\obj\x64\Release\PGStatLibrary.pdb

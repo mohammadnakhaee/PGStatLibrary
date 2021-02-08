@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="UserData" targetNamespace="http://tempuri.org/UserData.xsd" xmlns:mstns="http://tempuri.org/UserData.xsd" xmlns="http://tempuri.org/UserData.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="UserData" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="UserData" msprop:Generator_UserDSName="UserData">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Data" msprop:Generator_TableClassName="DataDataTable" msprop:Generator_TableVarName="tableData" msprop:Generator_TablePropName="Data" msprop:Generator_RowDeletingName="DataRowDeleting" msprop:Generator_RowChangingName="DataRowChanging" msprop:Generator_RowEvHandlerName="DataRowChangeEventHandler" msprop:Generator_RowDeletedName="DataRowDeleted" msprop:Generator_UserTableName="Data" msprop:Generator_RowChangedName="DataRowChanged" msprop:Generator_RowEvArgName="DataRowChangeEvent" msprop:Generator_RowClassName="DataRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Time" msprop:Generator_ColumnVarNameInTable="columnTime" msprop:Generator_ColumnPropNameInRow="Time" msprop:Generator_ColumnPropNameInTable="TimeColumn" msprop:Generator_UserColumnName="Time" type="xs:double" minOccurs="0" />
+              <xs:element name="Voltage" msprop:Generator_ColumnVarNameInTable="columnVoltage" msprop:Generator_ColumnPropNameInRow="Voltage" msprop:Generator_ColumnPropNameInTable="VoltageColumn" msprop:Generator_UserColumnName="Voltage" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Fitting" msprop:Generator_TableClassName="FittingDataTable" msprop:Generator_TableVarName="tableFitting" msprop:Generator_TablePropName="Fitting" msprop:Generator_RowDeletingName="FittingRowDeleting" msprop:Generator_RowChangingName="FittingRowChanging" msprop:Generator_RowEvHandlerName="FittingRowChangeEventHandler" msprop:Generator_RowDeletedName="FittingRowDeleted" msprop:Generator_UserTableName="Fitting" msprop:Generator_RowChangedName="FittingRowChanged" msprop:Generator_RowEvArgName="FittingRowChangeEvent" msprop:Generator_RowClassName="FittingRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Time" msprop:Generator_ColumnVarNameInTable="columnTime" msprop:Generator_ColumnPropNameInRow="Time" msprop:Generator_ColumnPropNameInTable="TimeColumn" msprop:Generator_UserColumnName="Time" type="xs:double" minOccurs="0" />
+              <xs:element name="Voltage" msprop:Generator_ColumnVarNameInTable="columnVoltage" msprop:Generator_ColumnPropNameInRow="Voltage" msprop:Generator_ColumnPropNameInTable="VoltageColumn" msprop:Generator_UserColumnName="Voltage" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Derivatives1" msprop:Generator_TableClassName="Derivatives1DataTable" msprop:Generator_TableVarName="tableDerivatives1" msprop:Generator_RowChangedName="Derivatives1RowChanged" msprop:Generator_TablePropName="Derivatives1" msprop:Generator_RowDeletingName="Derivatives1RowDeleting" msprop:Generator_RowChangingName="Derivatives1RowChanging" msprop:Generator_RowEvHandlerName="Derivatives1RowChangeEventHandler" msprop:Generator_RowDeletedName="Derivatives1RowDeleted" msprop:Generator_RowClassName="Derivatives1Row" msprop:Generator_UserTableName="Derivatives1" msprop:Generator_RowEvArgName="Derivatives1RowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Time" msprop:Generator_ColumnVarNameInTable="columnTime" msprop:Generator_ColumnPropNameInRow="Time" msprop:Generator_ColumnPropNameInTable="TimeColumn" msprop:Generator_UserColumnName="Time" type="xs:double" minOccurs="0" />
+              <xs:element name="Voltage" msprop:Generator_ColumnVarNameInTable="columnVoltage" msprop:Generator_ColumnPropNameInRow="Voltage" msprop:Generator_ColumnPropNameInTable="VoltageColumn" msprop:Generator_UserColumnName="Voltage" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Derivatives2" msprop:Generator_TableClassName="Derivatives2DataTable" msprop:Generator_TableVarName="tableDerivatives2" msprop:Generator_RowChangedName="Derivatives2RowChanged" msprop:Generator_TablePropName="Derivatives2" msprop:Generator_RowDeletingName="Derivatives2RowDeleting" msprop:Generator_RowChangingName="Derivatives2RowChanging" msprop:Generator_RowEvHandlerName="Derivatives2RowChangeEventHandler" msprop:Generator_RowDeletedName="Derivatives2RowDeleted" msprop:Generator_RowClassName="Derivatives2Row" msprop:Generator_UserTableName="Derivatives2" msprop:Generator_RowEvArgName="Derivatives2RowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Time" msprop:Generator_ColumnVarNameInTable="columnTime" msprop:Generator_ColumnPropNameInRow="Time" msprop:Generator_ColumnPropNameInTable="TimeColumn" msprop:Generator_UserColumnName="Time" type="xs:double" minOccurs="0" />
+              <xs:element name="Voltage" msprop:Generator_ColumnVarNameInTable="columnVoltage" msprop:Generator_ColumnPropNameInRow="Voltage" msprop:Generator_ColumnPropNameInTable="VoltageColumn" msprop:Generator_UserColumnName="Voltage" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Derivatives3" msprop:Generator_TableClassName="Derivatives3DataTable" msprop:Generator_TableVarName="tableDerivatives3" msprop:Generator_RowChangedName="Derivatives3RowChanged" msprop:Generator_TablePropName="Derivatives3" msprop:Generator_RowDeletingName="Derivatives3RowDeleting" msprop:Generator_RowChangingName="Derivatives3RowChanging" msprop:Generator_RowEvHandlerName="Derivatives3RowChangeEventHandler" msprop:Generator_RowDeletedName="Derivatives3RowDeleted" msprop:Generator_RowClassName="Derivatives3Row" msprop:Generator_UserTableName="Derivatives3" msprop:Generator_RowEvArgName="Derivatives3RowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Time" msprop:Generator_ColumnVarNameInTable="columnTime" msprop:Generator_ColumnPropNameInRow="Time" msprop:Generator_ColumnPropNameInTable="TimeColumn" msprop:Generator_UserColumnName="Time" type="xs:double" minOccurs="0" />
+              <xs:element name="Voltage" msprop:Generator_ColumnVarNameInTable="columnVoltage" msprop:Generator_ColumnPropNameInRow="Voltage" msprop:Generator_ColumnPropNameInTable="VoltageColumn" msprop:Generator_UserColumnName="Voltage" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Derivatives4" msprop:Generator_TableClassName="Derivatives4DataTable" msprop:Generator_TableVarName="tableDerivatives4" msprop:Generator_RowChangedName="Derivatives4RowChanged" msprop:Generator_TablePropName="Derivatives4" msprop:Generator_RowDeletingName="Derivatives4RowDeleting" msprop:Generator_RowChangingName="Derivatives4RowChanging" msprop:Generator_RowEvHandlerName="Derivatives4RowChangeEventHandler" msprop:Generator_RowDeletedName="Derivatives4RowDeleted" msprop:Generator_RowClassName="Derivatives4Row" msprop:Generator_UserTableName="Derivatives4" msprop:Generator_RowEvArgName="Derivatives4RowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Time" msprop:Generator_ColumnVarNameInTable="columnTime" msprop:Generator_ColumnPropNameInRow="Time" msprop:Generator_ColumnPropNameInTable="TimeColumn" msprop:Generator_UserColumnName="Time" type="xs:double" minOccurs="0" />
+              <xs:element name="Voltage" msprop:Generator_ColumnVarNameInTable="columnVoltage" msprop:Generator_ColumnPropNameInRow="Voltage" msprop:Generator_ColumnPropNameInTable="VoltageColumn" msprop:Generator_UserColumnName="Voltage" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Inputs" msprop:Generator_TableClassName="InputsDataTable" msprop:Generator_TableVarName="tableInputs" msprop:Generator_TablePropName="Inputs" msprop:Generator_RowDeletingName="InputsRowDeleting" msprop:Generator_RowChangingName="InputsRowChanging" msprop:Generator_RowEvHandlerName="InputsRowChangeEventHandler" msprop:Generator_RowDeletedName="InputsRowDeleted" msprop:Generator_UserTableName="Inputs" msprop:Generator_RowChangedName="InputsRowChanged" msprop:Generator_RowEvArgName="InputsRowChangeEvent" msprop:Generator_RowClassName="InputsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="UserName" msprop:Generator_ColumnVarNameInTable="columnUserName" msprop:Generator_ColumnPropNameInRow="UserName" msprop:Generator_ColumnPropNameInTable="UserNameColumn" msprop:Generator_UserColumnName="UserName" type="xs:string" minOccurs="0" />
+              <xs:element name="SampleCode" msprop:Generator_ColumnVarNameInTable="columnSampleCode" msprop:Generator_ColumnPropNameInRow="SampleCode" msprop:Generator_ColumnPropNameInTable="SampleCodeColumn" msprop:Generator_UserColumnName="SampleCode" type="xs:string" minOccurs="0" />
+              <xs:element name="Current" msprop:Generator_ColumnVarNameInTable="columnCurrent" msprop:Generator_ColumnPropNameInRow="Current" msprop:Generator_ColumnPropNameInTable="CurrentColumn" msprop:Generator_UserColumnName="Current" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Time" msprop:Generator_ColumnVarNameInTable="columnTime" msprop:Generator_ColumnPropNameInRow="Time" msprop:Generator_ColumnPropNameInTable="TimeColumn" msprop:Generator_UserColumnName="Time" type="xs:decimal" minOccurs="0" />
+              <xs:element name="AutoSave" msprop:Generator_ColumnVarNameInTable="columnAutoSave" msprop:Generator_ColumnPropNameInRow="AutoSave" msprop:Generator_ColumnPropNameInTable="AutoSaveColumn" msprop:Generator_UserColumnName="AutoSave" type="xs:boolean" minOccurs="0" />
+              <xs:element name="AutoSavePath" msprop:Generator_ColumnVarNameInTable="columnAutoSavePath" msprop:Generator_ColumnPropNameInRow="AutoSavePath" msprop:Generator_ColumnPropNameInTable="AutoSavePathColumn" msprop:Generator_UserColumnName="AutoSavePath" type="xs:string" minOccurs="0" />
+              <xs:element name="VRange" msprop:Generator_ColumnVarNameInTable="columnVRange" msprop:Generator_ColumnPropNameInRow="VRange" msprop:Generator_ColumnPropNameInTable="VRangeColumn" msprop:Generator_UserColumnName="VRange" type="xs:int" minOccurs="0" />
+              <xs:element name="IRange" msprop:Generator_ColumnVarNameInTable="columnIRange" msprop:Generator_ColumnPropNameInRow="IRange" msprop:Generator_ColumnPropNameInTable="IRangeColumn" msprop:Generator_UserColumnName="IRange" type="xs:int" minOccurs="0" />
+              <xs:element name="Interval" msprop:Generator_ColumnVarNameInTable="columnInterval" msprop:Generator_ColumnPropNameInRow="Interval" msprop:Generator_ColumnPropNameInTable="IntervalColumn" msprop:Generator_UserColumnName="Interval" type="xs:int" minOccurs="0" />
+              <xs:element name="t1" msprop:Generator_ColumnVarNameInTable="columnt1" msprop:Generator_ColumnPropNameInRow="t1" msprop:Generator_ColumnPropNameInTable="t1Column" msprop:Generator_UserColumnName="t1" type="xs:decimal" minOccurs="0" />
+              <xs:element name="t2" msprop:Generator_ColumnVarNameInTable="columnt2" msprop:Generator_ColumnPropNameInRow="t2" msprop:Generator_ColumnPropNameInTable="t2Column" msprop:Generator_UserColumnName="t2" type="xs:decimal" minOccurs="0" />
+              <xs:element name="IsFittingFound" msprop:Generator_ColumnVarNameInTable="columnIsFittingFound" msprop:Generator_ColumnPropNameInRow="IsFittingFound" msprop:Generator_ColumnPropNameInTable="IsFittingFoundColumn" msprop:Generator_UserColumnName="IsFittingFound" type="xs:boolean" minOccurs="0" />
+              <xs:element name="left1" msprop:Generator_ColumnVarNameInTable="columnleft1" msprop:Generator_ColumnPropNameInRow="left1" msprop:Generator_ColumnPropNameInTable="left1Column" msprop:Generator_UserColumnName="left1" type="xs:int" minOccurs="0" />
+              <xs:element name="left2" msprop:Generator_ColumnVarNameInTable="columnleft2" msprop:Generator_ColumnPropNameInRow="left2" msprop:Generator_ColumnPropNameInTable="left2Column" msprop:Generator_UserColumnName="left2" type="xs:int" minOccurs="0" />
+              <xs:element name="right1" msprop:Generator_ColumnVarNameInTable="columnright1" msprop:Generator_ColumnPropNameInRow="right1" msprop:Generator_ColumnPropNameInTable="right1Column" msprop:Generator_UserColumnName="right1" type="xs:int" minOccurs="0" />
+              <xs:element name="right2" msprop:Generator_ColumnVarNameInTable="columnright2" msprop:Generator_ColumnPropNameInRow="right2" msprop:Generator_ColumnPropNameInTable="right2Column" msprop:Generator_UserColumnName="right2" type="xs:int" minOccurs="0" />
+              <xs:element name="center1" msprop:Generator_ColumnVarNameInTable="columncenter1" msprop:Generator_ColumnPropNameInRow="center1" msprop:Generator_ColumnPropNameInTable="center1Column" msprop:Generator_UserColumnName="center1" type="xs:int" minOccurs="0" />
+              <xs:element name="center2" msprop:Generator_ColumnVarNameInTable="columncenter2" msprop:Generator_ColumnPropNameInRow="center2" msprop:Generator_ColumnPropNameInTable="center2Column" msprop:Generator_UserColumnName="center2" type="xs:int" minOccurs="0" />
+              <xs:element name="curvature1" msprop:Generator_ColumnVarNameInTable="columncurvature1" msprop:Generator_ColumnPropNameInRow="curvature1" msprop:Generator_ColumnPropNameInTable="curvature1Column" msprop:Generator_UserColumnName="curvature1" type="xs:int" minOccurs="0" />
+              <xs:element name="curvature2" msprop:Generator_ColumnVarNameInTable="columncurvature2" msprop:Generator_ColumnPropNameInRow="curvature2" msprop:Generator_ColumnPropNameInTable="curvature2Column" msprop:Generator_UserColumnName="curvature2" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="T1" msprop:Generator_TableClassName="T1DataTable" msprop:Generator_TableVarName="tableT1" msprop:Generator_TablePropName="T1" msprop:Generator_RowDeletingName="T1RowDeleting" msprop:Generator_RowChangingName="T1RowChanging" msprop:Generator_RowEvHandlerName="T1RowChangeEventHandler" msprop:Generator_RowDeletedName="T1RowDeleted" msprop:Generator_UserTableName="T1" msprop:Generator_RowChangedName="T1RowChanged" msprop:Generator_RowEvArgName="T1RowChangeEvent" msprop:Generator_RowClassName="T1Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Time" msprop:Generator_ColumnVarNameInTable="columnTime" msprop:Generator_ColumnPropNameInRow="Time" msprop:Generator_ColumnPropNameInTable="TimeColumn" msprop:Generator_UserColumnName="Time" type="xs:double" minOccurs="0" />
+              <xs:element name="Voltage" msprop:Generator_ColumnVarNameInTable="columnVoltage" msprop:Generator_ColumnPropNameInRow="Voltage" msprop:Generator_ColumnPropNameInTable="VoltageColumn" msprop:Generator_UserColumnName="Voltage" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="T2" msprop:Generator_TableClassName="T2DataTable" msprop:Generator_TableVarName="tableT2" msprop:Generator_TablePropName="T2" msprop:Generator_RowDeletingName="T2RowDeleting" msprop:Generator_RowChangingName="T2RowChanging" msprop:Generator_RowEvHandlerName="T2RowChangeEventHandler" msprop:Generator_RowDeletedName="T2RowDeleted" msprop:Generator_UserTableName="T2" msprop:Generator_RowChangedName="T2RowChanged" msprop:Generator_RowEvArgName="T2RowChangeEvent" msprop:Generator_RowClassName="T2Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Time" msprop:Generator_ColumnVarNameInTable="columnTime" msprop:Generator_ColumnPropNameInRow="Time" msprop:Generator_ColumnPropNameInTable="TimeColumn" msprop:Generator_UserColumnName="Time" type="xs:double" minOccurs="0" />
+              <xs:element name="Voltage" msprop:Generator_ColumnVarNameInTable="columnVoltage" msprop:Generator_ColumnPropNameInRow="Voltage" msprop:Generator_ColumnPropNameInTable="VoltageColumn" msprop:Generator_UserColumnName="Voltage" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

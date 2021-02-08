@@ -1,0 +1,1348 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO.Ports;
+using System.Threading;
+using System.IO;
+using System.Drawing;
+using System.Management;
+using System.Windows.Forms;
+using System.Timers;
+using System.Reflection;
+//using System.Runtime.InteropServices;
+
+
+namespace PGStatLibrary
+{
+    //[ClassInterface(ClassInterfaceType.AutoDual)]
+    //[ComVisible(true)]
+
+    /// <summary>
+    /// The main PGStat class.<para />
+    /// Contains all methods for controlling the device.
+    /// </summary>
+    public class PGStat
+    {
+        /*********************************************Variables*********************************************/
+        private string PGStatVer = "2019.1";
+        private SerialPort CheckPort = new SerialPort("COM1", 921600, Parity.None, 8, StopBits.One);
+        private SerialPort Port = new SerialPort("COM1", 921600, Parity.None, 8, StopBits.One);
+        private string ReadToChar = "\r";
+        private string FoundedPort = "";
+        private bool isFounded = false;
+        private int CheckPortTimeoutSec = 2000;
+        private bool Connected = false;
+        private int PortTimeout = 2000;
+        private int NotificationsVerbosity = 1;
+        private NotifyIcon notification;
+        private bool IsAutoReconnectEnabled = true;
+        private System.Timers.Timer PingTimer;
+        private int DeviceVersion = 0;
+        private int BoardType = 2;
+        private UInt16 PageNumber = 128;
+        private UInt16 PageSize = 256;
+        private int InteraPageSleep = 30;
+        private UInt16 pass = 0;
+        private int ReconnectingCount = 0;
+        private bool isPingEnable = true;
+        private int DataCountInQueue = 0;
+        private static int IVnData = 512;
+        /****************************************************************************************************/
+
+        /*********************************************Properties*********************************************/
+        /// <summary>
+        /// The number of data comming from dcget command family.
+        /// </summary>
+        public readonly int dcgetNdata = IVnData;
+        /// <summary>
+        /// Device settings. Do not change it.
+        /// </summary>
+        public bool SettingsIsIVReceiverUnsigned = false;
+        /****************************************************************************************************/
+
+        /*********************************************Properties*********************************************/
+        /// <summary>
+        /// Last value of PGmode.
+        /// </summary>
+        public int LastPGmode { get; private set; }
+        /// <summary>
+        /// Last value of vfilter.
+        /// </summary>
+        public int Lastvfilter { get; private set; }
+        /// <summary>
+        /// Last value of idcfilter.
+        /// </summary>
+        public int Lastidcfilter { get; private set; }
+        /// <summary>
+        /// Last value of idcselect.
+        /// </summary>
+        public int Lastidcselect { get; private set; }
+        /// <summary>
+        /// Last value of setselect.
+        /// </summary>
+        public int Lastsetselect { get; private set; }
+        /// <summary>
+        /// Last value of idcmlp.
+        /// </summary>
+        public int Lastidcmlp { get; private set; }
+        /// <summary>
+        /// Last value of vdcmlp.
+        /// </summary>
+        public int Lastvdcmlp { get; private set; }
+        /// <summary>
+        /// Last value of zeroset.
+        /// </summary>
+        public int Lastzeroset { get; private set; }
+        /// <summary>
+        /// Last value of acset.
+        /// </summary>
+        public int Lastacset { get; private set; }
+        /// <summary>
+        /// Last value of aczero.
+        /// </summary>
+        public int Lastaczero { get; private set; }
+        /// <summary>
+        /// Last value of vaczero.
+        /// </summary>
+        public int Lastvaczero { get; private set; }
+        /// <summary>
+        /// Last value of input00.
+        /// </summary>
+        public int Lastinput00 { get; private set; }
+        /// <summary>
+        /// Last value of input01.
+        /// </summary>
+        public int Lastinput01 { get; private set; }
+        /// <summary>
+        /// Last value of input02.
+        /// </summary>
+        public int Lastinput02 { get; private set; }
+        /// <summary>
+        /// Last value of input03.
+        /// </summary>
+        public int Lastinput03 { get; private set; }
+        /// <summary>
+        /// Last value of input04.
+        /// </summary>
+        public int Lastinput04 { get; private set; }
+        /// <summary>
+        /// Last value of input00.
+        /// </summary>
+        public int Lasttinput00 { get; private set; }
+        /// <summary>
+        /// Last value of input01.
+        /// </summary>
+        public int Lasttinput01 { get; private set; }
+        /// <summary>
+        /// Last value of sn.
+        /// </summary>
+        public int Lastsn { get; private set; }
+        /// <summary>
+        /// Last value of Tget.
+        /// </summary>
+        public int LastTget { get; private set; }
+        /// <summary>
+        /// Last value of dcset.
+        /// </summary>
+        public int Lastdcset { get; private set; }
+        /// <summary>
+        /// Last value of ddsclk.
+        /// </summary>
+        public int Lastddsclk { get; private set; }
+        /// <summary>
+        /// Last value of dds.
+        /// </summary>
+        public int Lastdds { get; private set; }
+        /// <summary>
+        /// Last value of vac.
+        /// </summary>
+        public int Lastvac { get; private set; }
+        /// <summary>
+        /// Last value of DCpreget.
+        /// </summary>
+        public int LastDCpreget { get; private set; }
+        /// <summary>
+        /// Last value of ACpreset.
+        /// </summary>
+        public int LastACpreset { get; private set; }
+        /// <summary>
+        /// Last state of the dummy.
+        /// </summary>
+        public int Lastdummy { get; private set; }
+        /// <summary>
+        /// Last state of the sample.
+        /// </summary>
+        public int Lastsample { get; private set; }
+        /****************************************************************************************************/
+
+        /***********************************************Events***********************************************/
+        /// <summary>
+        /// Process a PG_EVT_StartConnecting event, when PGStat started to search for a connected device.
+        /// </summary>
+        public event EventHandler PG_EVT_StartConnecting;
+
+        /// <summary>
+        /// Process a PG_EVT_Connected event, when PGStat connected to the device.
+        /// </summary>
+        public event EventHandler PG_EVT_Connected;
+
+        /// <summary>
+        /// Process a PG_EVT_Ping event, when PGStat is pinging.
+        /// </summary>
+        public event EventHandler PG_EVT_Ping;
+
+        /// <summary>
+        /// Process a PG_EVT_Disconnected event, when PGStat is disconnected from the device.
+        /// </summary>
+        public event EventHandler PG_EVT_Disconnected;
+
+        /// <summary>
+        /// Process a PG_EVT_Unpluged event, when PGStat is disconnected accidentally.
+        /// </summary>
+        public event EventHandler PG_EVT_Unpluged;
+
+        /// <summary>
+        /// Represents the method that will handle the Async Process Started event.<para />
+        /// It will be fired once an async process started.
+        /// </summary>
+        public event EventHandler<AProcessStartedEventArgs> PG_EVT_AProcessStarted;
+
+        /// <summary>
+        /// Represents the method that will handle the Async Process Finished event.<para />
+        /// /// It will be fired once an async process finished.
+        /// </summary>
+        public event EventHandler<AProcessFinishedEventArgs> PG_EVT_AProcessFinished;
+
+        /// <summary>
+        /// Represents the method that will handle the Data Received event of ACommand process.<para />
+        /// ACommand is the asynchronous mode of the method Command.
+        /// </summary>
+        public event EventHandler<ACommandEventArgs> PG_EVT_ACommandDataReceived;
+
+        /// <summary>
+        /// Represents the method that will handle the Data Received event of Adcget process.<para />
+        /// Adcget is the asynchronous mode of the method dcget.
+        /// </summary>
+        public event EventHandler<AdcgetEventArgs> PG_EVT_AdcgetDataReceived;
+
+        /// <summary>
+        /// Represents the method that will handle the Total Data Received event of Adcget process.<para />
+        /// Adcget is the asynchronous mode of the method dcget.
+        /// </summary>
+        public event EventHandler<AdcgetTotalEventArgs> PG_EVT_AdcgetTotalDataReceived;
+        /****************************************************************************************************/
+
+        /// <summary>
+        /// The constructor for the PGStat class.<para />
+        /// The object contains all methods for controlling the device.
+        /// </summary>
+        public PGStat()
+        {
+            CheckPort.NewLine = "\r";
+            
+            WqlEventQuery removeQuery = new WqlEventQuery("SELECT * FROM __InstanceDeletionEvent WITHIN 1 WHERE TargetInstance ISA 'Win32_SerialPort'");
+            ManagementEventWatcher removeWatcher = new ManagementEventWatcher(removeQuery);
+            removeWatcher.EventArrived += new EventArrivedEventHandler(Unpluged);
+            removeWatcher.Start();
+
+            notification = new NotifyIcon();
+            
+            PingTimer = new System.Timers.Timer();
+            SetPingPeriod(1.0);
+            PingTimer.Elapsed += new ElapsedEventHandler(PingTimerTick);
+
+        }
+
+        private bool isPackageCompleted(string MethodName)
+        {
+            return false;
+        }
+        
+        private void Notification_Click(object sender, EventArgs e)
+        {
+            NotifyIcon ThisNotifyIcon = sender as NotifyIcon;
+            MessageBox.Show(ThisNotifyIcon.Text);
+        }
+        
+        /// <summary>
+        /// This method determines the verbosity of notifications.<para />
+        /// 0: notification off.<para />
+        /// 1: Release mode of final software for user.<para />
+        /// 2: Debug mode for developer of the software.<para />
+        /// 3: Debug mode for developer of the dll.
+        /// </summary>
+        public int SetNotificationVerbosity(int verbosity = 1)
+        {
+            int err = -1;
+            if (verbosity < 0) return err;
+            if (verbosity > 3) return err;
+            NotificationsVerbosity = verbosity;
+            return 0;
+        }
+        
+        /// <summary>
+        /// This function determines that the PGStat wills
+        /// try to reconnect in case of accidentally disconnection.
+        /// </summary>
+        public void EnableAutoReconnect()
+        {
+            IsAutoReconnectEnabled = true;
+        }
+
+        /// <summary>
+        /// This function determines that the PGStat avoids
+        /// automatical reconnection in the case of accidentally disconnection.
+        /// </summary>
+        public void DisableAutoReconnect()
+        {
+            IsAutoReconnectEnabled = false;
+        }
+
+        /// <summary>
+        /// Returns true if PGStat is connected to the device.
+        /// </summary>
+        public bool IsConnected()
+        {
+            return Connected;
+        }
+
+        /// <summary>
+        /// Returns true if PGStat is pinging data to the software.
+        /// </summary>
+        public bool IsPingEnabled()
+        {
+            return isPingEnable;
+        }
+
+        /// <summary>
+        /// Determines the period of "pinging process".
+        /// </summary>
+        public int SetPingPeriod(double sec)
+        {
+            int err = -1;
+            int s = (int)(1000 * sec);
+            if (s < 500) return err;
+            if (s > 10000) return err;
+            PingTimer.Interval = s;
+            return 0;
+        }
+
+        private void PingTimerTick(object sender, EventArgs e)
+        {
+            if (Connected && isPingEnable)
+                PG_EVT_Ping?.Invoke(this, EventArgs.Empty);
+            else
+                PingTimer.Stop();
+        }
+
+        /// <summary>
+        /// Try to discard both input and output buffers of the connected port.
+        /// </summary>
+        public void ClearBuffer()
+        {
+            try
+            {
+                Port.DiscardOutBuffer();
+                Port.DiscardInBuffer();
+            }
+            catch
+            {}
+        }
+        
+        private void ClearBuffer(SerialPort port)
+        {
+            try
+            {
+                port.DiscardOutBuffer();
+                port.DiscardInBuffer();
+            }
+            catch
+            { }
+        }
+
+        /// <summary>
+        /// Kills any possibly running process.
+        /// </summary>
+        public void KillProcess()
+        {
+            ClearBuffer();
+            try
+            {
+                Port.Write(";");
+                Thread.Sleep(100);
+            }
+            catch (Exception ex)
+            {
+                SetStatus("Unable to kill the process.", ex.Message, "void KillProcess()");
+            }
+            ClearBuffer();
+        }
+
+        /// <summary>
+        /// It turns on the pinging process.
+        /// </summary>
+        public void EnablePing()
+        {
+            isPingEnable = true;
+            PingTimer.Start();
+        }
+
+        /// <summary>
+        /// It turns off the pinging process.
+        /// </summary>
+        public void DisablePing()
+        {
+            isPingEnable = false; //The timer will be turned off in the next tick.
+        }
+
+        private string Command(SerialPort port, string command, int Delay = 100)
+        {
+            ClearBuffer();
+            try
+            {
+                port.Write(command + ReadToChar);
+            }
+            catch (Exception ex)
+            {
+                SetStatus("Unable to send command to device.", ex.Message, "string Command(SerialPort port, string command, int Delay = 100)");
+            }
+            string reply = "";
+            Thread.Sleep(Delay);
+            try
+            {
+                reply = port.ReadExisting();
+            }
+            catch (Exception ex)
+            {
+                SetStatus("Unable to receive command from device.", ex.Message, "string Command(SerialPort port, string command, int Delay = 100)");
+            }
+            return reply;
+        }
+
+        private void ACommand(SerialPort port, string command)
+        {
+            ClearBuffer();
+            try
+            {
+                port.Write(command + ReadToChar);
+            }
+            catch (Exception ex)
+            {
+                SetStatus("Unable to send command to device.", ex.Message, "void ACommand(SerialPort port, string command, int Delay = 100)");
+            }
+        }
+
+        /// <summary>
+        /// This method sends the command to device and returns the reply synchronously.
+        /// </summary>
+        public string Command(string command, int Delay = 100)
+        {
+            if (command == "dcget")
+            {
+                SetStatus("Unable to send command to device.", "You are not allowed to send this command via this method. It returns more than one output.", "string Command(string command, int Delay = 100)");
+                return "Err";
+            }
+
+            if (!IsConnected())
+            {
+                SetStatus("Unable to send command to device. PGStat has not connected to device yet.");
+                return "Err";
+            }
+
+            if (IsBusy())
+            {
+                SetStatus("Unable to send command to device.", "Port is busy by an async mode process.", "void Command(string command, int Delay = 100)");
+                return "Err";
+            }
+
+            return Command(Port, command, Delay);
+        }
+
+        /// <summary>
+        /// This method sends the command to device in asynchronous mode.<para />
+        /// The reply will be accessible from the ACommandEventArgs of the callback PG_EVT_ACommandDataReceived
+        /// </summary>
+        public void ACommand(string command)
+        {
+            if (command == "dcget")
+            {
+                SetStatus("Unable to send command to device.", "You are not allowed to send this command via this method. It returns more than one output.", "string Command(string command, int Delay = 100)");
+                return;
+            }
+
+            if (!IsConnected())
+            {
+                SetStatus("Unable to send command to device. PGStat has not connected to device yet.");
+                return;
+            }
+
+            if (IsPingEnabled())
+            {
+                SetStatus("Unable to send command in this mode.", "The port is busy by the Ping process. You should disable ping by calling the function DisablePing().", "void ACommand(string command, int Delay = 100)");    
+                return;
+            }
+
+            if (IsBusy())
+            {
+                SetStatus("Unable to send command to device.", "Port is busy by another async mode process.", "void ACommand(string command, int Delay = 100)");
+                return;
+            }
+
+            DataCountInQueue = 1;
+            Thread t = new Thread(new ParameterizedThreadStart(ACommand_Process));
+            t.Start(command);
+        }
+
+        private void ACommand_Process(object command)
+        {
+            AProcessStartedEventArgs e1 = new AProcessStartedEventArgs("ACommand");
+            PG_EVT_AProcessStarted?.Invoke(this, e1);
+            ACommand(Port, (string)command);
+            Thread.Sleep(200);
+            string ans = Port.ReadExisting();
+            DataCountInQueue--;
+            ACommandEventArgs e2 = new ACommandEventArgs(ans);
+            PG_EVT_ACommandDataReceived?.Invoke(this, e2);
+            if (DataCountInQueue == 0)
+            {
+                AProcessFinishedEventArgs e3 = new AProcessFinishedEventArgs("ACommand");
+                PG_EVT_AProcessFinished?.Invoke(this, e3);
+            }
+        }
+
+        private void log(string command)
+        {
+
+        }
+
+        private bool SendAndReceiveOK(string command)
+        {
+            if (Command(command) == "OK")
+            {
+                log(command);
+                return true;
+            }
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// This function changes the PGmode.<para />
+        /// 0:<para />
+        /// 1:<para />
+        /// 2:
+        /// </summary>
+        public void PGmode(int value)
+        {
+            string order = "PGmode " + value.ToString();
+            if (SendAndReceiveOK(order)) LastPGmode = value;
+        }
+
+        /// <summary>
+        /// This function changes the voltage filter.<para />
+        /// 0:<para />
+        /// 1:<para />
+        /// 2:
+        /// </summary>
+        public void vfilter(int value)
+        {
+            string order = "vfilter " + value.ToString();
+            if (SendAndReceiveOK(order)) Lastvfilter = value;
+        }
+
+        /// <summary>
+        /// This function changes the DC current filter.<para />
+        /// 0:<para />
+        /// 1:<para />
+        /// 2:
+        /// </summary>
+        public void idcfilter(int value)
+        {
+            string order = "idcfilter " + value.ToString();
+            if (SendAndReceiveOK(order)) Lastidcfilter = value;
+        }
+
+        /// <summary>
+        /// This function changes the DC current range.<para />
+        /// 0:<para />
+        /// 1:<para />
+        /// 2:<para />
+        /// 3:
+        /// </summary>
+        public void idcselect(int value)
+        {
+            string order = "idcselect " + value.ToString();
+            if (SendAndReceiveOK(order)) Lastidcselect = value;
+        }
+
+        /// <summary>
+        /// This function changes the voltage range.<para />
+        /// 0:<para />
+        /// 1:<para />
+        /// 2:<para />
+        /// 3:
+        /// </summary>
+        public void setselect(int value)
+        {
+            string order = "setselect " + value.ToString();
+            if (SendAndReceiveOK(order)) Lastsetselect = value;
+        }
+
+        /// <summary>
+        /// This function changes the DC current multiplier.<para />
+        /// 0:<para />
+        /// 1:<para />
+        /// 2:<para />
+        /// 3:
+        /// </summary>
+        public void idcmlp(int value)
+        {
+            string order = "idcmlp " + value.ToString();
+            if (SendAndReceiveOK(order)) Lastidcmlp = value;
+        }
+
+        /// <summary>
+        /// This function changes the DC voltage multiplier.<para />
+        /// 0:<para />
+        /// 1:<para />
+        /// 2:<para />
+        /// 3:
+        /// </summary>
+        public void vdcmlp(int value)
+        {
+            string order = "vdcmlp " + value.ToString();
+            if (SendAndReceiveOK(order)) Lastvdcmlp = value;
+        }
+
+        /// <summary>
+        /// This function sets the zero level of DC voltage.<para />
+        /// The input value should be set between 0 and 4096.
+        /// </summary>
+        public void zeroset(int value)
+        {
+            string order = "zeroset " + value.ToString();
+            if (SendAndReceiveOK(order)) Lastzeroset = value;
+        }
+
+        /// <summary>
+        /// This function sets the AC voltage.
+        /// </summary>
+        public void acset(int value)
+        {
+            string order = "acset " + value.ToString();
+            if (SendAndReceiveOK(order)) Lastacset = value;
+        }
+
+        /// <summary>
+        /// This function sets the zero level of the AC current.
+        /// </summary>
+        public void aczero(int value)
+        {
+            string order = "aczero " + value.ToString();
+            if (SendAndReceiveOK(order)) Lastaczero = value;
+        }
+
+        /// <summary>
+        /// This function sets the zero level of the AC voltage.
+        /// </summary>
+        public void vaczero(int value)
+        {
+            string order = "vaczero " + value.ToString();
+            if (SendAndReceiveOK(order)) Lastvaczero = value;
+        }
+
+        /// <summary>
+        /// Sets the input00.
+        /// </summary>
+        public void input00(int value)
+        {
+            string order = "input 00 " + value.ToString();
+            if (SendAndReceiveOK(order)) Lastinput00 = value;
+        }
+
+        /// <summary>
+        /// Sets the input01.
+        /// </summary>
+        public void input01(int value)
+        {
+            string order = "input 01 " + value.ToString();
+            if (SendAndReceiveOK(order)) Lastinput01 = value;
+        }
+
+        /// <summary>
+        /// Sets the input02.
+        /// </summary>
+        public void input02(int value)
+        {
+            string order = "input 02 " + value.ToString();
+            if (SendAndReceiveOK(order)) Lastinput02 = value;
+        }
+
+        /// <summary>
+        /// Sets the input03.
+        /// </summary>
+        public void input03(int value)
+        {
+            string order = "input 03 " + value.ToString();
+            if (SendAndReceiveOK(order)) Lastinput03 = value;
+        }
+
+        /// <summary>
+        /// Sets the input04.
+        /// </summary>
+        public void input04(int value)
+        {
+            string order = "input 04 " + value.ToString();
+            if (SendAndReceiveOK(order)) Lastinput04 = value;
+        }
+
+        /// <summary>
+        /// Sets the tinput00.
+        /// </summary>
+        public void tinput00(int value)
+        {
+            string order = "tinput 00 " + value.ToString();
+            if (SendAndReceiveOK(order)) Lasttinput00 = value;
+        }
+
+        /// <summary>
+        /// Sets the tinput01.
+        /// </summary>
+        public void tinput01(int value)
+        {
+            string order = "tinput 01 " + value.ToString();
+            if (SendAndReceiveOK(order)) Lasttinput01 = value;
+        }
+
+        /// <summary>
+        /// Sets the sn.
+        /// </summary>
+        public void sn(int value)
+        {
+            string order = "sn " + value.ToString();
+            if (SendAndReceiveOK(order)) Lastsn = value;
+        }
+
+        /// <summary>
+        /// Sets the Tget.
+        /// </summary>
+        public void Tget(int value)
+        {
+            string order = "T_get " + value.ToString();
+            if (SendAndReceiveOK(order)) LastTget = value;
+        }
+
+        /// <summary>
+        /// Sets the dcset.
+        /// </summary>
+        public void dcset(int value)
+        {
+            string order = "dcset " + value.ToString();
+            if (SendAndReceiveOK(order)) Lastdcset = value;
+        }
+
+        /// <summary>
+        /// Sets the ddsclk.
+        /// </summary>
+        public void ddsclk(int value)
+        {
+            string order = "ddsclk " + value.ToString();
+            if (SendAndReceiveOK(order)) Lastddsclk = value;
+        }
+
+        /// <summary>
+        /// Sets the dds.
+        /// </summary>
+        public void dds(int value)
+        {
+            string order = "dds " + value.ToString();
+            if (SendAndReceiveOK(order)) Lastdds = value;
+        }
+
+        /// <summary>
+        /// Sets the vac.
+        /// </summary>
+        public void vac(int value)
+        {
+            string order = "vac " + value.ToString();
+            if (SendAndReceiveOK(order)) Lastvac = value;
+        }
+
+        /// <summary>
+        /// Sets the DCpreget.
+        /// </summary>
+        public void DCpreget(int value)
+        {
+            string order = "DCpreget " + value.ToString();
+            if (SendAndReceiveOK(order)) LastDCpreget = value;
+        }
+
+        /// <summary>
+        /// Sets the ACpreget.
+        /// </summary>
+        public void ACpreset(int value)
+        {
+            string order = "ACpreset " + value.ToString();
+            if (SendAndReceiveOK(order)) LastACpreset = value;
+        }
+
+        /// <summary>
+        /// This method connect or disconnect the sample probe;<para />
+        /// 0: Disconnect<para />
+        /// 1: Connect
+        /// </summary>
+        public void sample(int value)
+        {
+            string order = "sampleon " + value.ToString();
+            if (SendAndReceiveOK(order)) Lastsample = value;
+        }
+
+        /// <summary>
+        /// This method connect or disconnect the dummy probe;<para />
+        /// The dummy is a 1KOhm resistor.<para />
+        /// 0: Disconnect<para />
+        /// 1: Connect
+        /// </summary>
+        public void dummy(int value)
+        {
+            string order = "dummyon " + value.ToString();
+            if (SendAndReceiveOK(order)) Lastdummy = value;
+        }
+
+        /// <summary>
+        /// Returns the raw data of Voltage and Current.<para />
+        /// One should convert the data using ConvertToObservable
+        /// </summary>
+        public int[,] dcget()
+        {
+            int[,] Output = new int[dcgetNdata, 2];
+            ACommand(Port, "dcget");
+            try
+            {
+                for (int iData = 0; iData < dcgetNdata; iData++)
+                {
+                    int word;
+                    int AllBytes0 = Port.ReadByte();
+                    int AllBytes1 = Port.ReadByte();
+                    int AllBytes2 = Port.ReadByte();
+                    int AllBytes3 = Port.ReadByte();
+
+                    word = AllBytes0 + AllBytes1 * 256;
+                    if (!SettingsIsIVReceiverUnsigned)
+                    {
+                        if (word >= 0 && word < 2048)
+                            word = word + 2048;
+                        else
+                            word = word - 2048 - 61440;
+                    }
+                    Output[iData, 0] = word;
+
+                    word = AllBytes2 + AllBytes3 * 256;
+                    if (!SettingsIsIVReceiverUnsigned)
+                    {
+                        if (word >= 0 && word < 2048)
+                            word = word + 2048;
+                        else
+                            word = word - 2048 - 61440;
+                    }
+                    Output[iData, 1] = word;
+                }
+            }
+            catch { }
+            return Output;
+        }
+
+        private void Adcget_Process()
+        {
+            AProcessStartedEventArgs e1 = new AProcessStartedEventArgs("Adcget");
+            PG_EVT_AProcessStarted?.Invoke(this, e1);
+            ACommand(Port, "dcget");
+            try
+            {
+                for (int iData = 0; iData < dcgetNdata; iData++)
+                {
+                    int word, voltage, current;
+                    int AllBytes0 = Port.ReadByte();
+                    int AllBytes1 = Port.ReadByte();
+                    int AllBytes2 = Port.ReadByte();
+                    int AllBytes3 = Port.ReadByte();
+
+                    word = AllBytes0 + AllBytes1 * 256;
+                    if (!SettingsIsIVReceiverUnsigned)
+                    {
+                        if (word >= 0 && word < 2048)
+                            word = word + 2048;
+                        else
+                            word = word - 2048 - 61440;
+                    }
+                    voltage = word;
+
+                    word = AllBytes2 + AllBytes3 * 256;
+                    if (!SettingsIsIVReceiverUnsigned)
+                    {
+                        if (word >= 0 && word < 2048)
+                            word = word + 2048;
+                        else
+                            word = word - 2048 - 61440;
+                    }
+                    current = word;
+
+                    DataCountInQueue--;
+                    AdcgetEventArgs e2 = new AdcgetEventArgs(dcgetNdata, iData, voltage, current);
+                    PG_EVT_AdcgetDataReceived?.Invoke(this, e2);
+                }
+            }
+            catch { }
+
+            if (DataCountInQueue == 0)
+            {
+                AProcessFinishedEventArgs e3 = new AProcessFinishedEventArgs("Adcget");
+                PG_EVT_AProcessFinished?.Invoke(this, e3);
+            }
+        }
+
+        private void AdcgetTotal_Process()
+        {
+            AProcessStartedEventArgs e1 = new AProcessStartedEventArgs("AdcgetTotal");
+            PG_EVT_AProcessStarted?.Invoke(this, e1);
+            ACommand(Port, "dcget");
+            try
+            {
+                int[] VotageArray = new int[dcgetNdata];
+                int[] CurrentArray = new int[dcgetNdata];
+                for (int iData = 0; iData < dcgetNdata; iData++)
+                {
+                    int word;
+                    int AllBytes0 = Port.ReadByte();
+                    int AllBytes1 = Port.ReadByte();
+                    int AllBytes2 = Port.ReadByte();
+                    int AllBytes3 = Port.ReadByte();
+
+                    word = AllBytes0 + AllBytes1 * 256;
+                    if (!SettingsIsIVReceiverUnsigned)
+                    {
+                        if (word >= 0 && word < 2048)
+                            word = word + 2048;
+                        else
+                            word = word - 2048 - 61440;
+                    }
+                    VotageArray[iData] = word;
+
+                    word = AllBytes2 + AllBytes3 * 256;
+                    if (!SettingsIsIVReceiverUnsigned)
+                    {
+                        if (word >= 0 && word < 2048)
+                            word = word + 2048;
+                        else
+                            word = word - 2048 - 61440;
+                    }
+                    CurrentArray[iData] = word;
+                    DataCountInQueue--;
+                }
+                AdcgetTotalEventArgs e2 = new AdcgetTotalEventArgs(dcgetNdata, VotageArray, CurrentArray);
+                PG_EVT_AdcgetTotalDataReceived?.Invoke(this, e2);
+            }
+            catch { }
+
+            if (DataCountInQueue == 0)
+            {
+                AProcessFinishedEventArgs e3 = new AProcessFinishedEventArgs("Adcget");
+                PG_EVT_AProcessFinished?.Invoke(this, e3);
+            }
+        }
+
+        /// <summary>
+        /// This method start the command dcget in asynchronous mode.<para />
+        /// The reply will be accessible from the AdcgetEventArgs of the callback PG_EVT_AdcgetDataReceived.<para />
+        /// The data will be passed one by one including its index.<para />
+        /// It is suitable in the case of real time plotting. Note, the plotter should be fast enough.
+        /// </summary>
+        public void Adcget()
+        {
+            DataCountInQueue = dcgetNdata;
+            Thread t = new Thread(new  ThreadStart(Adcget_Process));
+            t.Start();
+        }
+
+        /// <summary>
+        /// This method start the command dcget in asynchronous mode.<para />
+        /// The reply will be accessible from the AdcgetTotalEventArgs of the callback PG_EVT_AdcgetTotalDataReceived.<para />
+        /// The whole data will be collected in memory and the total array will be passed to AdcgetTotalEventArgs.
+        /// </summary>
+        public void AdcgetTotal()
+        {
+            DataCountInQueue = dcgetNdata;
+            Thread t = new Thread(new ThreadStart(AdcgetTotal_Process));
+            t.Start();
+        }
+
+        /*
+        public void ivset(int value)
+        {
+            string order = "ivset " + value.ToString();
+            if (SendAndReceiveOK(order)) LastCommands.ivset = value;
+        }
+        */
+
+        private string stringver()
+        {
+            return Command("ver?");
+        }
+
+        /// <summary>
+        /// Returns the version of the device firmware.
+        /// </summary>
+        public int DeviceVer()
+        {
+            string Ver = stringver();
+            string[] Parts;
+            char[] delimiterChars = { '.' };
+            Parts = Ver.Split(delimiterChars);
+            int CurrentVer = Convert.ToInt16(Parts[1]);
+            return CurrentVer;
+        }
+
+        /// <summary>
+        /// Returns the version of the PGStat library.
+        /// </summary>
+        public string version()
+        {
+            return PGStatVer;
+        }
+
+        /// <summary>
+        /// Command to check the process status.
+        /// Returns true if an async process in the device is currently running.
+        /// </summary>
+        public bool IsBusy()
+        {
+            if (DataCountInQueue == 0)
+                return false;
+            else
+                return true;
+        }
+
+        private void Unpluged(object sender, EventArrivedEventArgs e)
+        {
+            //if (PG_EVT_UNPLUGED != null){PG_EVT_UNPLUGED(this, e);}
+            PG_EVT_Unpluged?.Invoke(this, EventArgs.Empty);
+            if (!Connected) return;
+            try
+            {
+                Disconnect();
+            }
+            catch (Exception ex)
+            {
+                SetStatus("Unable to disconnect the connection.", ex.Message, "void Unpluged(object sender, EventArrivedEventArgs e)");
+            }
+            if (IsAutoReconnectEnabled) ReConnect();
+        }
+
+        private void SetStatus(string Value, int time = 1000)
+        {
+            if (NotificationsVerbosity > 0)
+            {
+                Icon MyIcon0 = (Icon)Properties.Resources.ResourceManager.GetObject("pg");
+                //Icon MyIcon = new Icon(MyIcon0, new Size(256, 256));
+                notification.Icon = MyIcon0;
+                notification.BalloonTipIcon = ToolTipIcon.None;
+                notification.Visible = true;
+                notification.Text = "";
+                notification.BalloonTipTitle = "";
+                notification.BalloonTipText = Value;
+                notification.ShowBalloonTip(time);
+            }
+        }
+
+        private void SetStatus(string Value, string DebugValue, string FunctionName, int time = 1000)
+        {
+            if (NotificationsVerbosity > 0)
+            {
+                if (NotificationsVerbosity == 1) SetStatus(Value, time);
+                if (NotificationsVerbosity == 2) MessageBox.Show(Value + "\n\nDebugging Message:\n" + DebugValue, "PGStat Message");
+                if (NotificationsVerbosity == 3) MessageBox.Show(Value + "\n\nDebugging Message:\n" + DebugValue + "\n\nFunction name:\n" + FunctionName, "PGStat Message");
+            }
+        }
+
+        /// <summary>
+        /// This method disconnects PGStat from the device.
+        /// </summary>
+        public void Disconnect()
+        {
+            try
+            {
+                if (Port.IsOpen) Port.Close();
+            }
+            catch { }
+            Connected = false;
+            FoundedPort = "";
+            DeviceVersion = 0;
+            isFounded = false;
+            PG_EVT_Disconnected?.Invoke(this, EventArgs.Empty);
+            SetStatus("Application is disconnected.");
+        }
+
+        /// <summary>
+        /// This method searchs and tries to connect PGStat to the device.
+        /// </summary>
+        public int Connect()
+        {   
+            /* -1 An unknown error has occurred
+             * 0 Successfully completed (No error)
+             * 1 Device not found
+             * 2 There is not any port in your device
+             */
+            PG_EVT_StartConnecting?.Invoke(this, EventArgs.Empty);
+            int err = -1;
+            string DeviceName = "";
+            string Ver = "";
+            isFounded = false;
+            Thread.Sleep(500);
+            for (int trynum = 0; trynum < 2; trynum++)
+            {
+                if (!isFounded)
+                {
+                    string[] ArrayComPortsNames = null;
+                    int index = -1;
+                    FoundedPort = "";
+                    DeviceVersion = 0;
+
+                    string ComPortName = null;
+                    ArrayComPortsNames = SerialPort.GetPortNames();
+                    do
+                    {
+                        index++;
+                        if (!isFounded)
+                        {
+                            if (CheckPort.IsOpen) CheckPort.Close();
+                            CheckPort.WriteTimeout = CheckPortTimeoutSec; CheckPort.ReadTimeout = CheckPortTimeoutSec;
+                            if (ArrayComPortsNames.Length == 0)
+                            {
+                                err = 2; //
+                                return err;
+                            }
+                            CheckPort.PortName = ArrayComPortsNames[index];
+
+                            // try to open the selected port:
+                            try
+                            {
+                                CheckPort.Open();
+                                ClearBuffer(CheckPort);
+                                string Order = Command(CheckPort, "you?");
+                                if (Order.StartsWith("EIS"))
+                                {
+                                    FoundedPort = CheckPort.PortName;
+                                    //DeviceVersion = Convert.ToInt32(Commands[1]);
+                                    DeviceVersion = 1;
+                                    isFounded = true;
+                                    Ver = Command(CheckPort, "ver?");
+                                    string[] Parts;
+                                    char[] delimiterChars = { '.' };
+                                    Parts = Ver.Split(delimiterChars);
+                                    int CurrentVer;
+                                    if (Parts[0] == "b")
+                                    {
+                                        BoardType = 2;
+                                        CurrentVer = Convert.ToInt16(Parts[1]);
+                                    }
+                                    else
+                                    {
+                                        BoardType = 1;
+                                        CurrentVer = Convert.ToInt16(Ver);
+                                    }
+                                    Port = CheckPort;
+                                    //CheckUpdates(CurrentVer);
+                                    DeviceName = Order;
+                                }
+                                else
+                                {
+                                    if (CheckPort.IsOpen) CheckPort.Close();
+                                }
+                            }
+                            catch {}
+                        }
+                    }
+                    while (!((ArrayComPortsNames[index] == ComPortName) ||
+                                        (index == ArrayComPortsNames.GetUpperBound(0))));
+
+                    if (CheckPort.IsOpen) CheckPort.Close();
+                    if (isFounded)
+                    {
+                        Port.WriteTimeout = PortTimeout; Port.ReadTimeout = PortTimeout;
+                        if (Port.IsOpen) Port.Close();
+                        Port.PortName = FoundedPort;
+                        Port.Open();
+                        ClearBuffer();
+                        Connected = true;
+                        PingTimer.Enabled = true;
+                        PingTimer.Start();
+                        err = 0;
+                        SetStatus("Application is Connected to Device.");
+                        PG_EVT_Connected?.Invoke(this, EventArgs.Empty);
+                        return err;
+                    }
+                    else
+                    {
+                        if (trynum > 0)
+                        {
+                            SetStatus("Device was not found.");
+                            err = 1;
+                            return 1;
+                        }
+                    }
+
+                }
+            }
+            return err;
+        }
+
+        private void ReConnect()
+        {
+            SetStatus("Reconnecting ...");
+            
+            for (int i = 0; i < 10; i++)
+            {
+                if (!Connected)
+                {
+                    try
+                    {
+                        Thread.Sleep(1000);
+                        Port.Open();
+                        KillProcess();
+                        KillProcess();
+                        Command(Port, "");
+                        string Order = Command(Port, "you?");
+                        if (Order.StartsWith("EIS"))
+                        {
+                            Connected = true;
+                            isFounded = true;
+                        }
+                    }
+                    catch
+                    { }
+                }
+            }
+
+            if (Connected)
+            {
+                PingTimer.Interval = 1000;
+                PingTimer.Start();
+                PG_EVT_Connected?.Invoke(this, EventArgs.Empty);
+                SetStatus("Successfully reconnected ...");
+            }
+            else
+                SetStatus("Sorry. We could not reconnect the system.\nCheck the USB cable and reconnect manually.");
+
+        }
+
+
+
+
+
+
+
+        /***************************************************************************************************************/
+    }
+
+    /// <summary>
+    /// The information comming with the event PG_EVT_AProcessStarted.
+    /// </summary>
+    public class AProcessStartedEventArgs : EventArgs
+    {
+        /// <summary>
+        /// The constructor of PG_EVT_AProcessStarted class.
+        /// </summary>
+        public AProcessStartedEventArgs(string ProcessName) { Process = ProcessName; }
+
+        /// <summary>
+        /// The name of process passing through PG_EVT_AProcessStarted.
+        /// </summary>
+        public string Process { get; set; }
+    }
+
+    /// <summary>
+    /// The information comming with the event PG_EVT_AProcessFinished.
+    /// </summary>
+    public class AProcessFinishedEventArgs : EventArgs
+    {
+        /// <summary>
+        /// The constructor of PG_EVT_AProcessFinished class.
+        /// </summary>
+        public AProcessFinishedEventArgs(string ProcessName) { Process = ProcessName; }
+
+        /// <summary>
+        /// The name of process passing through PG_EVT_AProcessFinished.
+        /// </summary>
+        public string Process { get; set; }
+    }
+
+    /// <summary>
+    /// The information comming with the event PG_EVT_AdcgetDataReceived.
+    /// </summary>
+    public class AdcgetEventArgs : EventArgs
+    {
+        /// <summary>
+        /// The constructor of AdcgetEventArgs class.
+        /// </summary>
+        public AdcgetEventArgs(int count, int index, int voltage, int current) { Count = count; Index = index; Voltage = voltage; Current = current; }
+
+        /// <summary>
+        /// The count of forthcoming data including Voltage and Current.
+        /// </summary>
+        public int Count { get; set; }
+        /// <summary>
+        /// The index of the received data including Voltage and Current.
+        /// </summary>
+        public int Index { get; set; }
+        /// <summary>
+        /// The raw value of Voltage passing through PG_EVT_AdcgetDataReceived.
+        /// </summary>
+        public int Voltage { get; set; }
+        /// <summary>
+        /// The raw value of Current passing through PG_EVT_AdcgetDataReceived.
+        /// </summary>
+        public int Current { get; set; }
+    }
+
+    /// <summary>
+    /// The information comming with the event PG_EVT_AdcgetTotalDataReceived.
+    /// </summary>
+    public class AdcgetTotalEventArgs : EventArgs
+    {
+        /// <summary>
+        /// The constructor of AdcgetTotalEventArgs class.
+        /// </summary>
+        public AdcgetTotalEventArgs(int count, int[] voltage, int[] current) { Count = count; Voltage = voltage; Current = current; }
+
+        /// <summary>
+        /// The count of the received data including Voltage and Current.
+        /// </summary>
+        public int Count { get; set; }
+        /// <summary>
+        /// The raw value of Voltage passing through PG_EVT_AdcgetTotalDataReceived.
+        /// </summary>
+        public int[] Voltage { get; set; }
+        /// <summary>
+        /// The raw value of Current passing through PG_EVT_AdcgetTotalDataReceived.
+        /// </summary>
+        public int[] Current { get; set; }
+    }
+
+    /// <summary>
+    /// The information comming with the event PG_EVT_ACommandDataReceived.
+    /// </summary>
+    public class ACommandEventArgs : EventArgs
+    {
+        /// <summary>
+        /// The constructor of AdcgetEventArgs class.
+        /// </summary>
+        public ACommandEventArgs(string ans) { Ans = ans; }
+
+        /// <summary>
+        /// The answere from device as a string passing through PG_EVT_ACommandDataReceived.
+        /// </summary>
+        public string Ans { get; set; }
+    }
+}

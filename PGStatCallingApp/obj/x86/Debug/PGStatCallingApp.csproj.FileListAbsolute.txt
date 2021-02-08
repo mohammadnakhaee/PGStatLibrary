@@ -1,0 +1,13 @@
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatCallingApp\obj\x86\Debug\PGStatCallingApp.csprojResolveAssemblyReference.cache
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatCallingApp\obj\x86\Debug\PGStatCallingApp.Form1.resources
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatCallingApp\obj\x86\Debug\PGStatCallingApp.Properties.Resources.resources
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatCallingApp\obj\x86\Debug\PGStatCallingApp.csproj.GenerateResource.cache
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatCallingApp\obj\x86\Debug\PGStatCallingApp.csproj.CoreCompileInputs.cache
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatCallingApp\bin\x86\Debug\PGStatCallingApp.exe.config
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatCallingApp\bin\x86\Debug\PGStatCallingApp.exe
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatCallingApp\bin\x86\Debug\PGStatCallingApp.pdb
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatCallingApp\bin\x86\Debug\PGStatLibrary.dll
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatCallingApp\bin\x86\Debug\PGStatLibrary.pdb
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatCallingApp\obj\x86\Debug\PGStatCallingApp.csproj.CopyComplete
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatCallingApp\obj\x86\Debug\PGStatCallingApp.exe
+C:\Users\mohammad\source\repos\PGStatLibrary\PGStatCallingApp\obj\x86\Debug\PGStatCallingApp.pdb

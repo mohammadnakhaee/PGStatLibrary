@@ -1,0 +1,1465 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PGStatLibrary</name>
+    </assembly>
+    <members>
+        <member name="T:PGStatLibrary.PGStat">
+            <summary>
+            The main PGStat class.<para />
+            Contains all methods for controlling the device.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.dcgetNdata">
+            <summary>
+            The number of data coming from dcget command family.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.SettingsIsIVReceiverUnsigned">
+            <summary>
+            Device settings. Do not change it.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.CV_Input">
+            <summary>
+            The inputs of the CV method.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.IV_Input">
+            <summary>
+            The inputs of the IV method.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.Chrono_Input">
+            <summary>
+            The inputs of the Chrono method.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.LastPGmode">
+            <summary>
+            The last value of PGmode.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastvfilter">
+            <summary>
+            The last value of vfilter.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastidcfilter">
+            <summary>
+            The last value of idcfilter.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastidcselect">
+            <summary>
+            The last value of idcselect.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastsetselect">
+            <summary>
+            The last value of setselect.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastidcmlp">
+            <summary>
+            The last value of idcmlp.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastvdcmlp">
+            <summary>
+            The last value of vdcmlp.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastzeroset">
+            <summary>
+            The last value of zeroset.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastacset">
+            <summary>
+            The last value of acset.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastaczero">
+            <summary>
+            The last value of aczero.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastvaczero">
+            <summary>
+            The last value of vaczero.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastinput00">
+            <summary>
+            The last value of input00.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastinput01">
+            <summary>
+            The last value of input01.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastinput02">
+            <summary>
+            The last value of input02.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastinput03">
+            <summary>
+            The last value of input03.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastinput04">
+            <summary>
+            The last value of input04.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastinput05">
+            <summary>
+            The last value of input05.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastinput06">
+            <summary>
+            The last value of input06.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastinput07">
+            <summary>
+            The last value of input07.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastinput08">
+            <summary>
+            The last value of input08.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastinput09">
+            <summary>
+            The last value of input09.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastinput10">
+            <summary>
+            The last value of input10.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lasttinput00">
+            <summary>
+            The last value of input00.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lasttinput01">
+            <summary>
+            The last value of input01.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lasttinput02">
+            <summary>
+            The last value of input02.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lasttinput03">
+            <summary>
+            The last value of input03.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lasttinput04">
+            <summary>
+            The last value of input04.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lasttinput05">
+            <summary>
+            The last value of input05.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lasttinput06">
+            <summary>
+            The last value of input06.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lasttinput07">
+            <summary>
+            The last value of input07.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lasttinput08">
+            <summary>
+            The last value of input08.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lasttinput09">
+            <summary>
+            The last value of input09.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lasttinput10">
+            <summary>
+            The last value of input10.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastninput00">
+            <summary>
+            The last value of ninput00.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastninput01">
+            <summary>
+            The last value of ninput01.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastninput02">
+            <summary>
+            The last value of ninput02.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastninput03">
+            <summary>
+            The last value of ninput03.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastninput04">
+            <summary>
+            The last value of ninput04.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastninput05">
+            <summary>
+            The last value of ninput05.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastninput06">
+            <summary>
+            The last value of ninput06.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastninput07">
+            <summary>
+            The last value of ninput07.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastninput08">
+            <summary>
+            The last value of ninput08.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastninput09">
+            <summary>
+            The last value of ninput09.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastninput10">
+            <summary>
+            The last value of ninput10.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastsn">
+            <summary>
+            The last value of sn.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.LastTget">
+            <summary>
+            The last value of Tget.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastdcset">
+            <summary>
+            The last value of dcset.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastddsclk">
+            <summary>
+            The last value of ddsclk.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastdds">
+            <summary>
+            The last value of dds.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastvac">
+            <summary>
+            The last value of vac.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastdummy">
+            <summary>
+            The last state of the dummy.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.Lastsample">
+            <summary>
+            The last state of the sample.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.LastEqTime">
+            <summary>
+            The last value of EqTime.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.LastPretreatment">
+            <summary>
+            The last value of Pretreatment.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.LastOCPState">
+            <summary>
+            The last value of Open Circuit Potential state. Respectively, false and true are Inactive and Active.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.LastRelRefState">
+            <summary>
+            The last value of RelRef state. Respectively, false and true are Absolute and Relative modes.<para />
+            If it is true, the potential of the working electrode is relative to the reference electrode.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.LastOCP">
+            <summary>
+            The Open Circuit Potential. It can be voltage or current with respect to the PGMode. The unit for set voltage/current is Volt/Ampere.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PGStat.LastIdealVoltage">
+            <summary>
+            The last value of IdealVoltage.
+            </summary>
+        </member>
+        <member name="E:PGStatLibrary.PGStat.PG_EVT_StartConnecting">
+            <summary>
+            Process a PG_EVT_StartConnecting event, when PGStat started to search for a connected device.
+            </summary>
+        </member>
+        <member name="E:PGStatLibrary.PGStat.PG_EVT_Connected">
+            <summary>
+            Process a PG_EVT_Connected event, when PGStat connected to the device.
+            </summary>
+        </member>
+        <member name="E:PGStatLibrary.PGStat.PG_EVT_Ping">
+            <summary>
+            Process a PG_EVT_Ping event, when PGStat is pinging.
+            </summary>
+        </member>
+        <member name="E:PGStatLibrary.PGStat.PG_EVT_Disconnected">
+            <summary>
+            Process a PG_EVT_Disconnected event, when PGStat is disconnected from the device.
+            </summary>
+        </member>
+        <member name="E:PGStatLibrary.PGStat.PG_EVT_Unpluged">
+            <summary>
+            Process a PG_EVT_Unpluged event, when PGStat is disconnected accidentally.
+            </summary>
+        </member>
+        <member name="E:PGStatLibrary.PGStat.PG_EVT_OffsetRemovalStarted">
+            <summary>
+            Represents the method that will handle the Offset Removal Started event.<para />
+            It will be fired once Potentiostat or Galvanostat offset removal started.
+            </summary>
+        </member>
+        <member name="E:PGStatLibrary.PGStat.PG_EVT_OffsetRemovalFinished">
+            <summary>
+            Represents the method that will handle the Offset Removal Finished event.<para />
+            It will be fired once Potentiostat or Galvanostat offset removal finished.
+            </summary>
+        </member>
+        <member name="E:PGStatLibrary.PGStat.PG_EVT_AProcessStarted">
+            <summary>
+            Represents the method that will handle the Async Process Started event.<para />
+            It will be fired once an async process started.
+            </summary>
+        </member>
+        <member name="E:PGStatLibrary.PGStat.PG_EVT_AProcessFinished">
+            <summary>
+            Represents the method that will handle the Async Process Finished event.<para />
+            It will be fired once an async process finished.
+            </summary>
+        </member>
+        <member name="E:PGStatLibrary.PGStat.PG_EVT_ACommandDataReceived">
+            <summary>
+            Represents the method that will handle the Data Received event of ACommand process.<para />
+            ACommand is the asynchronous mode of the method Command.
+            </summary>
+        </member>
+        <member name="E:PGStatLibrary.PGStat.PG_EVT_AdcgetDataReceived">
+            <summary>
+            Represents the method that will handle the Data Received event of Adcget process.<para />
+            Adcget is the asynchronous mode of the method dcget.<para />
+            Note that the raw data of event, according to the values of the setdcselect and idcselect functions, will be translated to observable values. One can convert the data using ConvertToObservable.
+            </summary>
+        </member>
+        <member name="E:PGStatLibrary.PGStat.PG_EVT_AdcgetTotalDataReceived">
+            <summary>
+            Represents the method that will handle the Total Data Received event of AdcgetTotal process.<para />
+            AdcgetTotal is the asynchronous mode of the method dcget.<para />
+            Note that the raw data of event, according to the values of the setdcselect and idcselect functions, will be translated to observable values. One can convert the data using ConvertToObservable.
+            </summary>
+        </member>
+        <member name="E:PGStatLibrary.PGStat.PG_EVT_AivsetDataReceived">
+            <summary>
+            Represents the method that will handle the Data Received event of Aivset process.<para />
+            Aivset is the asynchronous mode of the method ivset.<para />
+            Note that the raw data of event, according to the values of the setdcselect and idcselect functions, will be translated to observable values. One can convert the data using ConvertToObservable.
+            </summary>
+        </member>
+        <member name="E:PGStatLibrary.PGStat.PG_EVT_ACVDataReceived">
+            <summary>
+            Represents the method that will handle the Data Received event of ACV process.<para />
+            ACV is the asynchronous mode of the method CV.
+            </summary>
+        </member>
+        <member name="E:PGStatLibrary.PGStat.PG_EVT_AIVDataReceived">
+            <summary>
+            Represents the method that will handle the Data Received event of AIV process.<para />
+            AIV is the asynchronous mode of the method IV.
+            </summary>
+        </member>
+        <member name="E:PGStatLibrary.PGStat.PG_EVT_AChronoDataReceived">
+            <summary>
+            Represents the method that will handle the Data Received event of AChrono process.<para />
+            AChrono is the asynchronous mode of the method Chrono.
+            </summary>
+        </member>
+        <member name="T:PGStatLibrary.PGStat.CVProperties">
+            <summary>
+            Inputs for CV method.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.CVProperties.Initial_Potential">
+            <summary>
+            in Volt.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.CVProperties.Switching_Potential">
+            <summary>
+            in Volt.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.CVProperties.Final_Potential">
+            <summary>
+            in Volt.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.CVProperties.Interval_Time">
+            <summary>
+            Time step in milliseconds.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.CVProperties.Ideal_Voltage">
+            <summary>
+            in Volt.
+            </summary>
+        </member>
+        <member name="T:PGStatLibrary.PGStat.IVProperties">
+            <summary>
+            Inputs for IV method.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.IVProperties.Initial_Potential">
+            <summary>
+            in Volt.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.IVProperties.Final_Potential">
+            <summary>
+            in Volt.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.IVProperties.Interval_Time">
+            <summary>
+            Time step in milliseconds.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.IVProperties.Ideal_Voltage">
+            <summary>
+            in Volt.
+            </summary>
+        </member>
+        <member name="T:PGStatLibrary.PGStat.ChronoProperties">
+            <summary>
+            Inputs for Chrono method.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.ChronoProperties.V1">
+            <summary>
+            in Volt.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.ChronoProperties.V2">
+            <summary>
+            in Volt.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.ChronoProperties.V3">
+            <summary>
+            in Volt.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.ChronoProperties.V4">
+            <summary>
+            in Volt.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.ChronoProperties.V5">
+            <summary>
+            in Volt.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.ChronoProperties.V6">
+            <summary>
+            in Volt.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.ChronoProperties.V7">
+            <summary>
+            in Volt.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.ChronoProperties.V8">
+            <summary>
+            in Volt.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.ChronoProperties.V9">
+            <summary>
+            in Volt.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.ChronoProperties.V10">
+            <summary>
+            in Volt.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.ChronoProperties.T1">
+            <summary>
+            in second.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.ChronoProperties.T2">
+            <summary>
+            in second.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.ChronoProperties.T3">
+            <summary>
+            in second.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.ChronoProperties.T4">
+            <summary>
+            in second.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.ChronoProperties.T5">
+            <summary>
+            in second.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.ChronoProperties.T6">
+            <summary>
+            in second.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.ChronoProperties.T7">
+            <summary>
+            in second.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.ChronoProperties.T8">
+            <summary>
+            in second.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.ChronoProperties.T9">
+            <summary>
+            in second.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.ChronoProperties.T10">
+            <summary>
+            in second.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.ChronoProperties.Step">
+            <summary>
+            The number of parts Step=[1:10].
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.ChronoProperties.Interval_Time">
+            <summary>
+            Time step in milliseconds.
+            </summary>
+        </member>
+        <member name="F:PGStatLibrary.PGStat.ChronoProperties.Ideal_Voltage">
+            <summary>
+            in Volt.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.#ctor">
+            <summary>
+            The constructor for the PGStat class.<para />
+            The object contains all methods for controlling the device.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.SetNotificationVerbosity(System.Int32)">
+            <summary>
+            This method determines the verbosity of notifications.<para />
+            0: notification off.<para />
+            1: Release mode of final software for user.<para />
+            2: Debug mode for developer of the software.<para />
+            3: Debug mode for developer of the dll.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.EnableAutoReconnect">
+            <summary>
+            This function determines that the PGStat wills
+            try to reconnect in case of accidentally disconnection.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.DisableAutoReconnect">
+            <summary>
+            This function determines that the PGStat avoids
+            automatical reconnection in the case of accidentally disconnection.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.IsConnected">
+            <summary>
+            Returns true if PGStat is connected to the device.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.IsPingEnabled">
+            <summary>
+            Returns true if PGStat is pinging data to the software.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.SetPingPeriod(System.Double)">
+            <summary>
+            Determines the period of "pinging process".
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.ClearBuffer">
+            <summary>
+            Try to discard both input and output buffers of the connected port.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.KillProcess">
+            <summary>
+            Kills any possibly running process.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.EnablePing">
+            <summary>
+            It turns on the pinging process.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.DisablePing">
+            <summary>
+            It turns off the pinging process.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.Command(System.String,System.Int32)">
+            <summary>
+            This method sends the command to device and returns the reply synchronously.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.ACommand(System.String)">
+            <summary>
+            This method sends the command to device in asynchronous mode.<para />
+            The reply will be accessible from the ACommandEventArgs of the callback PG_EVT_ACommandDataReceived.<para />
+            If the command is sent successfully, True is returned. 
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.PGmode(System.Int32)">
+            <summary>
+            This function changes the PGmode.<para />
+            0:<para />
+            1:<para />
+            2:
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.vfilter(System.Int32)">
+            <summary>
+            This function changes the voltage filter.<para />
+            0:<para />
+            1:<para />
+            2:
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.idcfilter(System.Int32)">
+            <summary>
+            This function changes the DC current filter.<para />
+            0:<para />
+            1:<para />
+            2:
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.idcselect(System.Int32)">
+            <summary>
+            This function changes the DC current range.<para />
+            0:<para />
+            1:<para />
+            2:<para />
+            3:
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.setselect(System.Int32)">
+            <summary>
+            This function changes the voltage range.<para />
+            0:<para />
+            1:<para />
+            2:<para />
+            3:
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.idcmlp(System.Int32)">
+            <summary>
+            This function changes the DC current multiplier.<para />
+            0:<para />
+            1:<para />
+            2:<para />
+            3:
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.vdcmlp(System.Int32)">
+            <summary>
+            This function changes the DC voltage multiplier.<para />
+            0:<para />
+            1:<para />
+            2:<para />
+            3:
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.zeroset(System.Int32)">
+            <summary>
+            This function sets the zero level of DC voltage.<para />
+            The input value should be set between 0 and 4096.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.acset(System.Int32)">
+            <summary>
+            This function sets the AC voltage.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.aczero(System.Int32)">
+            <summary>
+            This function sets the zero level of the AC current.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.vaczero(System.Int32)">
+            <summary>
+            This function sets the zero level of the AC voltage.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.input00(System.Int32)">
+            <summary>
+            Sets the input00.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.input01(System.Int32)">
+            <summary>
+            Sets the input01.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.input02(System.Int32)">
+            <summary>
+            Sets the input02.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.input03(System.Int32)">
+            <summary>
+            Sets the input03.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.input04(System.Int32)">
+            <summary>
+            Sets the input04.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.input05(System.Int32)">
+            <summary>
+            Sets the input05.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.input06(System.Int32)">
+            <summary>
+            Sets the input06.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.input07(System.Int32)">
+            <summary>
+            Sets the input07.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.input08(System.Int32)">
+            <summary>
+            Sets the input08.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.input09(System.Int32)">
+            <summary>
+            Sets the input09.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.input10(System.Int32)">
+            <summary>
+            Sets the input10.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.tinput00(System.Int32)">
+            <summary>
+            Sets the tinput00.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.tinput01(System.Int32)">
+            <summary>
+            Sets the tinput01.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.tinput02(System.Int32)">
+            <summary>
+            Sets the tinput02.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.tinput03(System.Int32)">
+            <summary>
+            Sets the tinput03.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.tinput04(System.Int32)">
+            <summary>
+            Sets the tinput04.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.tinput05(System.Int32)">
+            <summary>
+            Sets the tinput05.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.tinput06(System.Int32)">
+            <summary>
+            Sets the tinput06.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.tinput07(System.Int32)">
+            <summary>
+            Sets the tinput07.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.tinput08(System.Int32)">
+            <summary>
+            Sets the tinput08.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.tinput09(System.Int32)">
+            <summary>
+            Sets the tinput09.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.tinput10(System.Int32)">
+            <summary>
+            Sets the tinput10.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.ninput00(System.Int32)">
+            <summary>
+            Sets the ninput00.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.ninput01(System.Int32)">
+            <summary>
+            Sets the ninput01.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.ninput02(System.Int32)">
+            <summary>
+            Sets the ninput02.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.ninput03(System.Int32)">
+            <summary>
+            Sets the ninput03.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.ninput04(System.Int32)">
+            <summary>
+            Sets the ninput04.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.ninput05(System.Int32)">
+            <summary>
+            Sets the ninput05.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.ninput06(System.Int32)">
+            <summary>
+            Sets the ninput06.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.ninput07(System.Int32)">
+            <summary>
+            Sets the ninput07.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.ninput08(System.Int32)">
+            <summary>
+            Sets the ninput08.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.ninput09(System.Int32)">
+            <summary>
+            Sets the ninput09.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.ninput10(System.Int32)">
+            <summary>
+            Sets the ninput10.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.sn(System.Int32)">
+            <summary>
+            Sets the sn.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.Tget(System.Int32)">
+            <summary>
+            Sets the Tget.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.dcset(System.Int32)">
+            <summary>
+            Sets the dcset.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.ddsclk(System.Int32)">
+            <summary>
+            Sets the ddsclk.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.dds(System.Int32)">
+            <summary>
+            Sets the dds.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.vac(System.Int32)">
+            <summary>
+            Sets the vac.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.DCpreget">
+            <summary>
+            DCpreget command.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.ACpreset(System.Int32)">
+            <summary>
+            ACpreset command.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.dummy(System.Int32)">
+            <summary>
+            This method connect or disconnect the dummy probe;<para />
+            The dummy is a 1KOhm resistor.<para />
+            0: Disconnect<para />
+            1: Connect
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.sample(System.Int32)">
+            <summary>
+            This method connect or disconnect the sample probe;<para />
+            0: Disconnect<para />
+            1: Connect
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.RelRefState(System.Boolean)">
+            <summary>
+            Sets the RelRef state. Respectively, false and true are Absolute and Relative modes.<para />
+            If it is true, the potential of the working electrode is relative to the reference electrode.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.OCP(System.Boolean)">
+            <summary>
+            Sets the Open Circuit Potential state. Respectively, false and true are Inactive and Active.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.OCP(System.Double)">
+            <summary>
+            Sets the Open Circuit Potential. It can be voltage or current with respect to the PGMode. The unit for set voltage/current is Volt/Ampere.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.EqTime(System.Int32)">
+            <summary>
+            Sets the equilibrium time in (ms). It is the waiting time just after the pretreatment voltage/current is set.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.Pretreatment(System.Double)">
+            <summary>
+            Sets the pretreatment. It can be voltage or current with respect to the set PGMode.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.IdealVoltage(System.Double)">
+            <summary>
+            Sets the ideal value for voltage/current in Volt/Ampere with respect to the set PGMode.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.ToRawData(System.Double)">
+            <summary>
+            Convert an observable value to raw data.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.dcget">
+            <summary>
+            Returns the raw data of Voltage and Current.<para />
+            Note, the raw data for both input and output values, according to the values of the setdcselect and idcselect functions, will be translated to observable values. One can convert the data using ConvertToObservable.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.Adcget">
+            <summary>
+            This method start the command dcget in asynchronous mode.<para />
+            The reply will be accessible from the AdcgetEventArgs of the callback PG_EVT_AdcgetDataReceived.<para />
+            The data will be passed one by one including its index.<para />
+            This method is suitable in the case of real time plotting. Note, the plotter should be fast enough.<para />
+            If the command is sent successfully, True is returned.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.AdcgetTotal">
+            <summary>
+            This method start the command dcget in asynchronous mode.<para />
+            The reply will be accessible from the AdcgetTotalEventArgs of the callback PG_EVT_AdcgetTotalDataReceived.<para />
+            The whole data will be collected in memory and the total array will be passed to AdcgetTotalEventArgs.<para />
+            If the command is sent successfully, True is returned.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.ivset(System.Int32)">
+            <summary>
+            This method set the desire voltage/current in potentiostat/galvanostat mode and returns the real voltage and real current.<para />
+            The input is a raw data not real voltage/current. The raw data is between 0 and 4095. The middle point is 2047.<para />
+            Note, the raw data for both input and output values, according to the values of the setdcselect and idcselect functions, will be translated to observable values. One can convert the data using ConvertToObservable.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.Aivset(System.Int32)">
+            <summary>
+            This method start the command ivset in asynchronous mode.<para />
+            The reply will be accessible from the AivsetEventArgs of the callback PG_EVT_AivsetDataReceived.<para />
+            The raw values of voltage and current will be collected in an array and passed to AivsetEventArgs.<para />
+            If the command is sent successfully, True is returned.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.ACV">
+            <summary>
+            This method start the command CV in asynchronous mode.<para />
+            The reply will be accessible from the ACVEventArgs of the callback PG_EVT_ACVDataReceived.<para />
+            It returns true when the command is sent to device successfully.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.AIV">
+            <summary>
+            This method start the command IV in asynchronous mode.<para />
+            The reply will be accessible from the AIVEventArgs of the callback PG_EVT_AIVDataReceived.<para />
+            It returns true when the command is sent to device successfully.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.AChrono">
+            <summary>
+            This method start the command Chrono in asynchronous mode.<para />
+            The reply will be accessible from the AChronoEventArgs of the callback PG_EVT_AChronoDataReceived.<para />
+            It returns true when the command is sent to device successfully.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.DeviceVer">
+            <summary>
+            Returns the version of the device firmware.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.version">
+            <summary>
+            Returns the version of the PGStat library.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.IsBusy">
+            <summary>
+            Command to check the process status.
+            Returns true if an async process in the device is currently running.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.Disconnect">
+            <summary>
+            This method disconnects PGStat from the device.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.Connect">
+            <summary>
+            This method searchs and tries to connect PGStat to the device.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.ResetFactory">
+            <summary>
+            Restore device to factory settings.<para />
+            Please contact with the manufacturer to do this.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.SaveSettings(System.String)">
+            <summary>
+            Write the settings in a binary file.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.MicroSaveSettings(System.String)">
+            <summary>
+            Save the settings from a binary file to the Micro Controller.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.LoadSettings(System.String)">
+            <summary>
+            Load the settings from a binary file.<para />
+            Returns the version of the settings written in the file.<para />
+            Returns 0 if the file was not found.<para />
+            Returns -1 if the file is an old verson or maybe it was corrupted during save process.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.LoadSettingsFromDevice(System.String)">
+            <summary>
+            Load the settings from the device and save to a binary file.<para />
+            Returns the version of the settings written in the file.<para />
+            Returns 0 if the file was not found.<para />
+            Returns -1 if the file is an old verson or maybe it was corrupted during save process.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.OffsetRemoval">
+            <summary>
+            Offset removal in Potentiostat mode.<para />
+            Returns true if done.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PGStat.G_OffsetRemoval">
+            <summary>
+            Offset removal in Galvanostat mode.<para />
+            Returns true if done.
+            </summary>
+        </member>
+        <member name="T:PGStatLibrary.OffsetRemovalFinishedEventArgs">
+            <summary>
+            The information coming with the event PG_EVT_OffsetRemovalFinished.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.OffsetRemovalFinishedEventArgs.#ctor">
+            <summary>
+            The constructor of PG_EVT_AProcessStarted class.
+            </summary>
+        </member>
+        <member name="T:PGStatLibrary.PingEventArgs">
+            <summary>
+            The information coming with the event PG_EVT_Ping.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.PingEventArgs.#ctor(System.Double,System.Double)">
+            <summary>
+            The constructor of AdcgetTotalEventArgs class.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PingEventArgs.Voltage">
+            <summary>
+            The raw value of Voltage passing through PG_EVT_Ping.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.PingEventArgs.Current">
+            <summary>
+            The raw value of Current passing through PG_EVT_Ping.
+            </summary>
+        </member>
+        <member name="T:PGStatLibrary.OffsetRemovalStartedEventArgs">
+            <summary>
+            The information coming with the event PG_EVT_OffsetRemovalFinished.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.OffsetRemovalStartedEventArgs.#ctor">
+            <summary>
+            The constructor of PG_EVT_AProcessStarted class.
+            </summary>
+        </member>
+        <member name="T:PGStatLibrary.AProcessStartedEventArgs">
+            <summary>
+            The information coming with the event PG_EVT_AProcessStarted.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.AProcessStartedEventArgs.#ctor(System.String)">
+            <summary>
+            The constructor of PG_EVT_AProcessStarted class.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.AProcessStartedEventArgs.Process">
+            <summary>
+            The name of process passing through PG_EVT_AProcessStarted.
+            </summary>
+        </member>
+        <member name="T:PGStatLibrary.AProcessFinishedEventArgs">
+            <summary>
+            The information coming with the event PG_EVT_AProcessFinished.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.AProcessFinishedEventArgs.#ctor(System.String)">
+            <summary>
+            The constructor of PG_EVT_AProcessFinished class.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.AProcessFinishedEventArgs.Process">
+            <summary>
+            The name of process passing through PG_EVT_AProcessFinished.
+            </summary>
+        </member>
+        <member name="T:PGStatLibrary.AdcgetEventArgs">
+            <summary>
+            The information coming with the event PG_EVT_AdcgetDataReceived.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.AdcgetEventArgs.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            The constructor of AdcgetEventArgs class.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.AdcgetEventArgs.Count">
+            <summary>
+            The count of forthcoming data including Voltage and Current.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.AdcgetEventArgs.Index">
+            <summary>
+            The index of the received data including Voltage and Current.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.AdcgetEventArgs.Voltage">
+            <summary>
+            The raw value of Voltage passing through PG_EVT_AdcgetDataReceived.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.AdcgetEventArgs.Current">
+            <summary>
+            The raw value of Current passing through PG_EVT_AdcgetDataReceived.
+            </summary>
+        </member>
+        <member name="T:PGStatLibrary.AdcgetTotalEventArgs">
+            <summary>
+            The information coming with the event PG_EVT_AdcgetTotalDataReceived.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.AdcgetTotalEventArgs.#ctor(System.Int32,System.Int32[],System.Int32[])">
+            <summary>
+            The constructor of AdcgetTotalEventArgs class.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.AdcgetTotalEventArgs.Count">
+            <summary>
+            The count of the received data including Voltage and Current.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.AdcgetTotalEventArgs.Voltage">
+            <summary>
+            The raw value of Voltage passing through PG_EVT_AdcgetTotalDataReceived.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.AdcgetTotalEventArgs.Current">
+            <summary>
+            The raw value of Current passing through PG_EVT_AdcgetTotalDataReceived.
+            </summary>
+        </member>
+        <member name="T:PGStatLibrary.ACommandEventArgs">
+            <summary>
+            The information coming with the event PG_EVT_ACommandDataReceived.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.ACommandEventArgs.#ctor(System.String)">
+            <summary>
+            The constructor of AdcgetEventArgs class.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.ACommandEventArgs.Ans">
+            <summary>
+            The answere from device as a string passing through PG_EVT_ACommandDataReceived.
+            </summary>
+        </member>
+        <member name="T:PGStatLibrary.AivsetEventArgs">
+            <summary>
+            The information coming with the event PG_EVT_AivsetDataReceived.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.AivsetEventArgs.#ctor(System.Double,System.Double)">
+            <summary>
+            The constructor of AivsetEventArgs class.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.AivsetEventArgs.Voltage">
+            <summary>
+            The raw value of Voltage passing through PG_EVT_AivsetDataReceived.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.AivsetEventArgs.Current">
+            <summary>
+            The raw value of Current passing through PG_EVT_AivsetDataReceived.
+            </summary>
+        </member>
+        <member name="T:PGStatLibrary.ACVEventArgs">
+            <summary>
+            The information coming with the event PG_EVT_ACVDataReceived.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.ACVEventArgs.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            The constructor of ACVEventArgs class.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.ACVEventArgs.Count">
+            <summary>
+            The count of forthcoming data.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.ACVEventArgs.Count0">
+            <summary>
+            The count of the first sweep.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.ACVEventArgs.Count1">
+            <summary>
+            The count of other sweeps.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.ACVEventArgs.Index">
+            <summary>
+            The index of this data.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.ACVEventArgs.Time">
+            <summary>
+            The value of time in seconds passing through PG_EVT_ACVDataReceived.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.ACVEventArgs.MaxTime">
+            <summary>
+            The maximum value of time in seconds passing through PG_EVT_ACVDataReceived.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.ACVEventArgs.Voltage">
+            <summary>
+            The value of Voltage in Volt passing through PG_EVT_ACVDataReceived.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.ACVEventArgs.Current">
+            <summary>
+            The value of Current in Ampere passing through PG_EVT_ACVDataReceived.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.ACVEventArgs.MeasuredVoltage">
+            <summary>
+            The value of measured Voltage in Volt passing through PG_EVT_ACVDataReceived.
+            </summary>
+        </member>
+        <member name="T:PGStatLibrary.AIVEventArgs">
+            <summary>
+            The information coming with the event PG_EVT_AIVDataReceived.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.AIVEventArgs.#ctor(System.Int32,System.Int32,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            The constructor of AIVEventArgs class.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.AIVEventArgs.Count">
+            <summary>
+            The count of forthcoming data.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.AIVEventArgs.Index">
+            <summary>
+            The index of this data.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.AIVEventArgs.Time">
+            <summary>
+            The value of time in seconds passing through PG_EVT_AIVDataReceived.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.AIVEventArgs.MaxTime">
+            <summary>
+            The maximum value of time in seconds passing through PG_EVT_AIVDataReceived.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.AIVEventArgs.Voltage">
+            <summary>
+            The value of Voltage in Volt passing through PG_EVT_AIVDataReceived.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.AIVEventArgs.Current">
+            <summary>
+            The value of Current in Ampere passing through PG_EVT_AIVDataReceived.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.AIVEventArgs.MeasuredVoltage">
+            <summary>
+            The value of measured Voltage in Volt passing through PG_EVT_AIVDataReceived.
+            </summary>
+        </member>
+        <member name="T:PGStatLibrary.AChronoEventArgs">
+            <summary>
+            The information coming with the event PG_EVT_AChronoDataReceived.
+            </summary>
+        </member>
+        <member name="M:PGStatLibrary.AChronoEventArgs.#ctor(System.Int32,System.Int32,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            The constructor of AChronoEventArgs class.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.AChronoEventArgs.Count">
+            <summary>
+            The count of forthcoming data.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.AChronoEventArgs.Index">
+            <summary>
+            The index of this data.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.AChronoEventArgs.Time">
+            <summary>
+            The value of time in seconds passing through PG_EVT_AChronoDataReceived.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.AChronoEventArgs.MaxTime">
+            <summary>
+            The maximum value of time in seconds passing through PG_EVT_AChronoDataReceived.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.AChronoEventArgs.Current">
+            <summary>
+            The value of Current in Ampere passing through PG_EVT_AChronoDataReceived.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.AChronoEventArgs.MeasuredVoltage">
+            <summary>
+            The value of measured Voltage in Volt passing through PG_EVT_AChronoDataReceived.
+            </summary>
+        </member>
+        <member name="T:PGStatLibrary.Settings">
+            <summary>
+            The settings of the device.
+            </summary>
+        </member>
+        <member name="T:PGStatLibrary.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:PGStatLibrary.Properties.Resources.pg">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+            </summary>
+        </member>
+    </members>
+</doc>
