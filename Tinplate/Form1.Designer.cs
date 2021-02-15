@@ -183,9 +183,9 @@
             this.panel1.Controls.Add(this.panel7);
             this.panel1.Controls.Add(this.panel6);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(1294, 24);
+            this.panel1.Location = new System.Drawing.Point(616, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(412, 800);
+            this.panel1.Size = new System.Drawing.Size(412, 715);
             this.panel1.TabIndex = 0;
             // 
             // richTextBox1
@@ -194,7 +194,7 @@
             this.richTextBox1.Location = new System.Drawing.Point(0, 487);
             this.richTextBox1.Margin = new System.Windows.Forms.Padding(2);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(408, 309);
+            this.richTextBox1.Size = new System.Drawing.Size(408, 224);
             this.richTextBox1.TabIndex = 18;
             this.richTextBox1.Text = "";
             // 
@@ -597,9 +597,9 @@
             this.panel2.Controls.Add(this.groupBox4);
             this.panel2.Controls.Add(this.panel9);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 627);
+            this.panel2.Location = new System.Drawing.Point(0, 542);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1294, 197);
+            this.panel2.Size = new System.Drawing.Size(616, 197);
             this.panel2.TabIndex = 1;
             // 
             // groupBox6
@@ -990,7 +990,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel9.Location = new System.Drawing.Point(0, 162);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(1292, 33);
+            this.panel9.Size = new System.Drawing.Size(614, 33);
             this.panel9.TabIndex = 1;
             // 
             // StatusLabel
@@ -1013,7 +1013,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 24);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1294, 603);
+            this.panel3.Size = new System.Drawing.Size(616, 518);
             this.panel3.TabIndex = 2;
             // 
             // chart1
@@ -1052,7 +1052,7 @@
             this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(0, 50);
             this.chart1.Name = "chart1";
-            this.chart1.Size = new System.Drawing.Size(1294, 517);
+            this.chart1.Size = new System.Drawing.Size(616, 432);
             this.chart1.TabIndex = 4;
             this.chart1.Text = "chart1";
             this.chart1.SelectionRangeChanged += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.CursorEventArgs>(this.chart1_SelectionRangeChanged);
@@ -1065,9 +1065,9 @@
             // panel5
             // 
             this.panel5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel5.Location = new System.Drawing.Point(0, 567);
+            this.panel5.Location = new System.Drawing.Point(0, 482);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(1294, 36);
+            this.panel5.Size = new System.Drawing.Size(616, 36);
             this.panel5.TabIndex = 2;
             // 
             // panel4
@@ -1082,7 +1082,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1294, 50);
+            this.panel4.Size = new System.Drawing.Size(616, 50);
             this.panel4.TabIndex = 1;
             // 
             // button7
@@ -1184,7 +1184,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1706, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1028, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -1400,10 +1400,10 @@
             // progressBar1
             // 
             this.progressBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.progressBar1.Location = new System.Drawing.Point(0, 824);
+            this.progressBar1.Location = new System.Drawing.Point(0, 739);
             this.progressBar1.Margin = new System.Windows.Forms.Padding(5);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(1706, 10);
+            this.progressBar1.Size = new System.Drawing.Size(1028, 10);
             this.progressBar1.TabIndex = 2;
             // 
             // userData
@@ -1419,7 +1419,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1706, 834);
+            this.ClientSize = new System.Drawing.Size(1028, 749);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
