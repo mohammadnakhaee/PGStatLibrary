@@ -620,8 +620,8 @@ namespace Tinplate
             textBox1.Text = "";
             textBox2.Text = "";
             numericUpDown1.Value = 100;
-            numericUpDown2.Value = 5;
-            numericUpDown6.Value = 50;
+            numericUpDown2.Value = 30;
+            numericUpDown6.Value = 500;
             checkBox1.Checked = true;
             textBox3.Text = "./";
             comboBox1.SelectedIndex = 1;
@@ -1090,17 +1090,39 @@ namespace Tinplate
             foreach (DataPoint p in chart1.Series["Data"].Points)
             {
                 if (p.XValue < FirstOfValidInterval || p.XValue > EndOfValidInterval)
-                    p.Color = System.Drawing.Color.LightGray;
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        p.Color = System.Drawing.Color.LightGray;
+                    }));
+                }
                 else
-                    p.Color = chart1.Series["Data"].Color;
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        p.Color = chart1.Series["Data"].Color;
+                    }));
+                }
+                    
             }
 
             foreach (DataPoint p in chart1.Series["Fitting"].Points)
             {
                 if (p.XValue < FirstOfValidInterval || p.XValue > EndOfValidInterval)
-                    p.Color = System.Drawing.Color.LightGray;
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        p.Color = System.Drawing.Color.LightGray;
+                    }));
+                }
                 else
-                    p.Color = chart1.Series["Fitting"].Color;
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        p.Color = chart1.Series["Fitting"].Color;
+                    }));
+                }
+                    
             }
 
             if (IsFittingFound)
@@ -1970,7 +1992,10 @@ namespace Tinplate
             if (e.Process == "AIV")
             {
                 FindPicks();
-                UpdateFittingDiagram();
+                this.Invoke(new Action(() =>
+                {
+                    UpdateFittingDiagram();
+                }));
             }
         }
 
