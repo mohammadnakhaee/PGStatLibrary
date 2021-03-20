@@ -2165,6 +2165,10 @@ namespace Tinplate {
             
             private global::System.Data.DataColumn columncurvature2;
             
+            private global::System.Data.DataColumn columnCustomCurrent;
+            
+            private global::System.Data.DataColumn columnIsUsingCustomCurrent;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public InputsDataTable() {
@@ -2360,6 +2364,22 @@ namespace Tinplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CustomCurrentColumn {
+                get {
+                    return this.columnCustomCurrent;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn IsUsingCustomCurrentColumn {
+                get {
+                    return this.columnIsUsingCustomCurrent;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2415,7 +2435,9 @@ namespace Tinplate {
                         int center1, 
                         int center2, 
                         int curvature1, 
-                        int curvature2) {
+                        int curvature2, 
+                        decimal CustomCurrent, 
+                        bool IsUsingCustomCurrent) {
                 InputsRow rowInputsRow = ((InputsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         UserName,
@@ -2437,7 +2459,9 @@ namespace Tinplate {
                         center1,
                         center2,
                         curvature1,
-                        curvature2};
+                        curvature2,
+                        CustomCurrent,
+                        IsUsingCustomCurrent};
                 rowInputsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowInputsRow);
                 return rowInputsRow;
@@ -2480,6 +2504,8 @@ namespace Tinplate {
                 this.columncenter2 = base.Columns["center2"];
                 this.columncurvature1 = base.Columns["curvature1"];
                 this.columncurvature2 = base.Columns["curvature2"];
+                this.columnCustomCurrent = base.Columns["CustomCurrent"];
+                this.columnIsUsingCustomCurrent = base.Columns["IsUsingCustomCurrent"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2525,6 +2551,10 @@ namespace Tinplate {
                 base.Columns.Add(this.columncurvature1);
                 this.columncurvature2 = new global::System.Data.DataColumn("curvature2", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncurvature2);
+                this.columnCustomCurrent = new global::System.Data.DataColumn("CustomCurrent", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCustomCurrent);
+                this.columnIsUsingCustomCurrent = new global::System.Data.DataColumn("IsUsingCustomCurrent", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnIsUsingCustomCurrent);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3935,6 +3965,38 @@ namespace Tinplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public decimal CustomCurrent {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableInputs.CustomCurrentColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CustomCurrent\' in table \'Inputs\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableInputs.CustomCurrentColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsUsingCustomCurrent {
+                get {
+                    try {
+                        return ((bool)(this[this.tableInputs.IsUsingCustomCurrentColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'IsUsingCustomCurrent\' in table \'Inputs\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableInputs.IsUsingCustomCurrentColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsUserNameNull() {
                 return this.IsNull(this.tableInputs.UserNameColumn);
             }
@@ -4171,6 +4233,30 @@ namespace Tinplate {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void Setcurvature2Null() {
                 this[this.tableInputs.curvature2Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsCustomCurrentNull() {
+                return this.IsNull(this.tableInputs.CustomCurrentColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetCustomCurrentNull() {
+                this[this.tableInputs.CustomCurrentColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsIsUsingCustomCurrentNull() {
+                return this.IsNull(this.tableInputs.IsUsingCustomCurrentColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetIsUsingCustomCurrentNull() {
+                this[this.tableInputs.IsUsingCustomCurrentColumn] = global::System.Convert.DBNull;
             }
         }
         

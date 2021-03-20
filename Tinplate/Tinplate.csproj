@@ -98,6 +98,14 @@
     <Compile Include="solvers.cs" />
     <Compile Include="specialfunctions.cs" />
     <Compile Include="statistics.cs" />
+    <Compile Include="TinSampleSettings.cs">
+      <DependentUpon>TinSampleSettings.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="TinSampleSettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TinSampleSettings.xsd</DependentUpon>
+    </Compile>
     <Compile Include="TriDiagonalMatrix.cs" />
     <Compile Include="UserData.cs">
       <DependentUpon>UserData.xsd</DependentUpon>
@@ -144,6 +152,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="TinSampleSettings.xsc">
+      <DependentUpon>TinSampleSettings.xsd</DependentUpon>
+    </None>
+    <None Include="TinSampleSettings.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TinSampleSettings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="TinSampleSettings.xss">
+      <DependentUpon>TinSampleSettings.xsd</DependentUpon>
+    </None>
     <None Include="UserData.xsc">
       <DependentUpon>UserData.xsd</DependentUpon>
     </None>

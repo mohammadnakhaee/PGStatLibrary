@@ -51,6 +51,7 @@ namespace PGStatLibrary
         private int DataCountInQueue = 0;
         private static int IVnData = 512;
         private double OpenCircuitVoltage = 0;
+        private bool KillProcessRequested = false;
         /****************************************************************************************************/
 
         /*********************************************Properties*********************************************/
@@ -760,6 +761,7 @@ namespace PGStatLibrary
         /// </summary>
         public void KillProcess()
         {
+            KillProcessRequested = true;
             ClearBuffer();
             try
             {
@@ -2697,7 +2699,8 @@ namespace PGStatLibrary
             //vdcmlp(IV_Input.Voltage_Multiplier_Mode);
             //idcmlp(IV_Input.Current_Multiplier_Mode);
             double ThisIV_Voffset = 0;
-            double ThisIV_Ioffset = 0;
+            double ThisIV_Ioffset = 0; 
+
             CalculateSpecificIVOffsets(IV_Input.Current_Range_Mode, 0, 0, ref ThisIV_Ioffset, ref ThisIV_Voffset);
             //GetVOffsetFromSettings(IV_Input.Voltage_Multiplier_Mode, ref ThisIV_Voffset);
             double setvolt0 = IV_Input.Initial_Potential;
@@ -2751,18 +2754,28 @@ namespace PGStatLibrary
             DataCountInQueue = cntMax;
             double MaxTime = IVChronoTimeStep * (cntMax - 1) / 1000.0;
             int IVVsetcnt = 0;
+            KillProcessRequested = false;
             for (int cnt = 1; cnt <= cntMax; cnt++)
             {
+                if (KillProcessRequested)
+                {
+                    DataCountInQueue = 0;
+                    break;
+                }
                 byte[] AllBytes1 = new byte[4];
                 byte[] AllBytes2 = new byte[4];
-                AllBytes1[0] = (byte)Port.ReadByte();
-                AllBytes1[1] = (byte)Port.ReadByte();
-                AllBytes1[2] = (byte)Port.ReadByte();
-                AllBytes1[3] = (byte)Port.ReadByte();
-                AllBytes2[0] = (byte)Port.ReadByte();
-                AllBytes2[1] = (byte)Port.ReadByte();
-                AllBytes2[2] = (byte)Port.ReadByte();
-                AllBytes2[3] = (byte)Port.ReadByte();
+                try
+                {
+                    AllBytes1[0] = (byte)Port.ReadByte();
+                    AllBytes1[1] = (byte)Port.ReadByte();
+                    AllBytes1[2] = (byte)Port.ReadByte();
+                    AllBytes1[3] = (byte)Port.ReadByte();
+                    AllBytes2[0] = (byte)Port.ReadByte();
+                    AllBytes2[1] = (byte)Port.ReadByte();
+                    AllBytes2[2] = (byte)Port.ReadByte();
+                    AllBytes2[3] = (byte)Port.ReadByte();
+                }
+                catch { }
                 int nData = IVnData;
                 int word;
                 word = AllBytes1[0] | (AllBytes1[1] << 8) | (AllBytes1[2] << 16) | (AllBytes1[3] << 24);
@@ -2902,18 +2915,28 @@ namespace PGStatLibrary
 
             double MaxTime = IVChronoTimeStep * (cntMax - 1) / 1000.0;
             int IVVsetcnt = 0;
+            KillProcessRequested = false;
             for (int cnt = 1; cnt <= cntMax; cnt++)
             {
+                if (KillProcessRequested)
+                {
+                    DataCountInQueue = 0;
+                    break;
+                }
                 byte[] AllBytes1 = new byte[4];
                 byte[] AllBytes2 = new byte[4];
-                AllBytes1[0] = (byte)Port.ReadByte();
-                AllBytes1[1] = (byte)Port.ReadByte();
-                AllBytes1[2] = (byte)Port.ReadByte();
-                AllBytes1[3] = (byte)Port.ReadByte();
-                AllBytes2[0] = (byte)Port.ReadByte();
-                AllBytes2[1] = (byte)Port.ReadByte();
-                AllBytes2[2] = (byte)Port.ReadByte();
-                AllBytes2[3] = (byte)Port.ReadByte();
+                try
+                {
+                    AllBytes1[0] = (byte)Port.ReadByte();
+                    AllBytes1[1] = (byte)Port.ReadByte();
+                    AllBytes1[2] = (byte)Port.ReadByte();
+                    AllBytes1[3] = (byte)Port.ReadByte();
+                    AllBytes2[0] = (byte)Port.ReadByte();
+                    AllBytes2[1] = (byte)Port.ReadByte();
+                    AllBytes2[2] = (byte)Port.ReadByte();
+                    AllBytes2[3] = (byte)Port.ReadByte();
+                }
+                catch { }
                 int nData = IVnData;
                 int word;
                 word = AllBytes1[0] | (AllBytes1[1] << 8) | (AllBytes1[2] << 16) | (AllBytes1[3] << 24);
@@ -3095,21 +3118,37 @@ namespace PGStatLibrary
             double MaxTime = IVChronoTimeStep * (cntMax - 1) / 1000.0;
             int IVVsetcnt = 0;
             int cnt = 0;
+            KillProcessRequested = false;
             for (int cntsteps = 1; cntsteps <= cntMax; cntsteps++)
             {
+                if (KillProcessRequested)
+                {
+                    DataCountInQueue = 0;
+                    break;
+                }
+
                 for (int cnt0 = 1; cnt0 <= nThisStep; cnt0++)
                 {
+                    if (KillProcessRequested)
+                    {
+                        DataCountInQueue = 0;
+                        break;
+                    }
                     cnt++;
                     byte[] AllBytes1 = new byte[4];
                     byte[] AllBytes2 = new byte[4];
-                    AllBytes1[0] = (byte)Port.ReadByte();
-                    AllBytes1[1] = (byte)Port.ReadByte();
-                    AllBytes1[2] = (byte)Port.ReadByte();
-                    AllBytes1[3] = (byte)Port.ReadByte();
-                    AllBytes2[0] = (byte)Port.ReadByte();
-                    AllBytes2[1] = (byte)Port.ReadByte();
-                    AllBytes2[2] = (byte)Port.ReadByte();
-                    AllBytes2[3] = (byte)Port.ReadByte();
+                    try
+                    {
+                        AllBytes1[0] = (byte)Port.ReadByte();
+                        AllBytes1[1] = (byte)Port.ReadByte();
+                        AllBytes1[2] = (byte)Port.ReadByte();
+                        AllBytes1[3] = (byte)Port.ReadByte();
+                        AllBytes2[0] = (byte)Port.ReadByte();
+                        AllBytes2[1] = (byte)Port.ReadByte();
+                        AllBytes2[2] = (byte)Port.ReadByte();
+                        AllBytes2[3] = (byte)Port.ReadByte();
+                    }
+                    catch { }
                     int nData = IVnData;
                     int word;
                     word = AllBytes1[0] | (AllBytes1[1] << 8) | (AllBytes1[2] << 16) | (AllBytes1[3] << 24);

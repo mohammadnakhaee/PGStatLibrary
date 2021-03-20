@@ -19,14 +19,12 @@ namespace Tinplate
         string ProgramName = "Tinplate";
         public static PGStat pg;
         public static bool isFormSetting = false;
-
+        bool ProcessKilled = false;
         bool pingstatus = false;
         string xmlFile = "";
         WaitingForm waitingform = new WaitingForm();
         DataRow DataEmptyRow;
-
-
-        
+        string TinSampleSettingsxml = "./TinSampleSettings.xml";
 
         public Form1()
         {
@@ -51,6 +49,22 @@ namespace Tinplate
 
             this.comboBox1.DataBindings.Add(new System.Windows.Forms.Binding("SelectedIndex", this.inputsBindingSource, "VRange", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.comboBox2.DataBindings.Add(new System.Windows.Forms.Binding("SelectedIndex", this.inputsBindingSource, "IRange", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+
+            tinSampleSettings1.Clear();
+            DataTable t0 = tinSampleSettings1.Tables["Coefficients"];
+            DataRow r0 = t0.NewRow();
+            tinSampleSettings1.Tables["Coefficients"].Rows.Add(r0);
+
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["CorrectionCoef"] = (decimal)(0.65);
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["SampleArea"] = (decimal)(25.81); //in cm^2
+
+            if (File.Exists(TinSampleSettingsxml))
+            {
+                tinSampleSettings1.Clear();
+                tinSampleSettings1.ReadXml(TinSampleSettingsxml, XmlReadMode.ReadSchema);
+            }
+            else
+                tinSampleSettings1.WriteXml(TinSampleSettingsxml);
 
             DataTable t1 = userData1.Tables["Inputs"];
             DataRow r1 = t1.NewRow();
@@ -537,6 +551,17 @@ namespace Tinplate
                 return;
             }
 
+            ProcessKilled = false;
+            radioButton2.Checked = false;
+            radioButton3.Checked = false;
+            radioButton1.Checked = true;
+
+            //Connect to Sample if "Use dummy" is not checked
+            if (useDummyToolStripMenuItem.Checked)
+                radioButton3.Checked = true;
+            else
+                radioButton2.Checked = true;
+
             userData1.Tables["Inputs"].Rows[0]["IsFittingFound"] = false;
             userData1.Tables["Data"].Clear();
             userData1.Tables["Fitting"].Clear();
@@ -562,8 +587,8 @@ namespace Tinplate
 
             int nData = (int)(1000.0 * (int)numericUpDown2.Value / (int)numericUpDown6.Value) + 1;
 
-            pg.IV_Input.Initial_Potential = (double)numericUpDown1.Value;
-            pg.IV_Input.Final_Potential = (double)numericUpDown1.Value;
+            pg.IV_Input.Initial_Potential = (double)numericUpDown1.Value + (double)numericUpDown4.Value; //Current + set current offset
+            pg.IV_Input.Final_Potential = (double)numericUpDown1.Value + (double)numericUpDown4.Value;
             pg.IV_Input.Step = nData;
             //pg.IV_Input.Ideal_Voltage = 0;
             pg.IV_Input.Voltage_Range_Mode = comboBox1.SelectedIndex;
@@ -582,8 +607,10 @@ namespace Tinplate
 
         private void Pg_PG_EVT_AIVDataReceived(object sender, AIVEventArgs e)
         {
-            PrintOutput((e.Time * 1000).ToString() + "(ms) , " + e.MeasuredVoltage.ToString() + "(V), " + (e.Current * 1000).ToString() + "(mA)\n");
-            AddPointToData(e.Time, e.MeasuredVoltage);
+            double MeasuredVoltage = (e.MeasuredVoltage + (double)numericUpDown5.Value) * (double)numericUpDown8.Value / 100.0;
+            double Current = (e.Current + (double)numericUpDown7.Value / 1000.0) * (double)numericUpDown9.Value / 100.0;
+            PrintOutput((e.Time * 1000).ToString() + "(ms) , " + MeasuredVoltage.ToString() + "(V), " + (Current * 1000).ToString() + "(mA)\n");
+            AddPointToData(e.Time, MeasuredVoltage);
         }
 
         private void TryToConnect()
@@ -626,6 +653,10 @@ namespace Tinplate
             textBox3.Text = "./";
             comboBox1.SelectedIndex = 1;
             comboBox2.SelectedIndex = 1;
+
+            numericUpDown3.Value = 100;
+            checkBox2.Checked = false;
+            userData1.Tables["Inputs"].Rows[0]["IsUsingCustomCurrent"] = false;
 
             //Fitting Parameters
             userData1.Tables["Inputs"].Rows[0]["IsFittingFound"] = false;
@@ -1175,9 +1206,35 @@ namespace Tinplate
                 chart1.Series["Derivatives4"].Points.DataBindXY(userData1.Tables["Derivatives4"].Rows, "Time", userData1.Tables["Derivatives4"].Rows, "Voltage");
                 chart1.Series["T1"].Points.DataBindXY(userData1.Tables["T1"].Rows, "Time", userData1.Tables["T1"].Rows, "Voltage");
                 chart1.Series["T2"].Points.DataBindXY(userData1.Tables["T2"].Rows, "Time", userData1.Tables["T2"].Rows, "Voltage");
+
+                UpdateTin();
             }
 
             
+        }
+
+        private void UpdateTin()
+        {
+            if (userData1.Tables["Inputs"].Rows[0]["IsFittingFound"] is DBNull) return;
+            bool IsFittingFound = Convert.ToBoolean(userData1.Tables["Inputs"].Rows[0]["IsFittingFound"]);
+            if (!IsFittingFound) return;
+            double t1 = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["t1"]);
+            double t2 = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["t2"]);
+            double CorrectionCoef = Convert.ToDouble(numericUpDown11.Value);
+            double SampleArea = Convert.ToDouble(numericUpDown10.Value);
+            double C = 0.0185*SampleArea;
+            double I_mA = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["Current"]);
+            bool IsUsingCustomCurrent = checkBox2.Checked;
+            if (IsUsingCustomCurrent)
+                I_mA = Convert.ToDouble(numericUpDown3.Value);
+            double I_A = I_mA / 1000.0;
+
+            double freetin = I_A * t1 * C;
+            double alloytin = CorrectionCoef * I_A * t2 * C;
+
+            FreeTin.Text = freetin.ToString("0.0");
+            AlloyTin.Text = alloytin.ToString("0.0");
+            TotalTin.Text = (freetin + alloytin).ToString("0.0");
         }
 
         private void FindLine(int iTangential, int j, out double x1, out double y1, out double x2, out double y2, out double yAtCurvature)
@@ -1217,11 +1274,15 @@ namespace Tinplate
                 imax = imin0;
             }
 
-            int nTotal = imax - imin + 1;
+            int ntArray = tArray.Length;
+            //here is a bug. when we stop the proccess imax sometimes is more than tarray length
+            int imax_forbug = Math.Min(ntArray - 1, imax);
+
+            int nTotal = imax_forbug - imin + 1;
             double[] FindRootArray = new double[nTotal];
 
             int ind = 0;
-            for (int ixTang = imin; ixTang <= imax; ixTang++)
+            for (int ixTang = imin; ixTang <= imax_forbug; ixTang++)
             {
                 FindRootArray[ind] = Math.Abs(y0 - f[ixTang] - df[ixTang] * (x0 - tArray[ixTang]));
                 ind++;
@@ -1682,7 +1743,7 @@ namespace Tinplate
             float Interval = (float)Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["Interval"]) / 1000;
             double[] t0 = new double[nData0];
             double[] f0 = new double[nData0];
-
+            
             int i = 0;
             foreach (DataRow row in userData1.Tables["Data"].Rows)
             {
@@ -1690,7 +1751,6 @@ namespace Tinplate
                 f0[i] = (double)row["Voltage"];
                 i++;
             }
-
             
             try
             {
@@ -1991,6 +2051,47 @@ namespace Tinplate
         {
             if (e.Process == "AIV")
             {
+                //dettach sample and dummy
+                radioButton2.Checked = false;
+                radioButton3.Checked = false;
+                radioButton1.Checked = true;
+
+                int nData0 = userData1.Tables["Data"].Rows.Count;
+                if (nData0 == 0) return;
+
+                if (ProcessKilled)
+                {
+                    userData1.Tables["Data"].Rows.RemoveAt(nData0 - 1);
+                }
+
+                nData0 = userData1.Tables["Data"].Rows.Count;
+                if (nData0 == 0) return;
+
+                double[] t0 = new double[nData0];
+                double[] f0 = new double[nData0];
+                int i = 0;
+                foreach (DataRow row in userData1.Tables["Data"].Rows)
+                {
+                    t0[i] = (double)row["Time"];
+                    f0[i] = (double)row["Voltage"];
+                    i++;
+                }
+
+                try
+                {
+                    tStart = t0[0];
+                    tEnd = t0[nData0 - 1];
+                    this.Invoke(new Action(() =>
+                    {
+                        VA_t_min.X = tStart;
+                        VA_t_max.X = tEnd;
+                    }));
+                    FirstOfValidInterval = tStart;
+                    EndOfValidInterval = tEnd;
+                }
+                catch
+                { }
+
                 FindPicks();
                 this.Invoke(new Action(() =>
                 {
@@ -2399,6 +2500,37 @@ namespace Tinplate
         {
             FirstDoubleClick = true;
             doubleclicktimer.Stop();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            pg.KillProcess();
+            ProcessKilled = true;
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            numericUpDown3.Enabled = checkBox2.Checked;
+            UpdateTin();
+        }
+
+        private void numericUpDown3_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateTin();
+        }
+
+        private void numericUpDown10_ValueChanged(object sender, EventArgs e)
+        {   
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["SampleArea"] = numericUpDown10.Value; //in cm^2
+            tinSampleSettings1.WriteXml(TinSampleSettingsxml);
+            UpdateTin();
+        }
+
+        private void numericUpDown11_ValueChanged(object sender, EventArgs e)
+        {
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["CorrectionCoef"] = numericUpDown11.Value;
+            tinSampleSettings1.WriteXml(TinSampleSettingsxml);
+            UpdateTin();
         }
 
         private void AutoSelectTime_Click(object sender, EventArgs e)
