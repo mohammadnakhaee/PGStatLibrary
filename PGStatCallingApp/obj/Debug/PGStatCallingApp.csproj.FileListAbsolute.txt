@@ -11,3 +11,7 @@ C:\Users\mohammad\source\repos\PGStatLibrary\PGStatCallingApp\obj\Debug\PGStatCa
 C:\Users\mohammad\source\repos\PGStatLibrary\PGStatCallingApp\obj\Debug\PGStatCallingApp.exe
 C:\Users\mohammad\source\repos\PGStatLibrary\PGStatCallingApp\obj\Debug\PGStatCallingApp.pdb
 C:\Users\mohammad\source\repos\PGStatLibrary\PGStatCallingApp\bin\Debug\PGStatLibrary.dll
+C:\Users\DELL\source\repos\PGStatLibrary\PGStatCallingApp\obj\Debug\PGStatCallingApp.Form1.resources
+C:\Users\DELL\source\repos\PGStatLibrary\PGStatCallingApp\obj\Debug\PGStatCallingApp.Properties.Resources.resources
+C:\Users\DELL\source\repos\PGStatLibrary\PGStatCallingApp\obj\Debug\PGStatCallingApp.csproj.GenerateResource.cache
+C:\Users\DELL\source\repos\PGStatLibrary\PGStatCallingApp\obj\Debug\PGStatCallingApp.csproj.CoreCompileInputs.cache

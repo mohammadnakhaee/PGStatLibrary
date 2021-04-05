@@ -61,6 +61,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminPassForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminPassForm.Designer.cs">
+      <DependentUpon>AdminPassForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="alglibinternal.cs" />
     <Compile Include="alglibmisc.cs" />
     <Compile Include="alglib_info.cs" />
@@ -121,6 +127,9 @@
     <Compile Include="WaitingForm.Designer.cs">
       <DependentUpon>WaitingForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AdminPassForm.resx">
+      <DependentUpon>AdminPassForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

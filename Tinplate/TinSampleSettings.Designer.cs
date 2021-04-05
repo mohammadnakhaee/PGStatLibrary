@@ -283,6 +283,16 @@ namespace Tinplate {
             
             private global::System.Data.DataColumn columnSampleArea;
             
+            private global::System.Data.DataColumn columnSetCurrentOffset;
+            
+            private global::System.Data.DataColumn columnReadVoltageOffset;
+            
+            private global::System.Data.DataColumn columnReadVoltageGain;
+            
+            private global::System.Data.DataColumn columnReadCurrentOffset;
+            
+            private global::System.Data.DataColumn columnReadCurrentGain;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public CoefficientsDataTable() {
@@ -334,6 +344,46 @@ namespace Tinplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn SetCurrentOffsetColumn {
+                get {
+                    return this.columnSetCurrentOffset;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn ReadVoltageOffsetColumn {
+                get {
+                    return this.columnReadVoltageOffset;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn ReadVoltageGainColumn {
+                get {
+                    return this.columnReadVoltageGain;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn ReadCurrentOffsetColumn {
+                get {
+                    return this.columnReadCurrentOffset;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn ReadCurrentGainColumn {
+                get {
+                    return this.columnReadCurrentGain;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -369,11 +419,16 @@ namespace Tinplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public CoefficientsRow AddCoefficientsRow(decimal CorrectionCoef, decimal SampleArea) {
+            public CoefficientsRow AddCoefficientsRow(decimal CorrectionCoef, decimal SampleArea, decimal SetCurrentOffset, decimal ReadVoltageOffset, decimal ReadVoltageGain, decimal ReadCurrentOffset, decimal ReadCurrentGain) {
                 CoefficientsRow rowCoefficientsRow = ((CoefficientsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         CorrectionCoef,
-                        SampleArea};
+                        SampleArea,
+                        SetCurrentOffset,
+                        ReadVoltageOffset,
+                        ReadVoltageGain,
+                        ReadCurrentOffset,
+                        ReadCurrentGain};
                 rowCoefficientsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowCoefficientsRow);
                 return rowCoefficientsRow;
@@ -398,6 +453,11 @@ namespace Tinplate {
             internal void InitVars() {
                 this.columnCorrectionCoef = base.Columns["CorrectionCoef"];
                 this.columnSampleArea = base.Columns["SampleArea"];
+                this.columnSetCurrentOffset = base.Columns["SetCurrentOffset"];
+                this.columnReadVoltageOffset = base.Columns["ReadVoltageOffset"];
+                this.columnReadVoltageGain = base.Columns["ReadVoltageGain"];
+                this.columnReadCurrentOffset = base.Columns["ReadCurrentOffset"];
+                this.columnReadCurrentGain = base.Columns["ReadCurrentGain"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -407,6 +467,16 @@ namespace Tinplate {
                 base.Columns.Add(this.columnCorrectionCoef);
                 this.columnSampleArea = new global::System.Data.DataColumn("SampleArea", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnSampleArea);
+                this.columnSetCurrentOffset = new global::System.Data.DataColumn("SetCurrentOffset", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSetCurrentOffset);
+                this.columnReadVoltageOffset = new global::System.Data.DataColumn("ReadVoltageOffset", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnReadVoltageOffset);
+                this.columnReadVoltageGain = new global::System.Data.DataColumn("ReadVoltageGain", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnReadVoltageGain);
+                this.columnReadCurrentOffset = new global::System.Data.DataColumn("ReadCurrentOffset", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnReadCurrentOffset);
+                this.columnReadCurrentGain = new global::System.Data.DataColumn("ReadCurrentGain", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnReadCurrentGain);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -581,6 +651,86 @@ namespace Tinplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public decimal SetCurrentOffset {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableCoefficients.SetCurrentOffsetColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'SetCurrentOffset\' in table \'Coefficients\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCoefficients.SetCurrentOffsetColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public decimal ReadVoltageOffset {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableCoefficients.ReadVoltageOffsetColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ReadVoltageOffset\' in table \'Coefficients\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCoefficients.ReadVoltageOffsetColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public decimal ReadVoltageGain {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableCoefficients.ReadVoltageGainColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ReadVoltageGain\' in table \'Coefficients\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCoefficients.ReadVoltageGainColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public decimal ReadCurrentOffset {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableCoefficients.ReadCurrentOffsetColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ReadCurrentOffset\' in table \'Coefficients\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCoefficients.ReadCurrentOffsetColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public decimal ReadCurrentGain {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableCoefficients.ReadCurrentGainColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ReadCurrentGain\' in table \'Coefficients\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCoefficients.ReadCurrentGainColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsCorrectionCoefNull() {
                 return this.IsNull(this.tableCoefficients.CorrectionCoefColumn);
             }
@@ -601,6 +751,66 @@ namespace Tinplate {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetSampleAreaNull() {
                 this[this.tableCoefficients.SampleAreaColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsSetCurrentOffsetNull() {
+                return this.IsNull(this.tableCoefficients.SetCurrentOffsetColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetSetCurrentOffsetNull() {
+                this[this.tableCoefficients.SetCurrentOffsetColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsReadVoltageOffsetNull() {
+                return this.IsNull(this.tableCoefficients.ReadVoltageOffsetColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetReadVoltageOffsetNull() {
+                this[this.tableCoefficients.ReadVoltageOffsetColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsReadVoltageGainNull() {
+                return this.IsNull(this.tableCoefficients.ReadVoltageGainColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetReadVoltageGainNull() {
+                this[this.tableCoefficients.ReadVoltageGainColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsReadCurrentOffsetNull() {
+                return this.IsNull(this.tableCoefficients.ReadCurrentOffsetColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetReadCurrentOffsetNull() {
+                this[this.tableCoefficients.ReadCurrentOffsetColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsReadCurrentGainNull() {
+                return this.IsNull(this.tableCoefficients.ReadCurrentGainColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetReadCurrentGainNull() {
+                this[this.tableCoefficients.ReadCurrentGainColumn] = global::System.Convert.DBNull;
             }
         }
         

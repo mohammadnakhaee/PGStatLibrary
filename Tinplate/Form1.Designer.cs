@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.panel1 = new System.Windows.Forms.Panel();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.panel7 = new System.Windows.Forms.Panel();
@@ -42,6 +42,8 @@
             this.label37 = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
             this.numericUpDown9 = new System.Windows.Forms.NumericUpDown();
+            this.coefficientsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.tinSampleSettings1 = new Tinplate.TinSampleSettings();
             this.label36 = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
             this.numericUpDown8 = new System.Windows.Forms.NumericUpDown();
@@ -87,8 +89,6 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.numericUpDown11 = new System.Windows.Forms.NumericUpDown();
-            this.coefficientsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.tinSampleSettings1 = new Tinplate.TinSampleSettings();
             this.label47 = new System.Windows.Forms.Label();
             this.label43 = new System.Windows.Forms.Label();
             this.label44 = new System.Windows.Forms.Label();
@@ -185,6 +185,8 @@
             this.panel6.SuspendLayout();
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.coefficientsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tinSampleSettings1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
@@ -201,8 +203,6 @@
             this.panel2.SuspendLayout();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.coefficientsBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tinSampleSettings1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             this.groupBox3.SuspendLayout();
@@ -337,6 +337,7 @@
             // 
             // numericUpDown9
             // 
+            this.numericUpDown9.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "ReadCurrentGain", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.numericUpDown9.DecimalPlaces = 1;
             this.numericUpDown9.Location = new System.Drawing.Point(183, 258);
             this.numericUpDown9.Maximum = new decimal(new int[] {
@@ -357,6 +358,17 @@
             0,
             0,
             0});
+            this.numericUpDown9.ValueChanged += new System.EventHandler(this.numericUpDown9_ValueChanged);
+            // 
+            // coefficientsBindingSource
+            // 
+            this.coefficientsBindingSource.DataMember = "Coefficients";
+            this.coefficientsBindingSource.DataSource = this.tinSampleSettings1;
+            // 
+            // tinSampleSettings1
+            // 
+            this.tinSampleSettings1.DataSetName = "TinSampleSettings";
+            this.tinSampleSettings1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // label36
             // 
@@ -379,6 +391,7 @@
             // 
             // numericUpDown8
             // 
+            this.numericUpDown8.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "ReadVoltageGain", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.numericUpDown8.DecimalPlaces = 1;
             this.numericUpDown8.Location = new System.Drawing.Point(183, 189);
             this.numericUpDown8.Maximum = new decimal(new int[] {
@@ -399,6 +412,7 @@
             0,
             0,
             0});
+            this.numericUpDown8.ValueChanged += new System.EventHandler(this.numericUpDown8_ValueChanged);
             // 
             // label34
             // 
@@ -421,6 +435,7 @@
             // 
             // numericUpDown7
             // 
+            this.numericUpDown7.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "ReadCurrentOffset", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.numericUpDown7.DecimalPlaces = 1;
             this.numericUpDown7.Increment = new decimal(new int[] {
             1,
@@ -436,6 +451,7 @@
             this.numericUpDown7.Name = "numericUpDown7";
             this.numericUpDown7.Size = new System.Drawing.Size(120, 24);
             this.numericUpDown7.TabIndex = 27;
+            this.numericUpDown7.ValueChanged += new System.EventHandler(this.numericUpDown7_ValueChanged);
             // 
             // label32
             // 
@@ -458,6 +474,7 @@
             // 
             // numericUpDown5
             // 
+            this.numericUpDown5.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "ReadVoltageOffset", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.numericUpDown5.DecimalPlaces = 1;
             this.numericUpDown5.Increment = new decimal(new int[] {
             1,
@@ -478,6 +495,7 @@
             this.numericUpDown5.Name = "numericUpDown5";
             this.numericUpDown5.Size = new System.Drawing.Size(120, 24);
             this.numericUpDown5.TabIndex = 24;
+            this.numericUpDown5.ValueChanged += new System.EventHandler(this.numericUpDown5_ValueChanged);
             // 
             // label30
             // 
@@ -500,10 +518,12 @@
             // 
             // numericUpDown4
             // 
+            this.numericUpDown4.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "SetCurrentOffset", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.numericUpDown4.Location = new System.Drawing.Point(183, 63);
             this.numericUpDown4.Name = "numericUpDown4";
             this.numericUpDown4.Size = new System.Drawing.Size(120, 24);
             this.numericUpDown4.TabIndex = 1;
+            this.numericUpDown4.ValueChanged += new System.EventHandler(this.numericUpDown4_ValueChanged);
             // 
             // label27
             // 
@@ -914,7 +934,7 @@
             // numericUpDown11
             // 
             this.numericUpDown11.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "CorrectionCoef", true));
-            this.numericUpDown11.DecimalPlaces = 2;
+            this.numericUpDown11.DecimalPlaces = 3;
             this.numericUpDown11.Increment = new decimal(new int[] {
             1,
             0,
@@ -940,16 +960,6 @@
             0,
             196608});
             this.numericUpDown11.ValueChanged += new System.EventHandler(this.numericUpDown11_ValueChanged);
-            // 
-            // coefficientsBindingSource
-            // 
-            this.coefficientsBindingSource.DataMember = "Coefficients";
-            this.coefficientsBindingSource.DataSource = this.tinSampleSettings1;
-            // 
-            // tinSampleSettings1
-            // 
-            this.tinSampleSettings1.DataSetName = "TinSampleSettings";
-            this.tinSampleSettings1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // label47
             // 
@@ -982,7 +992,7 @@
             // numericUpDown10
             // 
             this.numericUpDown10.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "SampleArea", true));
-            this.numericUpDown10.DecimalPlaces = 2;
+            this.numericUpDown10.DecimalPlaces = 3;
             this.numericUpDown10.Increment = new decimal(new int[] {
             1,
             0,
@@ -1464,37 +1474,37 @@
             // chart1
             // 
             this.chart1.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea5.AxisX.LabelStyle.Format = "{0:0.00}";
-            chartArea5.AxisX.LabelStyle.TruncatedLabels = true;
-            chartArea5.AxisX.MajorGrid.Interval = 0D;
-            chartArea5.AxisX.MajorGrid.IntervalOffset = 0D;
-            chartArea5.AxisX.MajorGrid.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
-            chartArea5.AxisX.MajorGrid.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
-            chartArea5.AxisX.MajorGrid.LineColor = System.Drawing.Color.DimGray;
-            chartArea5.AxisX.MajorTickMark.Interval = 0D;
-            chartArea5.AxisX.MajorTickMark.IntervalOffset = 0D;
-            chartArea5.AxisX.MajorTickMark.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
-            chartArea5.AxisX.MajorTickMark.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
-            chartArea5.AxisX.MinorGrid.Enabled = true;
-            chartArea5.AxisX.MinorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea5.AxisX.MinorTickMark.Enabled = true;
-            chartArea5.AxisY.LabelStyle.Format = "{0:0.00}";
-            chartArea5.AxisY.LabelStyle.TruncatedLabels = true;
-            chartArea5.AxisY.MajorGrid.LineColor = System.Drawing.Color.DimGray;
-            chartArea5.AxisY.MinorGrid.Enabled = true;
-            chartArea5.AxisY.MinorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea5.AxisY.MinorTickMark.Enabled = true;
-            chartArea5.CursorX.Interval = 1E-08D;
-            chartArea5.CursorX.IsUserEnabled = true;
-            chartArea5.CursorX.IsUserSelectionEnabled = true;
-            chartArea5.CursorY.Interval = 1E-08D;
-            chartArea5.CursorY.IsUserEnabled = true;
-            chartArea5.CursorY.IsUserSelectionEnabled = true;
-            chartArea5.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea5);
+            chartArea4.AxisX.LabelStyle.Format = "{0:0.00}";
+            chartArea4.AxisX.LabelStyle.TruncatedLabels = true;
+            chartArea4.AxisX.MajorGrid.Interval = 0D;
+            chartArea4.AxisX.MajorGrid.IntervalOffset = 0D;
+            chartArea4.AxisX.MajorGrid.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea4.AxisX.MajorGrid.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea4.AxisX.MajorGrid.LineColor = System.Drawing.Color.DimGray;
+            chartArea4.AxisX.MajorTickMark.Interval = 0D;
+            chartArea4.AxisX.MajorTickMark.IntervalOffset = 0D;
+            chartArea4.AxisX.MajorTickMark.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea4.AxisX.MajorTickMark.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea4.AxisX.MinorGrid.Enabled = true;
+            chartArea4.AxisX.MinorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea4.AxisX.MinorTickMark.Enabled = true;
+            chartArea4.AxisY.LabelStyle.Format = "{0:0.00}";
+            chartArea4.AxisY.LabelStyle.TruncatedLabels = true;
+            chartArea4.AxisY.MajorGrid.LineColor = System.Drawing.Color.DimGray;
+            chartArea4.AxisY.MinorGrid.Enabled = true;
+            chartArea4.AxisY.MinorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea4.AxisY.MinorTickMark.Enabled = true;
+            chartArea4.CursorX.Interval = 1E-08D;
+            chartArea4.CursorX.IsUserEnabled = true;
+            chartArea4.CursorX.IsUserSelectionEnabled = true;
+            chartArea4.CursorY.Interval = 1E-08D;
+            chartArea4.CursorY.IsUserEnabled = true;
+            chartArea4.CursorY.IsUserSelectionEnabled = true;
+            chartArea4.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea4);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend5.Name = "Legend1";
-            this.chart1.Legends.Add(legend5);
+            legend4.Name = "Legend1";
+            this.chart1.Legends.Add(legend4);
             this.chart1.Location = new System.Drawing.Point(0, 50);
             this.chart1.Name = "chart1";
             this.chart1.Size = new System.Drawing.Size(1512, 635);
@@ -1832,7 +1842,8 @@
             // 
             this.tinSampleSettingsToolStripMenuItem.Name = "tinSampleSettingsToolStripMenuItem";
             this.tinSampleSettingsToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
-            this.tinSampleSettingsToolStripMenuItem.Text = "Tin Sample Settings";
+            this.tinSampleSettingsToolStripMenuItem.Text = "Login as Admin";
+            this.tinSampleSettingsToolStripMenuItem.Click += new System.EventHandler(this.tinSampleSettingsToolStripMenuItem_Click);
             // 
             // sampleToolStripMenuItem
             // 
@@ -1913,6 +1924,8 @@
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.coefficientsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tinSampleSettings1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
@@ -1933,8 +1946,6 @@
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.coefficientsBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tinSampleSettings1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
             this.groupBox3.ResumeLayout(false);

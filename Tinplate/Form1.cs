@@ -25,11 +25,14 @@ namespace Tinplate
         WaitingForm waitingform = new WaitingForm();
         DataRow DataEmptyRow;
         string TinSampleSettingsxml = "./TinSampleSettings.xml";
-
+        public bool IsAdmin = false;
         public Form1()
         {
             InitializeComponent();
             SetCustomBorder();
+
+            AdminLogout();
+
             pg = new PGStat(); //Create an object of PGStat class
 
             pg.PG_EVT_StartConnecting += new System.EventHandler(PG_OnConnecting);
@@ -56,7 +59,13 @@ namespace Tinplate
             tinSampleSettings1.Tables["Coefficients"].Rows.Add(r0);
 
             tinSampleSettings1.Tables["Coefficients"].Rows[0]["CorrectionCoef"] = (decimal)(0.65);
-            tinSampleSettings1.Tables["Coefficients"].Rows[0]["SampleArea"] = (decimal)(25.81); //in cm^2
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["SampleArea"] = (decimal)(20.428); //in cm^2
+
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["SetCurrentOffset"] = (decimal)(0);
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadVoltageOffset"] = (decimal)(0);
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadVoltageGain"] = (decimal)(100);
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadCurrentOffset"] = (decimal)(0);
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadCurrentGain"] = (decimal)(100);
 
             if (File.Exists(TinSampleSettingsxml))
             {
@@ -587,8 +596,8 @@ namespace Tinplate
 
             int nData = (int)(1000.0 * (int)numericUpDown2.Value / (int)numericUpDown6.Value) + 1;
 
-            pg.IV_Input.Initial_Potential = (double)numericUpDown1.Value + (double)numericUpDown4.Value; //Current + set current offset
-            pg.IV_Input.Final_Potential = (double)numericUpDown1.Value + (double)numericUpDown4.Value;
+            pg.IV_Input.Initial_Potential = -((double)numericUpDown1.Value + (double)numericUpDown4.Value); //Current + set current offset
+            pg.IV_Input.Final_Potential = -((double)numericUpDown1.Value + (double)numericUpDown4.Value);
             pg.IV_Input.Step = nData;
             //pg.IV_Input.Ideal_Voltage = 0;
             pg.IV_Input.Voltage_Range_Mode = comboBox1.SelectedIndex;
@@ -1831,13 +1840,13 @@ namespace Tinplate
                 Curvature[i] = Math.Abs(d2f[i]) / Math.Pow(1.0 + Math.Pow(df[i], 2.0), 3.0 / 2.0);
 
             int imax1 = iFirstOfValidInterval;
-            double max1 = df[iFirstOfValidInterval];
+            double max1 = Math.Abs(df[iFirstOfValidInterval]);
             double tmax1 = tArray[iFirstOfValidInterval];
 
             for (i = 1; i < nData; i++)
-                if (max1 < df[i] && i >= iFirstOfValidInterval && i <= iEndOfValidInterval)
+                if (max1 < Math.Abs(df[i]) && i >= iFirstOfValidInterval && i <= iEndOfValidInterval)
                 {
-                    max1 = df[i];
+                    max1 = Math.Abs(df[i]);
                     imax1 = i;
                     tmax1 = tArray[i];
                 }
@@ -1860,13 +1869,13 @@ namespace Tinplate
                     pick2[i] = df[i];
 
             int imax2 = iFirstOfValidInterval;
-            double max2 = pick2[iFirstOfValidInterval];
+            double max2 = Math.Abs(pick2[iFirstOfValidInterval]);
             double tmax2 = tArray[iFirstOfValidInterval];
 
             for (i = 1; i < nData; i++)
-                if (max2 < pick2[i] && i >= iFirstOfValidInterval && i <= iEndOfValidInterval)
+                if (max2 < Math.Abs(pick2[i]) && i >= iFirstOfValidInterval && i <= iEndOfValidInterval)
                 {
-                    max2 = pick2[i];
+                    max2 = Math.Abs(pick2[i]);
                     imax2 = i;
                     tmax2 = tArray[i];
                 }
@@ -2533,15 +2542,85 @@ namespace Tinplate
             UpdateTin();
         }
 
+        private void numericUpDown4_ValueChanged(object sender, EventArgs e)
+        {
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["SetCurrentOffset"] = numericUpDown4.Value;
+            tinSampleSettings1.WriteXml(TinSampleSettingsxml);
+        }
+
+        private void numericUpDown5_ValueChanged(object sender, EventArgs e)
+        {
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadVoltageOffset"] = numericUpDown5.Value;
+            tinSampleSettings1.WriteXml(TinSampleSettingsxml);
+        }
+
+        private void numericUpDown8_ValueChanged(object sender, EventArgs e)
+        {
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadVoltageGain"] = numericUpDown8.Value;
+            tinSampleSettings1.WriteXml(TinSampleSettingsxml);
+        }
+
+        private void numericUpDown7_ValueChanged(object sender, EventArgs e)
+        {
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadCurrentOffset"] = numericUpDown7.Value;
+            tinSampleSettings1.WriteXml(TinSampleSettingsxml);
+        }
+
+        private void numericUpDown9_ValueChanged(object sender, EventArgs e)
+        {
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadCurrentGain"] = numericUpDown9.Value;
+            tinSampleSettings1.WriteXml(TinSampleSettingsxml);
+        }
+        private void tinSampleSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (IsAdmin)
+            {
+                tinSampleSettingsToolStripMenuItem.Text = "Login as Admin";
+                AdminLogout();
+                return;
+            }
+
+            AdminPassForm passform = new AdminPassForm(this);
+            passform.ShowDialog();
+            if (IsAdmin)
+            {
+                tinSampleSettingsToolStripMenuItem.Text = "Logout Admin";
+                AdminLogin();
+            }
+        }
+
         private void AutoSelectTime_Click(object sender, EventArgs e)
         {
             FindPicks();
             UpdateFittingDiagram();
         }
 
+        private void AdminLogin()
+        {
+            IsAdmin = true;
+            groupBox7.Visible = true;
+            numericUpDown10.Visible = true;
+            numericUpDown11.Visible = true;
+            label42.Visible = true;
+            label42.Visible = true;
+            label44.Visible = true;
+            label47.Visible = true;
+            panel6.Size = new Size(panel6.Size.Width, 790);
+        }
 
 
-
+        private void AdminLogout()
+        {
+            IsAdmin = false;
+            groupBox7.Visible = false;
+            numericUpDown10.Visible = false;
+            numericUpDown11.Visible = false;
+            label42.Visible = false;
+            label43.Visible = false;
+            label44.Visible = false;
+            label47.Visible = false;
+            panel6.Size = new Size(panel6.Size.Width, 478);
+        }
 
 
 
