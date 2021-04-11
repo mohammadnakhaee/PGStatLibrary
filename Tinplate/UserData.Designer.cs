@@ -2169,6 +2169,12 @@ namespace Tinplate {
             
             private global::System.Data.DataColumn columnIsUsingCustomCurrent;
             
+            private global::System.Data.DataColumn columnIsUsingFittingTimes;
+            
+            private global::System.Data.DataColumn columnFittingMethod;
+            
+            private global::System.Data.DataColumn columnDateAndTime;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public InputsDataTable() {
@@ -2380,6 +2386,30 @@ namespace Tinplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn IsUsingFittingTimesColumn {
+                get {
+                    return this.columnIsUsingFittingTimes;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn FittingMethodColumn {
+                get {
+                    return this.columnFittingMethod;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn DateAndTimeColumn {
+                get {
+                    return this.columnDateAndTime;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2437,7 +2467,10 @@ namespace Tinplate {
                         int curvature1, 
                         int curvature2, 
                         decimal CustomCurrent, 
-                        bool IsUsingCustomCurrent) {
+                        bool IsUsingCustomCurrent, 
+                        bool IsUsingFittingTimes, 
+                        string FittingMethod, 
+                        string DateAndTime) {
                 InputsRow rowInputsRow = ((InputsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         UserName,
@@ -2461,7 +2494,10 @@ namespace Tinplate {
                         curvature1,
                         curvature2,
                         CustomCurrent,
-                        IsUsingCustomCurrent};
+                        IsUsingCustomCurrent,
+                        IsUsingFittingTimes,
+                        FittingMethod,
+                        DateAndTime};
                 rowInputsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowInputsRow);
                 return rowInputsRow;
@@ -2506,6 +2542,9 @@ namespace Tinplate {
                 this.columncurvature2 = base.Columns["curvature2"];
                 this.columnCustomCurrent = base.Columns["CustomCurrent"];
                 this.columnIsUsingCustomCurrent = base.Columns["IsUsingCustomCurrent"];
+                this.columnIsUsingFittingTimes = base.Columns["IsUsingFittingTimes"];
+                this.columnFittingMethod = base.Columns["FittingMethod"];
+                this.columnDateAndTime = base.Columns["DateAndTime"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2555,6 +2594,12 @@ namespace Tinplate {
                 base.Columns.Add(this.columnCustomCurrent);
                 this.columnIsUsingCustomCurrent = new global::System.Data.DataColumn("IsUsingCustomCurrent", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnIsUsingCustomCurrent);
+                this.columnIsUsingFittingTimes = new global::System.Data.DataColumn("IsUsingFittingTimes", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnIsUsingFittingTimes);
+                this.columnFittingMethod = new global::System.Data.DataColumn("FittingMethod", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFittingMethod);
+                this.columnDateAndTime = new global::System.Data.DataColumn("DateAndTime", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDateAndTime);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3997,6 +4042,54 @@ namespace Tinplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsUsingFittingTimes {
+                get {
+                    try {
+                        return ((bool)(this[this.tableInputs.IsUsingFittingTimesColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'IsUsingFittingTimes\' in table \'Inputs\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableInputs.IsUsingFittingTimesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string FittingMethod {
+                get {
+                    try {
+                        return ((string)(this[this.tableInputs.FittingMethodColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'FittingMethod\' in table \'Inputs\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableInputs.FittingMethodColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string DateAndTime {
+                get {
+                    try {
+                        return ((string)(this[this.tableInputs.DateAndTimeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'DateAndTime\' in table \'Inputs\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableInputs.DateAndTimeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsUserNameNull() {
                 return this.IsNull(this.tableInputs.UserNameColumn);
             }
@@ -4257,6 +4350,42 @@ namespace Tinplate {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetIsUsingCustomCurrentNull() {
                 this[this.tableInputs.IsUsingCustomCurrentColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsIsUsingFittingTimesNull() {
+                return this.IsNull(this.tableInputs.IsUsingFittingTimesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetIsUsingFittingTimesNull() {
+                this[this.tableInputs.IsUsingFittingTimesColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsFittingMethodNull() {
+                return this.IsNull(this.tableInputs.FittingMethodColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetFittingMethodNull() {
+                this[this.tableInputs.FittingMethodColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsDateAndTimeNull() {
+                return this.IsNull(this.tableInputs.DateAndTimeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetDateAndTimeNull() {
+                this[this.tableInputs.DateAndTimeColumn] = global::System.Convert.DBNull;
             }
         }
         

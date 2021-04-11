@@ -30,13 +30,17 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.panel1 = new System.Windows.Forms.Panel();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.panel7 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.inputsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.userData1 = new Tinplate.UserData();
+            this.label45 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.label38 = new System.Windows.Forms.Label();
             this.label37 = new System.Windows.Forms.Label();
@@ -60,8 +64,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
-            this.inputsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.userData1 = new Tinplate.UserData();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -136,6 +138,7 @@
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel5 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.button8 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
@@ -155,6 +158,7 @@
             this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disconnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.offsetRemovalToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.offsetRemovalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.galvanostatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -183,6 +187,8 @@
             this.panel1.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.inputsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userData1)).BeginInit();
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.coefficientsBindingSource)).BeginInit();
@@ -193,8 +199,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.inputsBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.userData1)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -264,6 +268,8 @@
             // 
             // panel6
             // 
+            this.panel6.Controls.Add(this.textBox4);
+            this.panel6.Controls.Add(this.label45);
             this.panel6.Controls.Add(this.groupBox7);
             this.panel6.Controls.Add(this.groupBox2);
             this.panel6.Controls.Add(this.groupBox1);
@@ -279,6 +285,36 @@
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(408, 790);
             this.panel6.TabIndex = 0;
+            // 
+            // textBox4
+            // 
+            this.textBox4.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.inputsBindingSource, "DateAndTime", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.textBox4.Location = new System.Drawing.Point(172, 172);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.ReadOnly = true;
+            this.textBox4.Size = new System.Drawing.Size(145, 24);
+            this.textBox4.TabIndex = 20;
+            // 
+            // inputsBindingSource
+            // 
+            this.inputsBindingSource.DataMember = "Inputs";
+            this.inputsBindingSource.DataSource = this.userData1;
+            // 
+            // userData1
+            // 
+            this.userData1.DataSetName = "UserData";
+            this.userData1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.label45.Location = new System.Drawing.Point(38, 175);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(108, 18);
+            this.label45.TabIndex = 19;
+            this.label45.Text = "Date and Time:";
             // 
             // groupBox7
             // 
@@ -337,7 +373,7 @@
             // 
             // numericUpDown9
             // 
-            this.numericUpDown9.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "ReadCurrentGain", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.numericUpDown9.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "ReadCurrentGain", true));
             this.numericUpDown9.DecimalPlaces = 1;
             this.numericUpDown9.Location = new System.Drawing.Point(183, 258);
             this.numericUpDown9.Maximum = new decimal(new int[] {
@@ -391,7 +427,7 @@
             // 
             // numericUpDown8
             // 
-            this.numericUpDown8.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "ReadVoltageGain", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.numericUpDown8.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "ReadVoltageGain", true));
             this.numericUpDown8.DecimalPlaces = 1;
             this.numericUpDown8.Location = new System.Drawing.Point(183, 189);
             this.numericUpDown8.Maximum = new decimal(new int[] {
@@ -435,8 +471,8 @@
             // 
             // numericUpDown7
             // 
-            this.numericUpDown7.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "ReadCurrentOffset", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.numericUpDown7.DecimalPlaces = 1;
+            this.numericUpDown7.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "ReadCurrentOffset", true));
+            this.numericUpDown7.DecimalPlaces = 3;
             this.numericUpDown7.Increment = new decimal(new int[] {
             1,
             0,
@@ -474,8 +510,8 @@
             // 
             // numericUpDown5
             // 
-            this.numericUpDown5.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "ReadVoltageOffset", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.numericUpDown5.DecimalPlaces = 1;
+            this.numericUpDown5.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "ReadVoltageOffset", true));
+            this.numericUpDown5.DecimalPlaces = 3;
             this.numericUpDown5.Increment = new decimal(new int[] {
             1,
             0,
@@ -567,16 +603,6 @@
             this.textBox3.Size = new System.Drawing.Size(194, 24);
             this.textBox3.TabIndex = 16;
             // 
-            // inputsBindingSource
-            // 
-            this.inputsBindingSource.DataMember = "Inputs";
-            this.inputsBindingSource.DataSource = this.userData1;
-            // 
-            // userData1
-            // 
-            this.userData1.DataSetName = "UserData";
-            this.userData1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
@@ -584,9 +610,9 @@
             this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.checkBox1.Location = new System.Drawing.Point(20, 25);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(94, 22);
+            this.checkBox1.Size = new System.Drawing.Size(114, 22);
             this.checkBox1.TabIndex = 15;
-            this.checkBox1.Text = "Auto Save";
+            this.checkBox1.Text = "Create report";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // label7
@@ -798,7 +824,7 @@
             // 
             this.textBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.inputsBindingSource, "SampleCode", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.textBox2.Location = new System.Drawing.Point(172, 145);
+            this.textBox2.Location = new System.Drawing.Point(172, 139);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(145, 24);
             this.textBox2.TabIndex = 12;
@@ -807,7 +833,7 @@
             // 
             this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.inputsBindingSource, "UserName", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.textBox1.Location = new System.Drawing.Point(172, 115);
+            this.textBox1.Location = new System.Drawing.Point(172, 109);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(145, 24);
             this.textBox1.TabIndex = 11;
@@ -848,7 +874,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label4.Location = new System.Drawing.Point(44, 148);
+            this.label4.Location = new System.Drawing.Point(44, 142);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(102, 18);
             this.label4.TabIndex = 2;
@@ -858,7 +884,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label3.Location = new System.Drawing.Point(48, 118);
+            this.label3.Location = new System.Drawing.Point(48, 112);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(99, 18);
             this.label3.TabIndex = 1;
@@ -1361,6 +1387,7 @@
             this.CurrentLabel.Size = new System.Drawing.Size(61, 18);
             this.CurrentLabel.TabIndex = 4;
             this.CurrentLabel.Text = "Current:";
+            this.CurrentLabel.Visible = false;
             // 
             // VoltageLabel
             // 
@@ -1370,6 +1397,7 @@
             this.VoltageLabel.Size = new System.Drawing.Size(61, 18);
             this.VoltageLabel.TabIndex = 3;
             this.VoltageLabel.Text = "Voltage:";
+            this.VoltageLabel.Visible = false;
             // 
             // groupBox5
             // 
@@ -1377,9 +1405,9 @@
             this.groupBox5.Controls.Add(this.radioButton2);
             this.groupBox5.Controls.Add(this.radioButton1);
             this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.groupBox5.Location = new System.Drawing.Point(187, 13);
+            this.groupBox5.Location = new System.Drawing.Point(154, 12);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(26, 151);
+            this.groupBox5.Size = new System.Drawing.Size(43, 151);
             this.groupBox5.TabIndex = 3;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Sample";
@@ -1474,37 +1502,37 @@
             // chart1
             // 
             this.chart1.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea4.AxisX.LabelStyle.Format = "{0:0.00}";
-            chartArea4.AxisX.LabelStyle.TruncatedLabels = true;
-            chartArea4.AxisX.MajorGrid.Interval = 0D;
-            chartArea4.AxisX.MajorGrid.IntervalOffset = 0D;
-            chartArea4.AxisX.MajorGrid.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
-            chartArea4.AxisX.MajorGrid.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
-            chartArea4.AxisX.MajorGrid.LineColor = System.Drawing.Color.DimGray;
-            chartArea4.AxisX.MajorTickMark.Interval = 0D;
-            chartArea4.AxisX.MajorTickMark.IntervalOffset = 0D;
-            chartArea4.AxisX.MajorTickMark.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
-            chartArea4.AxisX.MajorTickMark.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
-            chartArea4.AxisX.MinorGrid.Enabled = true;
-            chartArea4.AxisX.MinorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea4.AxisX.MinorTickMark.Enabled = true;
-            chartArea4.AxisY.LabelStyle.Format = "{0:0.00}";
-            chartArea4.AxisY.LabelStyle.TruncatedLabels = true;
-            chartArea4.AxisY.MajorGrid.LineColor = System.Drawing.Color.DimGray;
-            chartArea4.AxisY.MinorGrid.Enabled = true;
-            chartArea4.AxisY.MinorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea4.AxisY.MinorTickMark.Enabled = true;
-            chartArea4.CursorX.Interval = 1E-08D;
-            chartArea4.CursorX.IsUserEnabled = true;
-            chartArea4.CursorX.IsUserSelectionEnabled = true;
-            chartArea4.CursorY.Interval = 1E-08D;
-            chartArea4.CursorY.IsUserEnabled = true;
-            chartArea4.CursorY.IsUserSelectionEnabled = true;
-            chartArea4.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea4);
+            chartArea1.AxisX.LabelStyle.Format = "{0:0.00}";
+            chartArea1.AxisX.LabelStyle.TruncatedLabels = true;
+            chartArea1.AxisX.MajorGrid.Interval = 0D;
+            chartArea1.AxisX.MajorGrid.IntervalOffset = 0D;
+            chartArea1.AxisX.MajorGrid.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea1.AxisX.MajorGrid.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.DimGray;
+            chartArea1.AxisX.MajorTickMark.Interval = 0D;
+            chartArea1.AxisX.MajorTickMark.IntervalOffset = 0D;
+            chartArea1.AxisX.MajorTickMark.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea1.AxisX.MajorTickMark.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea1.AxisX.MinorGrid.Enabled = true;
+            chartArea1.AxisX.MinorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea1.AxisX.MinorTickMark.Enabled = true;
+            chartArea1.AxisY.LabelStyle.Format = "{0:0.00}";
+            chartArea1.AxisY.LabelStyle.TruncatedLabels = true;
+            chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.DimGray;
+            chartArea1.AxisY.MinorGrid.Enabled = true;
+            chartArea1.AxisY.MinorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea1.AxisY.MinorTickMark.Enabled = true;
+            chartArea1.CursorX.Interval = 1E-08D;
+            chartArea1.CursorX.IsUserEnabled = true;
+            chartArea1.CursorX.IsUserSelectionEnabled = true;
+            chartArea1.CursorY.Interval = 1E-08D;
+            chartArea1.CursorY.IsUserEnabled = true;
+            chartArea1.CursorY.IsUserSelectionEnabled = true;
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend4.Name = "Legend1";
-            this.chart1.Legends.Add(legend4);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(0, 50);
             this.chart1.Name = "chart1";
             this.chart1.Size = new System.Drawing.Size(1512, 635);
@@ -1528,6 +1556,7 @@
             // panel4
             // 
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.button8);
             this.panel4.Controls.Add(this.button7);
             this.panel4.Controls.Add(this.button3);
             this.panel4.Controls.Add(this.button6);
@@ -1540,6 +1569,22 @@
             this.panel4.Size = new System.Drawing.Size(1512, 50);
             this.panel4.TabIndex = 1;
             // 
+            // button8
+            // 
+            this.button8.BackColor = System.Drawing.Color.LightSlateGray;
+            this.button8.FlatAppearance.BorderColor = System.Drawing.Color.Navy;
+            this.button8.FlatAppearance.MouseDownBackColor = System.Drawing.Color.SteelBlue;
+            this.button8.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSteelBlue;
+            this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button8.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.button8.Location = new System.Drawing.Point(692, 9);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(108, 29);
+            this.button8.TabIndex = 16;
+            this.button8.Text = "Report";
+            this.button8.UseVisualStyleBackColor = false;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
             // button7
             // 
             this.button7.BackColor = System.Drawing.Color.LightSlateGray;
@@ -1548,7 +1593,7 @@
             this.button7.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSteelBlue;
             this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.button7.Location = new System.Drawing.Point(816, 9);
+            this.button7.Location = new System.Drawing.Point(949, 9);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(108, 29);
             this.button7.TabIndex = 15;
@@ -1606,7 +1651,7 @@
             this.button5.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSteelBlue;
             this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.button5.Location = new System.Drawing.Point(693, 9);
+            this.button5.Location = new System.Drawing.Point(822, 9);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(108, 29);
             this.button5.TabIndex = 12;
@@ -1729,6 +1774,7 @@
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.offsetRemovalToolStripMenuItem1,
             this.offsetRemovalToolStripMenuItem,
             this.galvanostatToolStripMenuItem,
             this.toolStripSeparator3,
@@ -1747,6 +1793,13 @@
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.settingsToolStripMenuItem.Text = "Settings";
+            // 
+            // offsetRemovalToolStripMenuItem1
+            // 
+            this.offsetRemovalToolStripMenuItem1.Name = "offsetRemovalToolStripMenuItem1";
+            this.offsetRemovalToolStripMenuItem1.Size = new System.Drawing.Size(222, 22);
+            this.offsetRemovalToolStripMenuItem1.Text = "Offset Removal";
+            this.offsetRemovalToolStripMenuItem1.Click += new System.EventHandler(this.offsetRemovalToolStripMenuItem1_Click);
             // 
             // offsetRemovalToolStripMenuItem
             // 
@@ -1921,6 +1974,8 @@
             this.panel7.PerformLayout();
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.inputsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userData1)).EndInit();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).EndInit();
@@ -1933,8 +1988,6 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.inputsBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.userData1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
@@ -2121,6 +2174,10 @@
         private System.Windows.Forms.NumericUpDown numericUpDown11;
         private System.Windows.Forms.Label label47;
         private System.Windows.Forms.BindingSource coefficientsBindingSource;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Label label45;
+        private System.Windows.Forms.ToolStripMenuItem offsetRemovalToolStripMenuItem1;
     }
 }
 

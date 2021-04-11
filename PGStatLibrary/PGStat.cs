@@ -474,6 +474,7 @@ namespace PGStatLibrary
             public int Voltage_Range_Mode_Max;
             public int Auto_Range_NCheck;
             public int Auto_Range_Time;
+            public bool IsCalculateOffsetBeforeStart;
             /// <summary>
             /// Time step in milliseconds.
             /// </summary>
@@ -617,11 +618,41 @@ namespace PGStatLibrary
         public PGStat()
         {
             CheckPort.NewLine = "\r";
+            
+            try
+            {
+                /*
+                string scopePath = @"\\.\root\default";
+                ManagementScope managementScope = new ManagementScope(scopePath);
 
-            WqlEventQuery removeQuery = new WqlEventQuery("SELECT * FROM __InstanceDeletionEvent WITHIN 1 WHERE TargetInstance ISA 'Win32_SerialPort'");
-            ManagementEventWatcher removeWatcher = new ManagementEventWatcher(removeQuery);
-            removeWatcher.EventArrived += new EventArrivedEventHandler(Unpluged);
-            removeWatcher.Start();
+                string subkey = "HARDWARE\\DEVICEMAP\\SERIALCOMM";
+
+                using (RegistryKey prodx = Registry.LocalMachine)
+                {
+                    prodx.CreateSubKey(subkey);
+                }
+
+                WqlEventQuery query = new WqlEventQuery(
+                    "SELECT * FROM RegistryKeyChangeEvent WHERE " +
+                   "Hive = 'HKEY_LOCAL_MACHINE'" +
+                  @"AND KeyPath = 'HARDWARE\\DEVICEMAP\\SERIALCOMM'");
+
+                registryWatcher = new ManagementEventWatcher(managementScope, query);
+
+                registryWatcher.EventArrived += new EventArrivedEventHandler(SerialCommRegistryUpdated);
+                registryWatcher.Start();*/
+
+                WqlEventQuery removeQuery = new WqlEventQuery("SELECT * FROM __InstanceDeletionEvent WITHIN 1 WHERE TargetInstance ISA 'Win32_SerialPort'");
+                ManagementEventWatcher removeWatcher = new ManagementEventWatcher(removeQuery);
+                removeWatcher.EventArrived += new EventArrivedEventHandler(Unpluged);
+                removeWatcher.Start();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            
 
             notification = new NotifyIcon();
 
@@ -2697,11 +2728,12 @@ namespace PGStatLibrary
 
             zeroset(Myzeroset);
             //vdcmlp(IV_Input.Voltage_Multiplier_Mode);
-            //idcmlp(IV_Input.Current_Multiplier_Mode);
+            idcmlp(0);// IV_Input.Current_Multiplier_Mode);
             double ThisIV_Voffset = 0;
-            double ThisIV_Ioffset = 0; 
+            double ThisIV_Ioffset = 0;
 
-            CalculateSpecificIVOffsets(IV_Input.Current_Range_Mode, 0, 0, ref ThisIV_Ioffset, ref ThisIV_Voffset);
+          //  if (IV_Input.IsCalculateOffsetBeforeStart)
+            //    CalculateSpecificIVOffsets(IV_Input.Current_Range_Mode, 0, 0, ref ThisIV_Ioffset, ref ThisIV_Voffset);
             //GetVOffsetFromSettings(IV_Input.Voltage_Multiplier_Mode, ref ThisIV_Voffset);
             double setvolt0 = IV_Input.Initial_Potential;
             if (IV_Input.Is_Relative_Reference) setvolt0 = -setvolt0;
@@ -2783,8 +2815,8 @@ namespace PGStatLibrary
                 word = AllBytes2[0] | (AllBytes2[1] << 8) | (AllBytes2[2] << 16) | (AllBytes2[3] << 24);
                 Imean = (double)word / (double)nData;
                 //DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " i=" + cnt.ToString());
-                double volt = GetDCVConvertWithNewOffset(Vmean, 0, ThisIV_Voffset, IV_Input.Voltage_Range_Mode);
-                double current = GetDCIConvertWithNewOffset(Imean, IV_Input.Current_Range_Mode, 0, ThisIV_Ioffset);
+                double volt = GetDCVConvert(Vmean, 0, IV_Input.Voltage_Range_Mode);
+                double current = GetDCIConvert(Imean, IV_Input.Current_Range_Mode, 0);
                 if (IV_Input.Is_Relative_Reference)
                 {
                     volt = -volt;
@@ -2855,7 +2887,7 @@ namespace PGStatLibrary
             idcmlp(CV_Input.Current_Multiplier_Mode);
             double ThisIV_Voffset = 0;
             double ThisIV_Ioffset = 0;
-            CalculateSpecificIVOffsets(CV_Input.Current_Range_Mode, CV_Input.Current_Multiplier_Mode, CV_Input.Voltage_Multiplier_Mode, ref ThisIV_Ioffset, ref ThisIV_Voffset);
+           // CalculateSpecificIVOffsets(CV_Input.Current_Range_Mode, CV_Input.Current_Multiplier_Mode, CV_Input.Voltage_Multiplier_Mode, ref ThisIV_Ioffset, ref ThisIV_Voffset);
             GetVOffsetFromSettings(CV_Input.Voltage_Multiplier_Mode, ref ThisIV_Voffset);
             double setvolt0 = CV_Input.Initial_Potential;
             if (CV_Input.Is_Relative_Reference) setvolt0 = -setvolt0;
@@ -3042,7 +3074,7 @@ namespace PGStatLibrary
             idcmlp(Chrono_Input.Current_Multiplier_Mode);
             double ThisIV_Voffset = 0;
             double ThisIV_Ioffset = 0;
-            CalculateSpecificIVOffsets(Chrono_Input.Current_Range_Mode, Chrono_Input.Current_Multiplier_Mode, Chrono_Input.Voltage_Multiplier_Mode, ref ThisIV_Ioffset, ref ThisIV_Voffset);
+            //CalculateSpecificIVOffsets(Chrono_Input.Current_Range_Mode, Chrono_Input.Current_Multiplier_Mode, Chrono_Input.Voltage_Multiplier_Mode, ref ThisIV_Ioffset, ref ThisIV_Voffset);
             GetVOffsetFromSettings(Chrono_Input.Voltage_Multiplier_Mode, ref ThisIV_Voffset);
             double setvolt0 = Chrono_Input.V1;
             if (Chrono_Input.Is_Relative_Reference) setvolt0 = -setvolt0;
@@ -3050,7 +3082,7 @@ namespace PGStatLibrary
             double[] Output = ivset(ivlt);
             double Vmean = Output[0];
             double Imean = Output[1];
-
+            
             /*
             if (CV_Input.isOCP && CV_Input.isOCPAutoStart)
             {

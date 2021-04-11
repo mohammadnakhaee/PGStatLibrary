@@ -46,7 +46,12 @@ namespace Tinplate
             pg.PG_EVT_OffsetRemovalStarted += Pg_PG_EVT_OffsetRemovalStarted;
             pg.SetNotificationVerbosity(1);
             pg.PG_EVT_AProcessFinished += Pg_PG_EVT_AProcessFinished;
-            int settingsver = pg.LoadSettings("./settings.bin");
+            int settingsver = pg.LoadSettings("C:/Users/DELL/source/repos/PGStatLibrary/Tinplate/bin/settings.bin");
+
+            if (settingsver == 0)
+                MessageBox.Show("The setting file was not found!");
+            else if (settingsver == -1)
+                MessageBox.Show("Unable to load the setting file correctly!");
 
             pingLED.BackgroundImageLayout = ImageLayout.Stretch;
 
@@ -475,7 +480,9 @@ namespace Tinplate
         {
             this.Invoke(new Action(() =>
             {
-                richTextBox1.AppendText((richTextBox1.Lines.Count() + 1).ToString() + ":  " + value);
+                int linenumber = richTextBox1.Lines.Count();
+                if (linenumber == 0) linenumber = 1;
+                richTextBox1.AppendText((linenumber).ToString() + ":  " + value);
                 richTextBox1.SelectionStart = richTextBox1.Text.Length;
                 richTextBox1.ScrollToCaret();
                 //richTextBox1.Refresh();
@@ -571,6 +578,8 @@ namespace Tinplate
             else
                 radioButton2.Checked = true;
 
+            string dateandtime = DateTime.Now.ToString(@"MM\/dd\/yyyy HH\:mm");
+            textBox4.Text = dateandtime;
             userData1.Tables["Inputs"].Rows[0]["IsFittingFound"] = false;
             userData1.Tables["Data"].Clear();
             userData1.Tables["Fitting"].Clear();
@@ -590,7 +599,7 @@ namespace Tinplate
 
             richTextBox1.Clear();
 
-            int settingsver = pg.LoadSettings("./settings.bin");
+            int settingsver = pg.LoadSettings("C:/Users/DELL/source/repos/PGStatLibrary/Tinplate/bin/settings.bin");
 
             pg.PGmode(3);
 
@@ -610,16 +619,25 @@ namespace Tinplate
             pg.IV_Input.Interval_Time = (int)numericUpDown6.Value; //(ms)
             pg.IV_Input.Voltage_Filter = 0;
             pg.IV_Input.Is_Relative_Reference = false;
+            pg.IV_Input.IsCalculateOffsetBeforeStart = false;
             pg.AIV_old();
         }
 
 
         private void Pg_PG_EVT_AIVDataReceived(object sender, AIVEventArgs e)
         {
-            double MeasuredVoltage = (e.MeasuredVoltage + (double)numericUpDown5.Value) * (double)numericUpDown8.Value / 100.0;
-            double Current = (e.Current + (double)numericUpDown7.Value / 1000.0) * (double)numericUpDown9.Value / 100.0;
-            PrintOutput((e.Time * 1000).ToString() + "(ms) , " + MeasuredVoltage.ToString() + "(V), " + (Current * 1000).ToString() + "(mA)\n");
-            AddPointToData(e.Time, MeasuredVoltage);
+            if (!isOffsetRemovalProc)
+            {
+                double MeasuredVoltage = (e.MeasuredVoltage - (double)numericUpDown5.Value) * (double)numericUpDown8.Value / 100.0;
+                double Current = (e.Current - (double)numericUpDown7.Value / 1000.0) * (double)numericUpDown9.Value / 100.0;
+                PrintOutput((e.Time * 1000).ToString() + "(ms) , " + MeasuredVoltage.ToString() + "(V), " + (Current * 1000).ToString() + "(mA)\n");
+                AddPointToData(e.Time, MeasuredVoltage);
+            }
+            else
+            {
+                OffsetRemovalProc_Vmean += e.MeasuredVoltage;
+                OffsetRemovalProc_Imean += e.Current;
+            }
         }
 
         private void TryToConnect()
@@ -659,7 +677,11 @@ namespace Tinplate
             numericUpDown2.Value = 30;
             numericUpDown6.Value = 500;
             checkBox1.Checked = true;
-            textBox3.Text = "./";
+            String SharifSolarPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SharifSolar");
+            bool exists = System.IO.Directory.Exists(SharifSolarPath);
+            if (!exists)
+                System.IO.Directory.CreateDirectory(SharifSolarPath);
+            textBox3.Text = SharifSolarPath;
             comboBox1.SelectedIndex = 1;
             comboBox2.SelectedIndex = 1;
 
@@ -675,10 +697,7 @@ namespace Tinplate
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (xmlFile != "")
-                userData1.WriteXml(xmlFile);
-            else
-                SaveAs();
+            Save();
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -686,6 +705,13 @@ namespace Tinplate
             SaveAs();
         }
 
+        private void Save()
+        {
+            if (xmlFile != "")
+                userData1.WriteXml(xmlFile);
+            else
+                SaveAs();
+        }
         private void SaveAs()
         {
             saveFileDialog1.Filter = "XML file (*.xml)|*.xml";
@@ -789,7 +815,7 @@ namespace Tinplate
 
         private void saveSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            pg.SaveSettings("./settings.bin");
+            pg.SaveSettings("C:/Users/DELL/source/repos/PGStatLibrary/Tinplate/bin/settings.bin");
         }
 
         private void saveSettingsAsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -808,8 +834,9 @@ namespace Tinplate
 
         private void loadSettingsFromDeviceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            pg.LoadSettingsFromDevice("./microsettings.bin");
-            pg.LoadSettings("./microsettings.bin");
+            pg.LoadSettingsFromDevice("C:/Users/DELL/source/repos/PGStatLibrary/Tinplate/bin/microsettings.bin");
+            pg.LoadSettings("C:/Users/DELL/source/repos/PGStatLibrary/Tinplate/bin/microsettings.bin");
+            
         }
 
         private void resetSettingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -819,7 +846,7 @@ namespace Tinplate
 
         private void saveSettingsToDeviceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            pg.MicroSaveSettings("./settings.bin");
+            pg.MicroSaveSettings("C:/Users/DELL/source/repos/PGStatLibrary/Tinplate/bin/settings.bin");
         }
 
         private void saveDeviceSettingsAsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -841,9 +868,36 @@ namespace Tinplate
                 ExportData(saveFileDialog1.FileName);
         }
 
-        private void ExportData(string FileName)
+        private void ExportData(string FileName, bool AddHeader = false)
         {
             StreamWriter FileProtocol = new StreamWriter(FileName);
+            if (AddHeader)
+            {
+                FileProtocol.Write("User's Name:\t" + textBox1.Text.ToString() + "\n");
+                FileProtocol.Write("Sample Code:\t" + textBox2.Text.ToString() + "\n");
+                FileProtocol.Write("Date and Time:\t" + textBox4.Text.ToString() + "\n");
+
+                FileProtocol.Write("Current:\t" + numericUpDown1.Value.ToString() + "(mA)\n");
+                FileProtocol.Write("Time:\t" + numericUpDown2.Value.ToString() + "(s)\n");
+                FileProtocol.Write("Sampling Interval:\t" + numericUpDown6.Value.ToString() + "(ms)\n");
+
+                FileProtocol.Write("t1:\t" + UD_T1.Value.ToString("0.000") + "(s)\n");
+                FileProtocol.Write("t2:\t" + UD_T1.Value.ToString("0.000") + "(s)\n");
+
+                if (checkBox2.Checked)
+                {
+                    FileProtocol.Write("Real current is used for calculations\n");
+                    FileProtocol.Write("Real Current:\t" + numericUpDown3.Value.ToString() + "(mA)\n");
+                }
+                FileProtocol.Write("Sample Area:\t" + numericUpDown10.Value.ToString() + "(cm^2)\n");
+                FileProtocol.Write("Free Tin:\t" + FreeTin.Text.ToString() + "(g m^-2)\n");
+                FileProtocol.Write("Alloy Tin:\t" + AlloyTin.Text.ToString() + "(g m^-2)\n");
+                FileProtocol.Write("Total Tin:\t" + TotalTin.Text.ToString() + "(g m^-2)\n");
+
+                FileProtocol.Write("\n");
+                FileProtocol.Write("time (s)   voltage (V)\n");
+            }
+
             foreach (DataRow row in userData1.Tables["Data"].Rows)
                 FileProtocol.Write(row["Time"].ToString() + "\t" + row["Voltage"].ToString() + "\n");
             FileProtocol.Close();
@@ -860,19 +914,48 @@ namespace Tinplate
             openFileDialog1.Filter = "XML file (*.xml)|*.xml";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
+                inLoadingProccess = true;
                 xmlFile = openFileDialog1.FileName;
                 userData1.Clear();
                 userData1.ReadXml(xmlFile, XmlReadMode.ReadSchema);
+                double t1 = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["t1"]);
+                double t2 = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["t2"]);
+                bool DummyIsUsingFittingTimes = Convert.ToBoolean(userData1.Tables["Inputs"].Rows[0]["IsUsingFittingTimes"]);
+                string FittingMethod = Convert.ToString(userData1.Tables["Inputs"].Rows[0]["FittingMethod"]);
+
                 UpdateTitle();
+                inLoadingProccess = false;
+                ProccessData();
+
+                if (FittingMethod == "Curvature")
+                    CurvatureMethod.Checked = true;
+
+                if (FittingMethod == "Tangential")
+                    TangentialMethod.Checked = true;
+
+                if (!DummyIsUsingFittingTimes)
+                {
+                    SetT1T2(t1, t2);
+                }
             }
+        }
+
+        private void SetT1T2(double T1, double T2)
+        {
+            UD_T1.Value = (decimal)T1;
+            SelectionModeT1 = false;
+
+            UD_T2.Value = (decimal)T2;
+            SelectionModeT2 = false;
+            IsUsingFittingTimes = false;
+            userData1.Tables["Inputs"].Rows[0]["IsUsingFittingTimes"] = IsUsingFittingTimes;
+
+            UpdateFittingDiagram();
         }
 
         private void button3_Click_1(object sender, EventArgs e)
         {
-            if (xmlFile != "")
-                userData1.WriteXml(xmlFile);
-            else
-                SaveAs();
+            Save();
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
@@ -915,315 +998,137 @@ namespace Tinplate
             if (pingHistory) pg.EnablePing();
         }
 
-        /*
-        private void UpdateFittingDiagram0()
-        {
-            bool IsFittingFound = Convert.ToBoolean(userData1.Tables["Inputs"].Rows[0]["IsFittingFound"]);
-            double Time = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["Time"]);
-            double Interval = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["Interval"]);
-            int nData = userData1.Tables["Data"].Rows.Count;
-            //int nData = (int)(1000.0 * Time / Interval) + 1;
-            int nDataFitting = nData * 3;
-            double dt = Time / (nDataFitting - 1);
-
-            userData1.Tables["Fitting"].Clear();
-            userData1.Tables["Derivatives1"].Clear();
-            userData1.Tables["Derivatives2"].Clear();
-            userData1.Tables["Derivatives3"].Clear();
-            userData1.Tables["Derivatives4"].Clear();
-
-            if (IsFittingFound)
-            {
-                double t1 = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["t1"]);
-                double t2 = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["t2"]);
-                double delta1 = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["delta1"]);
-                double delta2 = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["delta2"]);
-
-                double[] tArray = new double[nData];
-                double[] data = new double[nData];
-                int i = 0;
-                foreach (DataRow row in userData1.Tables["Data"].Rows)
-                {
-                    tArray[i] = (double)row["Time"];
-                    data[i] = (double)row["Voltage"];
-                    i++;
-                }
-
-                int nParameters = 3;
-                double[] parameters3 = new double[nParameters];
-                double[,] X = new double[nData, nParameters];
-
-                for (int iData = 0; iData < nData; iData++)
-                {
-                    double t0 = tArray[iData];
-                    X[iData, 0] = Erf((t0 - t1) / Math.Sqrt(delta1));
-                    X[iData, 1] = Erf((t0 - t2) / Math.Sqrt(delta2));
-                    X[iData, 2] = 1.0;
-                }
-
-                LinearFit(nData, nParameters, X, data, ref parameters3);
-
-                double a = parameters3[0];
-                double b = parameters3[1];
-                double c = parameters3[2];
-                for (double it = 0; it < nDataFitting; it++)
-                {
-                    double t0 = it * dt;
-                    double y = a*Erf((t0 - t1) / Math.Sqrt(delta1)) + b*Erf((t0 - t2) / Math.Sqrt(delta2)) + c;
-
-                    CubicSpline spline00 = new CubicSpline();
-                    float[] tSpline00 = new float[nDataSpline];
-                    for (i = 0; i < nDataSpline; i++) tSpline00[i] = (float)(i * dt_Spline);
-                    float[] sf000 = spline00.FitAndEval(tSpline00, f, new float[1] { (float)t0 });
-                    y = sf000[0];
-                    userData1.Tables["Fitting"].Rows.Add(t0, y);
-                }
-
-                //df = (2.0 * a * Math.Exp(Math.Pow(t - t1, 2.0) / delta1) / Math.Sqrt(delta1) / Math.Sqrt(Math.PI) + 2.0 * b * Math.Exp(Math.Pow(t - t2, 2.0) / delta2) / Math.Sqrt(delta2) / Math.Sqrt(Math.PI));
-
-                double t = t1;
-                double tdev = t;
-                //double f1 = a * Erf((t - t1) / Math.Sqrt(delta1)) + b * Erf((t - t2) / Math.Sqrt(delta2)) + c;
-                //double df1 = 2.0 * a * Math.Exp(-Math.Pow(t - t1, 2.0) / delta1) / Math.Sqrt(delta1) / Math.Sqrt(Math.PI) + 2.0 * b * Math.Exp(-Math.Pow(t - t2, 2.0) / delta2) / Math.Sqrt(delta2) / Math.Sqrt(Math.PI);
-                CubicSpline spline = new CubicSpline();
-                float[] tSpline = new float[nDataSpline];
-                for (i = 0; i < nDataSpline; i++) tSpline[i] = (float)(i * dt_Spline);
-                float[] sf0 = spline.FitAndEval(tSpline, f, new float[1] { (float)t });
-                double f1 = sf0[0];
-                float[] dsf0 = spline.FitAndEval(tSpline, df, new float[1] { (float)t });
-                double df1 = dsf0[0];
-                double Derivatives1 = df1;
-                t = t1 - 2*Math.Sqrt(delta1 / 2);
-                userData1.Tables["Derivatives1"].Rows.Add(t , df1 * (t - tdev) + f1);
-                t = t1 + 2*Math.Sqrt(delta1 / 2);
-                userData1.Tables["Derivatives1"].Rows.Add(t, df1 * (t - tdev) + f1);
-
-                t = t2;
-                tdev = t;
-                //f1 = a * Erf((t - t1) / Math.Sqrt(delta1)) + b * Erf((t - t2) / Math.Sqrt(delta2)) + c;
-                //df1 = 2.0 * a * Math.Exp(-Math.Pow(t - t1, 2.0) / delta1) / Math.Sqrt(delta1) / Math.Sqrt(Math.PI) + 2.0 * b * Math.Exp(-Math.Pow(t - t2, 2.0) / delta2) / Math.Sqrt(delta2) / Math.Sqrt(Math.PI);
-                spline = new CubicSpline();
-                tSpline = new float[nDataSpline];
-                for (i = 0; i < nDataSpline; i++) tSpline[i] = (float)(i * dt_Spline);
-                sf0 = spline.FitAndEval(tSpline, f, new float[1] { (float)t });
-                f1 = sf0[0];
-                dsf0 = spline.FitAndEval(tSpline, df, new float[1] { (float)t });
-                df1 = dsf0[0];
-                double Derivatives3 = df1;
-                //f1 = a * Erf((t - t1) / Math.Sqrt(delta1)) + b * Erf((t - t2) / Math.Sqrt(delta2)) + c;
-                //df1 = 2.0 * a * Math.Exp(-Math.Pow(t - t1, 2.0) / delta1) / Math.Sqrt(delta1) / Math.Sqrt(Math.PI) + 2.0 * b * Math.Exp(-Math.Pow(t - t2, 2.0) / delta2) / Math.Sqrt(delta2) / Math.Sqrt(Math.PI);
-                t = t2 - 2 * Math.Sqrt(delta2 / 2);
-                userData1.Tables["Derivatives3"].Rows.Add(t, df1 * (t - tdev) + f1);
-                t = t2 + 2 * Math.Sqrt(delta2 / 2);
-                userData1.Tables["Derivatives3"].Rows.Add(t, df1 * (t - tdev) + f1);
-
-                int nMinCheck = 100;
-                double tCheckMin = t1;
-                double tCheckMax = t2;
-                double MinDer = Math.Abs(Derivatives1);
-                double tMinDer = tCheckMin;
-                double dtMinCheck = (tCheckMax - tCheckMin) / (nMinCheck - 1);
-                for (int iMinCheck = 0; iMinCheck < nMinCheck; iMinCheck++)
-                {
-                    double tCheck = tCheckMin + iMinCheck * dtMinCheck;
-                    if (tCheck >= tSpline[0] && tCheck <= tSpline[nDataSpline - 1])
-                    {
-                        float[]  dfmincheck = spline.FitAndEval(tSpline, df, new float[1] { (float)tCheck });
-                        if (Math.Abs(dfmincheck[0]) < MinDer)
-                        {
-                            MinDer = Math.Abs(dfmincheck[0]);
-                            tMinDer = tCheck;
-                        }
-                    }
-                }
-
-                t = tMinDer;
-                tdev = t;
-                //f1 = a * Erf((t - t1) / Math.Sqrt(delta1)) + b * Erf((t - t2) / Math.Sqrt(delta2)) + c;
-                //df1 = 2.0 * a * Math.Exp(-Math.Pow(t - t1, 2.0) / delta1) / Math.Sqrt(delta1) / Math.Sqrt(Math.PI) + 2.0 * b * Math.Exp(-Math.Pow(t - t2, 2.0) / delta2) / Math.Sqrt(delta2) / Math.Sqrt(Math.PI);
-                spline = new CubicSpline();
-                tSpline = new float[nDataSpline];
-                for (i = 0; i < nDataSpline; i++) tSpline[i] = (float)(i * dt_Spline);
-                sf0 = spline.FitAndEval(tSpline, f, new float[1] { (float)t });
-                f1 = sf0[0];
-                dsf0 = spline.FitAndEval(tSpline, df, new float[1] { (float)t });
-                df1 = dsf0[0];
-                t = t1;
-                userData1.Tables["Derivatives2"].Rows.Add(t, df1 * (t - tdev) + f1);
-                t = tMinDer + Math.Sqrt(delta1 / 2);
-                userData1.Tables["Derivatives2"].Rows.Add(t, df1 * (t - tdev) + f1);
-
-                tCheckMin = t2;
-                tCheckMax = t2 + t2 - t1;
-                MinDer = Math.Abs(Derivatives3);
-                tMinDer = tCheckMin;
-                dtMinCheck = (tCheckMax - tCheckMin) / (nMinCheck - 1);
-                for (int iMinCheck = 0; iMinCheck < nMinCheck; iMinCheck++)
-                {
-                    double tCheck = tCheckMin + iMinCheck * dtMinCheck;
-                    if (tCheck >= tSpline[0] && tCheck <= tSpline[nDataSpline - 1])
-                    {
-                        float[] dfmincheck = spline.FitAndEval(tSpline, df, new float[1] { (float)tCheck });
-                        if (Math.Abs(dfmincheck[0]) < MinDer)
-                        {
-                            MinDer = Math.Abs(dfmincheck[0]);
-                            tMinDer = tCheck;
-                        }
-                    }
-                }
-
-                t = tMinDer;
-                tdev = t;
-                //f1 = a * Erf((t - t1) / Math.Sqrt(delta1)) + b * Erf((t - t2) / Math.Sqrt(delta2)) + c;
-                //df1 = 2.0 * a * Math.Exp(-Math.Pow(t - t1, 2.0) / delta1) / Math.Sqrt(delta1) / Math.Sqrt(Math.PI) + 2.0 * b * Math.Exp(-Math.Pow(t - t2, 2.0) / delta2) / Math.Sqrt(delta2) / Math.Sqrt(Math.PI);
-                spline = new CubicSpline();
-                tSpline = new float[nDataSpline];
-                for (i = 0; i < nDataSpline; i++) tSpline[i] = (float)(i * dt_Spline);
-                sf0 = spline.FitAndEval(tSpline, f, new float[1] { (float)t });
-                f1 = sf0[0];
-                dsf0 = spline.FitAndEval(tSpline, df, new float[1] { (float)t });
-                df1 = dsf0[0];
-                //f1 = a * Erf((t - t1) / Math.Sqrt(delta1)) + b * Erf((t - t2) / Math.Sqrt(delta2)) + c;
-                //df1 = 2.0 * a * Math.Exp(-Math.Pow(t - t1, 2.0) / delta1) / Math.Sqrt(delta1) / Math.Sqrt(Math.PI) + 2.0 * b * Math.Exp(-Math.Pow(t - t2, 2.0) / delta2) / Math.Sqrt(delta2) / Math.Sqrt(Math.PI);
-                t = t2;
-                userData1.Tables["Derivatives4"].Rows.Add(t, df1 * (t - tdev) + f1);
-                t = tMinDer + Math.Sqrt(delta2 / 2);
-                userData1.Tables["Derivatives4"].Rows.Add(t, df1 * (t - tdev) + f1);
-
-
-
-                chart1.Series["Fitting"].Points.DataBindXY(userData1.Tables["Fitting"].Rows, "Time", userData1.Tables["Fitting"].Rows, "Voltage");
-                chart1.Series["Derivatives1"].Points.DataBindXY(userData1.Tables["Derivatives1"].Rows, "Time", userData1.Tables["Derivatives1"].Rows, "Voltage");
-                chart1.Series["Derivatives2"].Points.DataBindXY(userData1.Tables["Derivatives2"].Rows, "Time", userData1.Tables["Derivatives2"].Rows, "Voltage");
-                chart1.Series["Derivatives3"].Points.DataBindXY(userData1.Tables["Derivatives3"].Rows, "Time", userData1.Tables["Derivatives3"].Rows, "Voltage");
-                chart1.Series["Derivatives4"].Points.DataBindXY(userData1.Tables["Derivatives4"].Rows, "Time", userData1.Tables["Derivatives4"].Rows, "Voltage");
-            }
-        }
-        */
-
+        bool inLoadingProccess = false;
         double tStart = 0;
         double tEnd = 0;
         private void UpdateFittingDiagram()
         {
-            this.Invoke(new Action(() =>
+            try
             {
-                UD_T1.Value = (decimal)(Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["t1"]));
-                UD_T2.Value = (decimal)(Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["t2"]));
-            }));
-
-            bool IsFittingFound = Convert.ToBoolean(userData1.Tables["Inputs"].Rows[0]["IsFittingFound"]);
-            double Time = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["Time"]);
-            double Interval = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["Interval"]);
-            int nData = userData1.Tables["Data"].Rows.Count;
-            //int nData = (int)(1000.0 * Time / Interval) + 1;
-            int nDataFitting = nData * 3;
-            double dt = Time / (nDataFitting - 1);
-
-            userData1.Tables["Fitting"].Clear();
-            userData1.Tables["Derivatives1"].Clear();
-            userData1.Tables["Derivatives2"].Clear();
-            userData1.Tables["Derivatives3"].Clear();
-            userData1.Tables["Derivatives4"].Clear();
-            userData1.Tables["T1"].Clear();
-            userData1.Tables["T2"].Clear();
-
-            foreach (DataPoint p in chart1.Series["Data"].Points)
-            {
-                if (p.XValue < FirstOfValidInterval || p.XValue > EndOfValidInterval)
+                if (inLoadingProccess) return;
+                this.Invoke(new Action(() =>
                 {
-                    this.Invoke(new Action(() =>
-                    {
-                        p.Color = System.Drawing.Color.LightGray;
-                    }));
-                }
-                else
+                    UD_T1.Value = (decimal)(Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["t1"]));
+                    UD_T2.Value = (decimal)(Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["t2"]));
+                }));
+
+                bool IsFittingFound = Convert.ToBoolean(userData1.Tables["Inputs"].Rows[0]["IsFittingFound"]);
+                double Time = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["Time"]);
+                double Interval = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["Interval"]);
+                int nData = userData1.Tables["Data"].Rows.Count;
+                //int nData = (int)(1000.0 * Time / Interval) + 1;
+                int nDataFitting = nData * 3;
+                double dt = Time / (nDataFitting - 1);
+
+                userData1.Tables["Fitting"].Clear();
+                userData1.Tables["Derivatives1"].Clear();
+                userData1.Tables["Derivatives2"].Clear();
+                userData1.Tables["Derivatives3"].Clear();
+                userData1.Tables["Derivatives4"].Clear();
+                userData1.Tables["T1"].Clear();
+                userData1.Tables["T2"].Clear();
+
+                foreach (DataPoint p in chart1.Series["Data"].Points)
                 {
-                    this.Invoke(new Action(() =>
+                    if (p.XValue < FirstOfValidInterval || p.XValue > EndOfValidInterval)
                     {
-                        p.Color = chart1.Series["Data"].Color;
-                    }));
+                        this.Invoke(new Action(() =>
+                        {
+                            p.Color = System.Drawing.Color.LightGray;
+                        }));
+                    }
+                    else
+                    {
+                        this.Invoke(new Action(() =>
+                        {
+                            p.Color = chart1.Series["Data"].Color;
+                        }));
+                    }
+
                 }
-                    
+
+                foreach (DataPoint p in chart1.Series["Fitting"].Points)
+                {
+                    if (p.XValue < FirstOfValidInterval || p.XValue > EndOfValidInterval)
+                    {
+                        this.Invoke(new Action(() =>
+                        {
+                            p.Color = System.Drawing.Color.LightGray;
+                        }));
+                    }
+                    else
+                    {
+                        this.Invoke(new Action(() =>
+                        {
+                            p.Color = chart1.Series["Fitting"].Color;
+                        }));
+                    }
+
+                }
+
+                if (IsFittingFound)
+                {
+                    double t1 = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["t1"]);
+                    double t2 = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["t2"]);
+                    int left1 = Convert.ToInt32(userData1.Tables["Inputs"].Rows[0]["left1"]);
+                    int left2 = Convert.ToInt32(userData1.Tables["Inputs"].Rows[0]["left2"]);
+                    int right1 = Convert.ToInt32(userData1.Tables["Inputs"].Rows[0]["right1"]);
+                    int right2 = Convert.ToInt32(userData1.Tables["Inputs"].Rows[0]["right2"]);
+                    int center1 = Convert.ToInt32(userData1.Tables["Inputs"].Rows[0]["center1"]);
+                    int center2 = Convert.ToInt32(userData1.Tables["Inputs"].Rows[0]["center2"]);
+                    int curvature1 = Convert.ToInt32(userData1.Tables["Inputs"].Rows[0]["curvature1"]);
+                    int curvature2 = Convert.ToInt32(userData1.Tables["Inputs"].Rows[0]["curvature2"]);
+
+
+                    for (int it = 0; it < nDataSpline; it++)
+                        userData1.Tables["Fitting"].Rows.Add(tArray[it], f[it]);
+
+                    userData1.Tables["T1"].Rows.Add(t1, f[curvature1]);
+                    userData1.Tables["T2"].Rows.Add(t2, f[curvature2]);
+
+                    if (TangentialMethod.Checked && IsUsingFittingTimes)
+                    {
+                        double x1, y1, x2, y2, yAtCurvature;
+                        FindLine(center1, curvature1, out x1, out y1, out x2, out y2, out yAtCurvature);
+                        userData1.Tables["Derivatives1"].Rows.Add(x1, y1);
+                        userData1.Tables["Derivatives1"].Rows.Add(x2, y2);
+
+                        int ixTangential;
+                        FindTangential(tArray[curvature1], yAtCurvature, curvature1 + 4, center2, out ixTangential);
+                        FindLine(ixTangential, curvature1, out x1, out y1, out x2, out y2, out yAtCurvature);
+                        userData1.Tables["Derivatives2"].Rows.Add(x1, y1);
+                        userData1.Tables["Derivatives2"].Rows.Add(x2, y2);
+
+                        FindLine(center2, curvature2, out x1, out y1, out x2, out y2, out yAtCurvature);
+                        userData1.Tables["Derivatives3"].Rows.Add(x1, y1);
+                        userData1.Tables["Derivatives3"].Rows.Add(x2, y2);
+
+                        FindTangential(tArray[curvature2], yAtCurvature, curvature2 + 4, iEndOfValidInterval, out ixTangential);
+                        FindLine(ixTangential, curvature2, out x1, out y1, out x2, out y2, out yAtCurvature);
+                        userData1.Tables["Derivatives4"].Rows.Add(x1, y1);
+                        userData1.Tables["Derivatives4"].Rows.Add(x2, y2);
+                    }
+
+                    chart1.Series["Fitting"].Points.DataBindXY(userData1.Tables["Fitting"].Rows, "Time", userData1.Tables["Fitting"].Rows, "Voltage");
+                    chart1.Series["Derivatives1"].Points.DataBindXY(userData1.Tables["Derivatives1"].Rows, "Time", userData1.Tables["Derivatives1"].Rows, "Voltage");
+                    chart1.Series["Derivatives2"].Points.DataBindXY(userData1.Tables["Derivatives2"].Rows, "Time", userData1.Tables["Derivatives2"].Rows, "Voltage");
+                    chart1.Series["Derivatives3"].Points.DataBindXY(userData1.Tables["Derivatives3"].Rows, "Time", userData1.Tables["Derivatives3"].Rows, "Voltage");
+                    chart1.Series["Derivatives4"].Points.DataBindXY(userData1.Tables["Derivatives4"].Rows, "Time", userData1.Tables["Derivatives4"].Rows, "Voltage");
+                    chart1.Series["T1"].Points.DataBindXY(userData1.Tables["T1"].Rows, "Time", userData1.Tables["T1"].Rows, "Voltage");
+                    chart1.Series["T2"].Points.DataBindXY(userData1.Tables["T2"].Rows, "Time", userData1.Tables["T2"].Rows, "Voltage");
+
+                    UpdateTin();
+                }
+
             }
-
-            foreach (DataPoint p in chart1.Series["Fitting"].Points)
-            {
-                if (p.XValue < FirstOfValidInterval || p.XValue > EndOfValidInterval)
-                {
-                    this.Invoke(new Action(() =>
-                    {
-                        p.Color = System.Drawing.Color.LightGray;
-                    }));
-                }
-                else
-                {
-                    this.Invoke(new Action(() =>
-                    {
-                        p.Color = chart1.Series["Fitting"].Color;
-                    }));
-                }
-                    
-            }
-
-            if (IsFittingFound)
-            {
-                double t1 = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["t1"]);
-                double t2 = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["t2"]);
-                int left1 = Convert.ToInt32(userData1.Tables["Inputs"].Rows[0]["left1"]);
-                int left2 = Convert.ToInt32(userData1.Tables["Inputs"].Rows[0]["left2"]);
-                int right1 = Convert.ToInt32(userData1.Tables["Inputs"].Rows[0]["right1"]);
-                int right2 = Convert.ToInt32(userData1.Tables["Inputs"].Rows[0]["right2"]);
-                int center1 = Convert.ToInt32(userData1.Tables["Inputs"].Rows[0]["center1"]);
-                int center2 = Convert.ToInt32(userData1.Tables["Inputs"].Rows[0]["center2"]);
-                int curvature1 = Convert.ToInt32(userData1.Tables["Inputs"].Rows[0]["curvature1"]);
-                int curvature2 = Convert.ToInt32(userData1.Tables["Inputs"].Rows[0]["curvature2"]);
-
-                
-                for (int it = 0; it < nDataSpline; it++)
-                    userData1.Tables["Fitting"].Rows.Add(tArray[it], f[it]);
-
-                userData1.Tables["T1"].Rows.Add(t1, f[curvature1]);
-                userData1.Tables["T2"].Rows.Add(t2, f[curvature2]);
-
-                if (TangentialMethod.Checked && FittingT1T2IsValid)
-                {
-                    double x1, y1, x2, y2, yAtCurvature;
-                    FindLine(center1, curvature1, out x1, out y1, out x2, out y2, out yAtCurvature);
-                    userData1.Tables["Derivatives1"].Rows.Add(x1, y1);
-                    userData1.Tables["Derivatives1"].Rows.Add(x2, y2);
-
-                    int ixTangential;
-                    FindTangential(tArray[curvature1], yAtCurvature, curvature1 + 4, center2, out ixTangential);
-                    FindLine(ixTangential, curvature1, out x1, out y1, out x2, out y2, out yAtCurvature);
-                    userData1.Tables["Derivatives2"].Rows.Add(x1, y1);
-                    userData1.Tables["Derivatives2"].Rows.Add(x2, y2);
-
-                    FindLine(center2, curvature2, out x1, out y1, out x2, out y2, out yAtCurvature);
-                    userData1.Tables["Derivatives3"].Rows.Add(x1, y1);
-                    userData1.Tables["Derivatives3"].Rows.Add(x2, y2);
-
-                    FindTangential(tArray[curvature2], yAtCurvature, curvature2 + 4, iEndOfValidInterval, out ixTangential);
-                    FindLine(ixTangential, curvature2, out x1, out y1, out x2, out y2, out yAtCurvature);
-                    userData1.Tables["Derivatives4"].Rows.Add(x1, y1);
-                    userData1.Tables["Derivatives4"].Rows.Add(x2, y2);
-                }
-
-                chart1.Series["Fitting"].Points.DataBindXY(userData1.Tables["Fitting"].Rows, "Time", userData1.Tables["Fitting"].Rows, "Voltage");
-                chart1.Series["Derivatives1"].Points.DataBindXY(userData1.Tables["Derivatives1"].Rows, "Time", userData1.Tables["Derivatives1"].Rows, "Voltage");
-                chart1.Series["Derivatives2"].Points.DataBindXY(userData1.Tables["Derivatives2"].Rows, "Time", userData1.Tables["Derivatives2"].Rows, "Voltage");
-                chart1.Series["Derivatives3"].Points.DataBindXY(userData1.Tables["Derivatives3"].Rows, "Time", userData1.Tables["Derivatives3"].Rows, "Voltage");
-                chart1.Series["Derivatives4"].Points.DataBindXY(userData1.Tables["Derivatives4"].Rows, "Time", userData1.Tables["Derivatives4"].Rows, "Voltage");
-                chart1.Series["T1"].Points.DataBindXY(userData1.Tables["T1"].Rows, "Time", userData1.Tables["T1"].Rows, "Voltage");
-                chart1.Series["T2"].Points.DataBindXY(userData1.Tables["T2"].Rows, "Time", userData1.Tables["T2"].Rows, "Voltage");
-
-                UpdateTin();
-            }
-
-            
+            catch { }
         }
 
         private void UpdateTin()
         {
+            if (inLoadingProccess) return;
+            if (userData1.Tables["Inputs"] is null) return;
+            if (userData1.Tables["Inputs"].Rows.Count < 1) return;
             if (userData1.Tables["Inputs"].Rows[0]["IsFittingFound"] is DBNull) return;
             bool IsFittingFound = Convert.ToBoolean(userData1.Tables["Inputs"].Rows[0]["IsFittingFound"]);
             if (!IsFittingFound) return;
@@ -1323,430 +1228,14 @@ namespace Tinplate
         double EndOfValidInterval = 0;
         int iFirstOfValidInterval = 0;
         int iEndOfValidInterval = 0;
-        /*
-        private void FindPicks0(ref double t1, ref double t2, ref double Delta1, ref double Delta2)
-        {
-            float Interval = (float)Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["Interval"])/1000;
-            int nData0 = userData1.Tables["Data"].Rows.Count;
-            float[] t0 = new float[nData0];
-            float[] f0 = new float[nData0];
-            
-            int i = 0;
-            foreach (DataRow row in userData1.Tables["Data"].Rows)
-            {
-                t0[i] = (float)((double)row["Time"]);
-                f0[i] = (float)((double)row["Voltage"]);
-                i++;
-            }
-
-            //int nData = (int)(nData0 / 6);
-            int nData = 100;
-            nDataSpline = nData;
-            float[] t = new float[nData];
-            f = new float[nData];
-            df = new float[nData];
-            float[] pick1 = new float[nData];
-            float[] pick2 = new float[nData];
-
-            float stepSize = (t0[t0.Length - 1] - t0[0]) / (nData - 1);
-            dt_Spline = stepSize;
-            for (i = 0; i < nData; i++) t[i] = t0[0] + i * stepSize;
-
-            CubicSpline spline = new CubicSpline();
-            float[] sf0 = spline.FitAndEval(t0, f0, t);
-
-            int nsmooth = 1;
-            for (i = 0; i < nData; i++)
-            {
-                float sum = 0.0f;
-                int n0 = (int)((nsmooth - 1) / 2);
-                for (int j = 0; j < nsmooth; j++)
-                {
-                    int i0 = i + j - n0;
-                    if (i0 < 0) i0 = 0;
-                    if (i0 > nData - 1) i0 = nData - 1;
-                    sum += sf0[i0];
-                }
-                f[i] = sum / nsmooth;
-            }
-
-            df[0] = (f[1] - f[0]) / dt_Spline;
-            df[nData - 1] = (f[nData - 1] - f[nData - 2]) / dt_Spline;
-            for (i = 1; i < nData - 1; i++)
-                df[i] = (f[i + 1] - f[i - 1]) / 2 / dt_Spline;
-
-            int imax1 = 11;
-            float max1 = df[11];
-            float tmax1 = t[11];
-
-            for (i = 1; i < nData; i++)
-                if (max1 < df[i] && i > 10)
-                {
-                    max1 = df[i];
-                    imax1 = i;
-                    tmax1 = t[i];
-                }
-
-            int left = imax1 - 10;
-            int center = imax1;
-            int right = imax1 + 10;
-            if (left < 0) left = 0;
-            if (right < 0) right = 0;
-            if (left > nData - 1) left = nData - 1;
-            if (right > nData - 1) right = nData - 1;
-
-            double smin = 1000000.0;
-            double delta1_left = 0.00001;
-            for (double d1 = 0.00001; d1 < 200; d1 += 0.1)
-            {
-                double s = 0.0;
-                for (i = left; i <= center; i++)
-                {
-                    double delta = max1 * Math.Exp(-Math.Pow(t[i] - tmax1, 2.0) / d1) - df[i];
-                    s += Math.Pow(delta, 2.0);
-                }
-
-                if (s < smin)
-                {
-                    smin = s;
-                    delta1_left = d1;
-                }
-            }
-
-            double delta1_right = 0.00001;
-            smin = 1000000.0;
-            for (double d1 = 0.00001; d1 < 200; d1 += 0.1)
-            {
-                double s = 0.0;
-                for (i = center; i <= right; i++)
-                {
-                    double delta = max1 * Math.Exp(-Math.Pow(t[i] - tmax1, 2.0) / d1) - df[i];
-                    s += Math.Pow(delta, 2.0);
-                }
-
-                if (s < smin)
-                {
-                    smin = s;
-                    delta1_right = d1;
-                }
-            }
-
-            for (i = 0; i < nData; i++)
-            {
-                if (i < center)
-                    pick1[i] = (float)(max1 * Math.Exp(-Math.Pow(t[i] - tmax1, 2.0) / delta1_left));
-                else
-                    pick1[i] = (float)(max1 * Math.Exp(-Math.Pow(t[i] - tmax1, 2.0) / delta1_right));
-                pick2[i] = df[i] - pick1[i];
-            }
-
-            int imax2 = 11;
-            double max2 = pick2[11];
-            double tmax2 = t[11];
-
-            for (i = 1; i < nData; i++)
-                if (max2 < pick2[i] && i > 10)
-                {
-                    max2 = pick2[i];
-                    imax2 = i;
-                    tmax2 = t[i];
-                }
-
-            smin = 1000000.0;
-            double delta2 = 0.00001;
-            left = imax2 - 10;
-            right = imax2 + 10;
-            if (left < 0) left = 0;
-            if (right < 0) right = 0;
-            if (left > nData - 1) left = nData - 1;
-            if (right > nData - 1) right = nData - 1;
-            for (double d2 = 0.00001; d2 < 200; d2 += 0.1)
-            {
-                double s = 0.0;
-                for (i = left; i <= right; i++)
-                {
-                    double delta = max2 * Math.Exp(-Math.Pow(t[i] - tmax2, 2.0) / d2) - df[i];
-                    s += Math.Pow(delta, 2.0);
-                }
-
-                if (s < smin)
-                {
-                    smin = s;
-                    delta2 = d2;
-                }
-            }
-
-            userData1.Tables["Inputs"].Rows[0]["IsFittingFound"] = true;
-
-            
-            if (tmax1 < tmax2)
-            {
-                t1 = tmax1;
-                t2 = tmax2;
-                Delta1 = delta1_left;
-                Delta2 = delta2;
-            }
-            else
-            {
-                t1 = tmax2;
-                t2 = tmax1;
-                Delta1 = delta2;
-                Delta2 = delta1_left;
-            }
-        }
-      
-
-
-        private void FindPicks1(ref double t1, ref double t2, ref double Delta1, ref double Delta2)
-        {
-            float Interval = (float)Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["Interval"]) / 1000;
-            int nData0 = userData1.Tables["Data"].Rows.Count;
-            float[] t0 = new float[nData0];
-            float[] f0 = new float[nData0];
-
-            int i = 0;
-            foreach (DataRow row in userData1.Tables["Data"].Rows)
-            {
-                t0[i] = (float)((double)row["Time"]);
-                f0[i] = (float)((double)row["Voltage"]);
-                i++;
-            }
-
-            //int nData = (int)(nData0 / 6);
-            int nData = 300;
-            nDataSpline = nData;
-            float[] t = new float[nData];
-            f = new float[nData];
-            df = new float[nData];
-
-            float stepSize = (t0[t0.Length - 1] - t0[0]) / (nData - 1);
-            dt_Spline = stepSize;
-            for (i = 0; i < nData; i++) t[i] = t0[0] + i * stepSize;
-
-            CubicSpline spline = new CubicSpline();
-            float[] sf0 = spline.FitAndEval(t0, f0, t);
-
-            int nsmooth = 1;
-            for (i = 0; i < nData; i++)
-            {
-                float sum = 0.0f;
-                int n0 = (int)((nsmooth - 1) / 2);
-                for (int j = 0; j < nsmooth; j++)
-                {
-                    int i0 = i + j - n0;
-                    if (i0 < 0) i0 = 0;
-                    if (i0 > nData - 1) i0 = nData - 1;
-                    sum += sf0[i0];
-                }
-                f[i] = sum / nsmooth;
-            }
-
-            df[0] = (f[1] - f[0]) / dt_Spline;
-            df[nData - 1] = (f[nData - 1] - f[nData - 2]) / dt_Spline;
-            for (i = 1; i < nData - 1; i++)
-                df[i] = (f[i + 1] - f[i - 1]) / 2 / dt_Spline;
-
-            int imax1 = 11;
-            float max1 = df[11];
-            float tmax1 = t[11];
-
-            for (i = 1; i < nData; i++)
-                if (max1 < df[i] && i > 10)
-                {
-                    max1 = df[i];
-                    imax1 = i;
-                    tmax1 = t[i];
-                }
-
-            int deltaN = (int)(nData / 9);
-
-            int left = imax1 - deltaN;
-            int center = imax1;
-            int right = imax1 + deltaN;
-            if (left < 0) left = 0;
-            if (right < 0) right = 0;
-            if (left > nData - 1) left = nData - 1;
-            if (right > nData - 1) right = nData - 1;
-
-            double[] doublet = new double[2 * deltaN + 1];
-            double[] doublef = new double[2 * deltaN + 1];
-            int cnt = 0;
-            for (i = left; i <= right; i++)
-            {
-                doublet[cnt] = t[i];
-                doublef[cnt] = f[i];
-                cnt++;
-            }
-
-            double fit_a;
-            double fit_b;
-            double fit_c;
-            double fit_d;
-            double fit_g;
-            alglib.lsfitreport rep;
-            alglib.logisticfit5(doublet, doublef, 2 * deltaN + 1, out fit_a, out fit_b, out fit_c, out fit_d, out fit_g, out rep);
-
-            double[] fit_logistic1 = new double[2 * deltaN + 1];
-            double[] fit_pick1 = new double[2 * deltaN + 1];
-            double[] fit_dpick1 = new double[2 * deltaN + 1];
-            double[] fit_Curvature1 = new double[2 * deltaN + 1];
-            for (i = 0; i < 2 * deltaN + 1; i++)
-            {
-                fit_logistic1[i] = alglib.logisticcalc5(doublet[i], fit_a, fit_b, fit_c, fit_d, fit_g);
-                fit_pick1[i] = dlogisticcalc5(doublet[i], fit_a, fit_b, fit_c, fit_d, fit_g);
-                fit_dpick1[i] = d2logisticcalc5(doublet[i], fit_a, fit_b, fit_c, fit_d, fit_g);
-                fit_Curvature1[i] = Math.Abs(fit_dpick1[i]) / Math.Pow( 1.0 + Math.Pow(fit_pick1[i], 2.0) , 3.0/2.0);
-            }
-
-            int imaxCurv1 = deltaN;
-            double maxCurv1 = fit_Curvature1[deltaN];
-            double tmaxCurv1 = doublet[deltaN];
-            for (i = deltaN; i < 2 * deltaN + 1; i++)
-                if (maxCurv1 < fit_Curvature1[i])
-                {
-                    maxCurv1 = fit_Curvature1[i];
-                    imaxCurv1 = i;
-                    tmaxCurv1 = doublet[i];
-                }
-
-            float[] pick1 = new float[nData];
-            float[] pick2_0 = new float[nData];
-            float[] pick2 = new float[nData];
-            for (i = 0; i < nData; i++)
-            {
-                if (i >= left && i <= right)
-                    pick1[i] = (float)dlogisticcalc5(t[i], fit_a, fit_b, fit_c, fit_d, fit_g);
-                else
-                    pick1[i] = 0;
-
-                pick2_0[i] = df[i] - pick1[i];
-                pick2[i] = pick2_0[i];
-            }
-
-            
-            nsmooth = 7;
-            for (int smoothingitt = 0; smoothingitt < 5; smoothingitt++)
-            {
-                for (i = 0; i < nData; i++)
-                {
-                    if (i >= left && i <= right)
-                    {
-                        float sum = 0.0f;
-                        int n0 = (int)((nsmooth - 1) / 2);
-                        for (int j = 0; j < nsmooth; j++)
-                        {
-                            int i0 = i + j - n0;
-                            if (i0 < 0) i0 = 0;
-                            if (i0 > nData - 1) i0 = nData - 1;
-                            sum += pick2_0[i0];
-                        }
-                        pick2[i] = sum / nsmooth;
-                    }
-                }
-                for (i = 0; i < nData; i++) pick2_0[i] = pick2[i];
-            }
-
-            int imax2 = 11;
-            double max2 = pick2[11];
-            double tmax2 = t[11];
-
-            for (i = 1; i < nData; i++)
-                if (max2 < pick2[i] && i > 10)
-                {
-                    max2 = pick2[i];
-                    imax2 = i;
-                    tmax2 = t[i];
-                }
-
-            int left2 = imax2 - deltaN;
-            int center2 = imax2;
-            int right2 = imax2 + deltaN;
-            if (left2 < 0) left2 = 0;
-            if (right2 < 0) right2 = 0;
-            if (left2 > nData - 1) left2 = nData - 1;
-            if (right2 > nData - 1) right2 = nData - 1;
-
-            double[] doublet2 = new double[2 * deltaN + 1];
-            double[] doublef2 = new double[2 * deltaN + 1];
-            cnt = 0;
-            for (i = left2; i <= right2; i++)
-            {
-                doublet2[cnt] = t[i];
-                doublef2[cnt] = f[i];
-                cnt++;
-            }
-
-            double fit_a2;
-            double fit_b2;
-            double fit_c2;
-            double fit_d2;
-            double fit_g2;
-            alglib.lsfitreport rep2;
-            alglib.logisticfit5(doublet2, doublef2, 2 * deltaN + 1, out fit_a2, out fit_b2, out fit_c2, out fit_d2, out fit_g2, out rep2);
-
-            double[] fit_logistic2 = new double[2 * deltaN + 1];
-            double[] fit_pick2 = new double[2 * deltaN + 1];
-            double[] fit_dpick2 = new double[2 * deltaN + 1];
-            double[] fit_Curvature2 = new double[2 * deltaN + 1];
-            for (i = 0; i < 2 * deltaN + 1; i++)
-            {
-                fit_logistic2[i] = alglib.logisticcalc5(doublet2[i], fit_a2, fit_b2, fit_c2, fit_d2, fit_g2);
-                fit_pick2[i] = dlogisticcalc5(doublet2[i], fit_a2, fit_b2, fit_c2, fit_d2, fit_g2);
-                fit_dpick2[i] = d2logisticcalc5(doublet2[i], fit_a2, fit_b2, fit_c2, fit_d2, fit_g2);
-                fit_Curvature2[i] = Math.Abs(fit_dpick2[i]) / Math.Pow(1.0 + Math.Pow(fit_pick2[i], 2.0), 3.0 / 2.0);
-            }
-
-            int imaxCurv2 = deltaN;
-            double maxCurv2 = fit_Curvature2[deltaN];
-            double tmaxCurv2 = doublet2[deltaN];
-            for (i = deltaN; i < 2 * deltaN + 1; i++)
-                if (maxCurv2 < fit_Curvature2[i])
-                {
-                    maxCurv2 = fit_Curvature2[i];
-                    imaxCurv2 = i;
-                    tmaxCurv2 = doublet2[i];
-                }
-
-
-            //double[] tdouble = new double[nData];
-            //double[] fdouble = new double[nData];
-            //for (i = 0; i < nData; i++)
-            //{
-            //    doublet[cnt] = t[i];
-            //    doublef[cnt] = f[i];
-            //}
-            //alglib.spline1dinterpolant s;
-            //alglib.spline1dbuildcubic(tdouble, fdouble, out s);
-            //double sp, dsp, d2sp;
-            //alglib.spline1ddiff(s, t, out sp, out dsp, out d2sp);
-
-
-
-            userData1.Tables["Inputs"].Rows[0]["IsFittingFound"] = true;
-
-            if (tmaxCurv1 < tmaxCurv2)
-            {
-                t1 = tmaxCurv1;
-                t2 = tmaxCurv2;
-                Delta1 = 0.1;
-                Delta2 = 0.1;
-            }
-            else
-            {
-                t1 = tmaxCurv2;
-                t2 = tmaxCurv1;
-                Delta1 = 0.1;
-                Delta2 = 0.1;
-            }
-
-
-            cnt++;
-        }
-          */
-
-        bool FittingT1T2IsValid = false;
+       
+        bool IsUsingFittingTimes = false;
         private void FindPicks()
         {
+            if (TangentialMethod.Checked)
+                userData1.Tables["Inputs"].Rows[0]["FittingMethod"] = "Tangential";
+            if (CurvatureMethod.Checked)
+                userData1.Tables["Inputs"].Rows[0]["FittingMethod"] = "Curvature";
             int nData0 = userData1.Tables["Data"].Rows.Count;
             if (nData0 == 0) return;
             float Interval = (float)Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["Interval"]) / 1000;
@@ -2002,8 +1491,10 @@ namespace Tinplate
                         imaxCurv2 = i; break;
                     }
             }
+
             userData1.Tables["Inputs"].Rows[0]["IsFittingFound"] = true;
-            FittingT1T2IsValid = true;
+            IsUsingFittingTimes = true;
+            userData1.Tables["Inputs"].Rows[0]["IsUsingFittingTimes"] = IsUsingFittingTimes;
             userData1.Tables["Inputs"].Rows[0]["t1"] = tmaxCurv1;
             userData1.Tables["Inputs"].Rows[0]["t2"] = tmaxCurv2;
             userData1.Tables["Inputs"].Rows[0]["left1"] = left1;
@@ -2056,57 +1547,131 @@ namespace Tinplate
             return (b * (a - d) * g * Math.Pow(x / c, b) * Math.Pow(1.0 + Math.Pow(x / c, b), -2.0 - g) * (1.0 - b + (1.0 + b * g) * Math.Pow(x / c, b))) / Math.Pow(x, 2);
         }
 
+        double OffsetRemovalProc_Vmax = 0;
+        double OffsetRemovalProc_Vmin = 0;
+        double OffsetRemovalProc_Imax = 0;
+        double OffsetRemovalProc_Imin = 0;
         private void Pg_PG_EVT_AProcessFinished(object sender, AProcessFinishedEventArgs e)
         {
             if (e.Process == "AIV")
             {
-                //dettach sample and dummy
-                radioButton2.Checked = false;
-                radioButton3.Checked = false;
-                radioButton1.Checked = true;
-
-                int nData0 = userData1.Tables["Data"].Rows.Count;
-                if (nData0 == 0) return;
-
-                if (ProcessKilled)
+                if (!isOffsetRemovalProc)
                 {
-                    userData1.Tables["Data"].Rows.RemoveAt(nData0 - 1);
-                }
+                    //dettach sample and dummy
+                    radioButton2.Checked = false;
+                    radioButton3.Checked = false;
+                    radioButton1.Checked = true;
 
-                nData0 = userData1.Tables["Data"].Rows.Count;
-                if (nData0 == 0) return;
+                    ProccessData();
 
-                double[] t0 = new double[nData0];
-                double[] f0 = new double[nData0];
-                int i = 0;
-                foreach (DataRow row in userData1.Tables["Data"].Rows)
-                {
-                    t0[i] = (double)row["Time"];
-                    f0[i] = (double)row["Voltage"];
-                    i++;
-                }
-
-                try
-                {
-                    tStart = t0[0];
-                    tEnd = t0[nData0 - 1];
-                    this.Invoke(new Action(() =>
+                    if (checkBox1.Checked)
                     {
-                        VA_t_min.X = tStart;
-                        VA_t_max.X = tEnd;
-                    }));
-                    FirstOfValidInterval = tStart;
-                    EndOfValidInterval = tEnd;
+                        CreateAutoReport();
+                    }
                 }
-                catch
-                { }
+                else
+                {
+                    double Imean = OffsetRemovalProc_Imean / OffsetRemovalProc_nData;
+                    double Vmean = OffsetRemovalProc_Vmean / OffsetRemovalProc_nData;
+                    if (Imean > 0)
+                        OffsetRemovalProc_Imax = Imean;
+                    else
+                        OffsetRemovalProc_Imin = Imean;
 
-                FindPicks();
+                    if (Vmean > 0)
+                        OffsetRemovalProc_Vmax = Vmean;
+                    else
+                        OffsetRemovalProc_Vmin = Vmean;
+
+
+                    if (OffsetRemovalProc_CurrentSet < 0) //I mean -100. Now we can calculate the offset and gain
+                    {
+                        double offsetI = (OffsetRemovalProc_Imax + OffsetRemovalProc_Imin) / 2;
+                        double offsetV = (OffsetRemovalProc_Vmax + OffsetRemovalProc_Vmin) / 2;
+                        double newImax = OffsetRemovalProc_Imax - offsetI;
+                        double newImin = OffsetRemovalProc_Imin - offsetI;
+                        double newVmax = OffsetRemovalProc_Vmax - offsetV;
+                        double newVmin = OffsetRemovalProc_Vmin - offsetV;
+                        double gainI= 0.1/ newImax;
+                        double gainV = 0.12 / newVmax;
+
+                        decimal offsetV_dec = Convert.ToDecimal(offsetV);
+                        decimal gainV_dec = Convert.ToDecimal(gainV * 100);
+                        decimal offsetI_dec = Convert.ToDecimal(offsetI * 1000);
+                        decimal gainI_dec = Convert.ToDecimal(gainI * 100);
+
+                        tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadVoltageOffset"] = offsetV_dec;
+                        tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadVoltageGain"] = gainV_dec;
+                        tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadCurrentOffset"] = offsetI_dec;
+                        tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadCurrentGain"] = gainI_dec;
+                        tinSampleSettings1.WriteXml(TinSampleSettingsxml);
+                        
+                        isOffsetRemovalProc = false;
+                    }
+                    else
+                        StartOffsetRemovalAt(-100);
+                }
+            }
+        }
+
+        
+        private void CreateAutoReport()
+        {
+            String dateAndTime = textBox4.Text;
+            dateAndTime = dateAndTime.Replace("/","-");
+            dateAndTime = dateAndTime.Replace(":", "-");
+            dateAndTime = dateAndTime.Replace(" ", "_");
+            string filename =  "Report_" + dateAndTime + ".dat";
+            string dir = textBox3.Text;
+            string filepath = Path.Combine(dir, Path.GetFileName(filename));
+            ExportData(filepath, true);
+        }
+
+
+        private void ProccessData()
+        {
+
+            int nData0 = userData1.Tables["Data"].Rows.Count;
+            if (nData0 == 0) return;
+
+            if (ProcessKilled)
+            {
+                userData1.Tables["Data"].Rows.RemoveAt(nData0 - 1);
+            }
+
+            nData0 = userData1.Tables["Data"].Rows.Count;
+            if (nData0 == 0) return;
+
+            double[] t0 = new double[nData0];
+            double[] f0 = new double[nData0];
+            int i = 0;
+            foreach (DataRow row in userData1.Tables["Data"].Rows)
+            {
+                t0[i] = (double)row["Time"];
+                f0[i] = (double)row["Voltage"];
+                i++;
+            }
+
+            try
+            {
+                tStart = t0[0];
+                tEnd = t0[nData0 - 1];
                 this.Invoke(new Action(() =>
                 {
-                    UpdateFittingDiagram();
+                    VA_t_min.X = tStart;
+                    VA_t_max.X = tEnd;
                 }));
+                FirstOfValidInterval = tStart;
+                EndOfValidInterval = tEnd;
             }
+            catch
+            { }
+
+            FindPicks();
+            this.Invoke(new Action(() =>
+            {
+                UpdateFittingDiagram();
+            }));
         }
 
         private double Erf(double x)
@@ -2237,6 +1802,7 @@ namespace Tinplate
 
         private void UD_T1_ValueChanged(object sender, EventArgs e)
         {
+            if (inLoadingProccess) return;
             if ((double)UD_T1.Value > tEnd || (double)UD_T1.Value < tStart)
             {
                 if ((double)UD_T1.Value > tEnd) UD_T1.Value = (decimal)tEnd;
@@ -2258,6 +1824,7 @@ namespace Tinplate
 
         private void UD_T2_ValueChanged(object sender, EventArgs e)
         {
+            if (inLoadingProccess) return;
             if ((double)UD_T2.Value > tEnd || (double)UD_T2.Value < tStart)
             {
                 if ((double)UD_T2.Value > tEnd) UD_T2.Value = (decimal)tEnd;
@@ -2390,7 +1957,10 @@ namespace Tinplate
         private void btn_choos_t1_Click(object sender, EventArgs e)
         {
             if (SelectionModeT2)
+            {
                 SelectionModeT2 = false;
+                UD_T2.BackColor = Color.White;
+            }
 
             if (SelectionModeT1)
                 SelectionModeT1 = false;
@@ -2418,7 +1988,10 @@ namespace Tinplate
         private void btn_choos_t2_Click(object sender, EventArgs e)
         {
             if (SelectionModeT1)
+            {
                 SelectionModeT1 = false;
+                UD_T1.BackColor = Color.White;
+            }
 
             if (SelectionModeT2)
                 SelectionModeT2 = false;
@@ -2471,7 +2044,8 @@ namespace Tinplate
                     UD_T1.Value = (decimal)dummy;
                 }
                 SelectionModeT1 = false;
-                FittingT1T2IsValid = false;
+                IsUsingFittingTimes = false;
+                userData1.Tables["Inputs"].Rows[0]["IsUsingFittingTimes"] = IsUsingFittingTimes;
             }
 
             if (SelectionModeT2)
@@ -2486,7 +2060,8 @@ namespace Tinplate
                     UD_T2.Value = (decimal)dummy;
                 }
                 SelectionModeT2 = false;
-                FittingT1T2IsValid = false;
+                IsUsingFittingTimes = false;
+                userData1.Tables["Inputs"].Rows[0]["IsUsingFittingTimes"] = IsUsingFittingTimes;
             }
 
             chart1.ChartAreas[0].CursorX.LineColor = Color.Blue;
@@ -2550,25 +2125,25 @@ namespace Tinplate
 
         private void numericUpDown5_ValueChanged(object sender, EventArgs e)
         {
-            tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadVoltageOffset"] = numericUpDown5.Value;
+            //tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadVoltageOffset"] = numericUpDown5.Value;
             tinSampleSettings1.WriteXml(TinSampleSettingsxml);
         }
 
         private void numericUpDown8_ValueChanged(object sender, EventArgs e)
         {
-            tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadVoltageGain"] = numericUpDown8.Value;
+            //tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadVoltageGain"] = numericUpDown8.Value;
             tinSampleSettings1.WriteXml(TinSampleSettingsxml);
         }
 
         private void numericUpDown7_ValueChanged(object sender, EventArgs e)
         {
-            tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadCurrentOffset"] = numericUpDown7.Value;
+            //tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadCurrentOffset"] = numericUpDown7.Value;
             tinSampleSettings1.WriteXml(TinSampleSettingsxml);
         }
 
         private void numericUpDown9_ValueChanged(object sender, EventArgs e)
         {
-            tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadCurrentGain"] = numericUpDown9.Value;
+            //tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadCurrentGain"] = numericUpDown9.Value;
             tinSampleSettings1.WriteXml(TinSampleSettingsxml);
         }
         private void tinSampleSettingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2599,26 +2174,94 @@ namespace Tinplate
         {
             IsAdmin = true;
             groupBox7.Visible = true;
-            numericUpDown10.Visible = true;
             numericUpDown11.Visible = true;
-            label42.Visible = true;
-            label42.Visible = true;
-            label44.Visible = true;
             label47.Visible = true;
+            button5.Visible = true;
+            button7.Visible = true;
             panel6.Size = new Size(panel6.Size.Width, 790);
         }
 
+        private void button8_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1.Filter = "Data files (*.dat)|*.dat";
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                ExportData(saveFileDialog1.FileName, true);
+        }
+
+        bool isOffsetRemovalProc;
+        double OffsetRemovalProc_CurrentSet = 0;
+        double OffsetRemovalProc_Vmean;
+        double OffsetRemovalProc_Imean;
+        int OffsetRemovalProc_Voltage_Range_Mode;
+        int OffsetRemovalProc_Current_Range_Mode;
+        int OffsetRemovalProc_nData = 0;
+        private void offsetRemovalToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            isOffsetRemovalProc = true;
+            
+
+            int settingsver = pg.LoadSettings("C:/Users/DELL/source/repos/PGStatLibrary/Tinplate/bin/settings.bin");
+
+            /*pg.ClearBuffer();
+            double[] output = pg.ivset(0);
+            PrintOutput("ivset:   Real V=" + output[0].ToString() + "  ,  Real I=" + output[1].ToString() + "\n");
+
+            Thread.Sleep(1000);
+
+            output = pg.ivset(2047);
+            PrintOutput("ivset:   Real V=" + output[0].ToString() + "  ,  Real I=" + output[1].ToString() + "\n");
+
+            Thread.Sleep(1000);
+
+            output = pg.ivset(4095);
+            PrintOutput("ivset:   Real V=" + output[0].ToString() + "  ,  Real I=" + output[1].ToString() + "\n");*/
+
+            OffsetRemovalProc_Voltage_Range_Mode = comboBox1.SelectedIndex;
+            OffsetRemovalProc_Current_Range_Mode = comboBox2.SelectedIndex;
+            StartOffsetRemovalAt(100);
+
+            
+        }
+
+        private void StartOffsetRemovalAt(double current)
+        {
+            pg.sample(1);
+            pg.sample(0);
+            pg.dummy(1);
+            OffsetRemovalProc_Imean = 0;
+            OffsetRemovalProc_Vmean = 0;
+
+            pg.PGmode(3);
+
+            OffsetRemovalProc_nData = 25;
+            int nData = OffsetRemovalProc_nData;
+            OffsetRemovalProc_CurrentSet = current;
+            pg.IV_Input.Initial_Potential = OffsetRemovalProc_CurrentSet;
+            pg.IV_Input.Final_Potential = OffsetRemovalProc_CurrentSet;
+            pg.IV_Input.Step = nData;
+            //pg.IV_Input.Ideal_Voltage = 0;
+            pg.IV_Input.Voltage_Range_Mode = OffsetRemovalProc_Voltage_Range_Mode;
+            pg.IV_Input.Current_Range_Mode = OffsetRemovalProc_Current_Range_Mode;
+            //pg.IV_Input.Current_Multiplier_Mode = 0;
+            //pg.IV_Input.Voltage_Multiplier_Mode = 0;
+            //pg.IV_Input.Pretreatment_Voltage = 0;
+            pg.IV_Input.Equilibration_Time = 0;
+            //pg.IV_Input.Post_Processing_Prob_Off = false;
+            pg.IV_Input.Interval_Time = 100; //(ms)
+            pg.IV_Input.Voltage_Filter = 0;
+            pg.IV_Input.Is_Relative_Reference = false;
+            pg.IV_Input.IsCalculateOffsetBeforeStart = false;
+            pg.AIV_old();
+        }
 
         private void AdminLogout()
         {
             IsAdmin = false;
             groupBox7.Visible = false;
-            numericUpDown10.Visible = false;
             numericUpDown11.Visible = false;
-            label42.Visible = false;
-            label43.Visible = false;
-            label44.Visible = false;
             label47.Visible = false;
+            button5.Visible = false;
+            button7.Visible = false;
             panel6.Size = new Size(panel6.Size.Width, 478);
         }
 
