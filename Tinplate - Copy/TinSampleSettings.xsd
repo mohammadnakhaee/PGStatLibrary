@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="TinSampleSettings" targetNamespace="http://tempuri.org/TinSampleSettings.xsd" xmlns:mstns="http://tempuri.org/TinSampleSettings.xsd" xmlns="http://tempuri.org/TinSampleSettings.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="TinSampleSettings" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="TinSampleSettings" msprop:Generator_UserDSName="TinSampleSettings">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Coefficients" msprop:Generator_TableClassName="CoefficientsDataTable" msprop:Generator_TableVarName="tableCoefficients" msprop:Generator_RowChangedName="CoefficientsRowChanged" msprop:Generator_TablePropName="Coefficients" msprop:Generator_RowDeletingName="CoefficientsRowDeleting" msprop:Generator_RowChangingName="CoefficientsRowChanging" msprop:Generator_RowEvHandlerName="CoefficientsRowChangeEventHandler" msprop:Generator_RowDeletedName="CoefficientsRowDeleted" msprop:Generator_RowClassName="CoefficientsRow" msprop:Generator_UserTableName="Coefficients" msprop:Generator_RowEvArgName="CoefficientsRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CorrectionCoef" msprop:Generator_ColumnVarNameInTable="columnCorrectionCoef" msprop:Generator_ColumnPropNameInRow="CorrectionCoef" msprop:Generator_ColumnPropNameInTable="CorrectionCoefColumn" msprop:Generator_UserColumnName="CorrectionCoef" type="xs:decimal" minOccurs="0" />
+              <xs:element name="SampleArea" msprop:Generator_ColumnVarNameInTable="columnSampleArea" msprop:Generator_ColumnPropNameInRow="SampleArea" msprop:Generator_ColumnPropNameInTable="SampleAreaColumn" msprop:Generator_UserColumnName="SampleArea" type="xs:decimal" minOccurs="0" />
+              <xs:element name="SetCurrentOffset" msprop:Generator_ColumnVarNameInTable="columnSetCurrentOffset" msprop:Generator_ColumnPropNameInRow="SetCurrentOffset" msprop:Generator_ColumnPropNameInTable="SetCurrentOffsetColumn" msprop:Generator_UserColumnName="SetCurrentOffset" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ReadVoltageOffset" msprop:Generator_ColumnVarNameInTable="columnReadVoltageOffset" msprop:Generator_ColumnPropNameInRow="ReadVoltageOffset" msprop:Generator_ColumnPropNameInTable="ReadVoltageOffsetColumn" msprop:Generator_UserColumnName="ReadVoltageOffset" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ReadVoltageGain" msprop:Generator_ColumnVarNameInTable="columnReadVoltageGain" msprop:Generator_ColumnPropNameInRow="ReadVoltageGain" msprop:Generator_ColumnPropNameInTable="ReadVoltageGainColumn" msprop:Generator_UserColumnName="ReadVoltageGain" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ReadCurrentOffset" msprop:Generator_ColumnVarNameInTable="columnReadCurrentOffset" msprop:Generator_ColumnPropNameInRow="ReadCurrentOffset" msprop:Generator_ColumnPropNameInTable="ReadCurrentOffsetColumn" msprop:Generator_UserColumnName="ReadCurrentOffset" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ReadCurrentGain" msprop:Generator_ColumnVarNameInTable="columnReadCurrentGain" msprop:Generator_ColumnPropNameInRow="ReadCurrentGain" msprop:Generator_ColumnPropNameInTable="ReadCurrentGainColumn" msprop:Generator_UserColumnName="ReadCurrentGain" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

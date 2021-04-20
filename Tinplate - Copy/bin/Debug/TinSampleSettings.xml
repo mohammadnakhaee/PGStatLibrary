@@ -1,0 +1,12 @@
+<?xml version="1.0" standalone="yes"?>
+<TinSampleSettings xmlns="http://tempuri.org/TinSampleSettings.xsd">
+  <Coefficients>
+    <CorrectionCoef>0.65</CorrectionCoef>
+    <SampleArea>20.428</SampleArea>
+    <SetCurrentOffset>0</SetCurrentOffset>
+    <ReadVoltageOffset>-0.0020256750258691</ReadVoltageOffset>
+    <ReadVoltageGain>82.5120422435859</ReadVoltageGain>
+    <ReadCurrentOffset>2.14661676754412</ReadCurrentOffset>
+    <ReadCurrentGain>141.992019885473</ReadCurrentGain>
+  </Coefficients>
+</TinSampleSettings>

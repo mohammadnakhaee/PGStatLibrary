@@ -311,6 +311,8 @@ namespace PGStatLibrary
         /// The last value of IdealVoltage.
         /// </summary>
         public double LastIdealVoltage { get; private set; }
+        public int Lastpostfilter { get; private set; }
+
         /****************************************************************************************************/
 
         /***********************************************Events***********************************************/
@@ -1005,7 +1007,17 @@ namespace PGStatLibrary
             string order = "vfilter " + value.ToString();
             if (SendAndReceiveOK(order)) Lastvfilter = value;
         }
-
+        /// <summary>
+        /// This function changes the voltage filter.<para />
+        /// 0:<para />
+        /// 1:<para />
+        /// 2:
+        /// </summary>
+        public void postfilter(int value)
+        {
+            string order = "postfilter " + value.ToString();
+            if (SendAndReceiveOK(order)) Lastpostfilter = value;
+        }
         /// <summary>
         /// This function changes the DC current filter.<para />
         /// 0:<para />
@@ -2006,8 +2018,9 @@ namespace PGStatLibrary
                 //Label_Filter_C_I.Text = "-------";
             }
 
-            vfilter(VFilter);
+            vfilter(2);
             idcfilter(IFilter);
+            postfilter(1);
         }
 
         private void GetVOffsetFromSettings(int vmlp, ref double Voffset)
@@ -2690,7 +2703,7 @@ namespace PGStatLibrary
             Current = Bytes[2] | ((Bytes[3] & 15) << 8);
         }
 
-        private void AIV_Process_old()
+        private void AIV_Process_old()//initilize iv
         {
             bool pingstatusHistory = IsPingEnabled();
             DisablePing();
@@ -2729,6 +2742,8 @@ namespace PGStatLibrary
             zeroset(Myzeroset);
             //vdcmlp(IV_Input.Voltage_Multiplier_Mode);
             idcmlp(0);// IV_Input.Current_Multiplier_Mode);
+            postfilter(2);//moosa
+            vfilter(3);
             double ThisIV_Voffset = 0;
             double ThisIV_Ioffset = 0;
 
@@ -2780,7 +2795,7 @@ namespace PGStatLibrary
             order = order + string.Format("{0: 0000}", ivltTo);
             order = order + string.Format("{0: 0000}", IV_Input.Step + 1);
             order = order + string.Format("{0: 000000}", iTimeStep);
-            if (!ACommand(Port, order)) return; //iv 0000 4094 0100 003125
+            if (!ACommand(Port, order)) return; //iv 0000 4094 0100 003125 //iv 3509 3509 0022 001561
             for (int d = 0; d < 8; d++) Port.ReadByte();
 
             DataCountInQueue = cntMax;

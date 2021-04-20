@@ -11,12 +11,15 @@ using PGStatLibrary;
 using System.Threading;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.IO;
+using System.Diagnostics;
+
 //test 1
 namespace Tinplate
 {
     public partial class Form1 : Form
     {
-        string ProgramName = "Tinplate";
+        string ProgramName = "STMS";
+        string Version = "100.0.0.1";
         public static PGStat pg;
         public static bool isFormSetting = false;
         bool ProcessKilled = false;
@@ -30,7 +33,6 @@ namespace Tinplate
         {
             InitializeComponent();
             SetCustomBorder();
-
             AdminLogout();
 
             pg = new PGStat(); //Create an object of PGStat class
@@ -86,12 +88,16 @@ namespace Tinplate
 
             DataEmptyRow = userData1.Tables["Data"].NewRow();
 
+
             waitingform.Text = "Offset Removal";
             waitingform.ControlBox = false;
             waitingform.Owner = this;
-
-            
+#if DEBUG
+            tinSampleSettingsToolStripMenuItem.Text = "Logout Admin";
+            AdminLogin();
+#endif//moosa
             InitializeFigure();
+            UpdateTitle();
         }
 
         private void SetCustomBorder()
@@ -104,8 +110,8 @@ namespace Tinplate
             Border.Size = new Size(100, 32);
             Border.Dock = DockStyle.Top;
             Border.BackColor = Color.FromArgb(60,5,5);
-            //Border.Image = global::CAngle.Properties.Resources.border;
-            //Border.Image = global::CAngle.Properties.Resources.cangleiconpng;
+            Border.Image = global::Tinplate.Properties.Resources.border;
+            //Border.Image = global::Tinplate.Properties.Resources.cangleiconpng;
             Border.SizeMode = PictureBoxSizeMode.StretchImage;
             Border.Paint += Border_Paint;
             Border.DoubleClick += Border_DoubleClick;
@@ -155,8 +161,8 @@ namespace Tinplate
             CloseButton.Text = c.ToString();
             CloseButton.Click += CloseButton_Click;
 
-            //LeaveFullScreenMode();
-            //EnterFullScreenMode();
+            LeaveFullScreenMode();
+            EnterFullScreenMode();
 
         }
 
@@ -251,17 +257,18 @@ namespace Tinplate
         private void Border_Paint(object sender, PaintEventArgs e)
         {
             // Create string to draw.
-            String drawString = "Tinplate";
+            String drawString;
+            drawString = ProgramName + Version;
 
             // Create font and brush.
             Font drawFont = new Font("Arial", 12, FontStyle.Bold);
 
-            SolidBrush drawBrush = new SolidBrush(Color.FromArgb(255, 255, 255));
+            SolidBrush drawBrush = new SolidBrush(Color.FromArgb(20, 20, 20));
 
             // Create point for upper-left corner of drawing.
             int x0 = 5;
-            int y0 = 7;
-            float y = 8.0F;
+            int y0 = 3;
+            float y = 9.0F;
 
             // Set format of string.
             StringFormat drawFormat = new StringFormat();
@@ -269,8 +276,9 @@ namespace Tinplate
 
             // Draw string to screen.
             float aspectratio = (float)global::Tinplate.Properties.Resources.irasollogo.Width / (float)global::Tinplate.Properties.Resources.irasollogo.Height;
-            int logowidth = (int)Math.Round(40.0 * aspectratio);
-            e.Graphics.DrawImage(global::Tinplate.Properties.Resources.irasollogo, (int)x0, (int)y0, logowidth, 20);
+            int logoheight = 28;
+            int logowidth = (int)Math.Round(logoheight * aspectratio);
+            e.Graphics.DrawImage(global::Tinplate.Properties.Resources.irasollogo, (int)x0, (int)y0, logowidth, logoheight);
 
             e.Graphics.DrawString(drawString, drawFont, drawBrush, logowidth + 9, y, drawFormat);
         }
@@ -278,8 +286,8 @@ namespace Tinplate
         private void EnterFullScreenMode()
         {
             //this.Hide();
-            //this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-            //this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
             //this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             //this.WindowState = FormWindowState.Normal;
             this.ControlBox = true;
@@ -628,8 +636,12 @@ namespace Tinplate
         {
             if (!isOffsetRemovalProc)
             {
-                double MeasuredVoltage = (e.MeasuredVoltage - (double)numericUpDown5.Value) * (double)numericUpDown8.Value / 100.0;
-                double Current = (e.Current - (double)numericUpDown7.Value / 1000.0) * (double)numericUpDown9.Value / 100.0;
+                double ReadVoltageOffset =Convert.ToDouble(tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadVoltageOffset"]);
+                double ReadVoltageGain = Convert.ToDouble(tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadVoltageGain"]);
+                double ReadCurrentOffset =Convert.ToDouble(tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadCurrentOffset"]);
+                double ReadCurrentGain = Convert.ToDouble(tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadCurrentGain"]);
+                double MeasuredVoltage = (e.MeasuredVoltage - ReadVoltageOffset) * ReadVoltageGain / 100.0;
+                double Current = (e.Current - ReadCurrentOffset / 1000.0) * ReadCurrentGain / 100.0;
                 PrintOutput((e.Time * 1000).ToString() + "(ms) , " + MeasuredVoltage.ToString() + "(V), " + (Current * 1000).ToString() + "(mA)\n");
                 AddPointToData(e.Time, MeasuredVoltage);
             }
@@ -726,7 +738,10 @@ namespace Tinplate
 
         private void UpdateTitle()
         {
-            this.Text = ProgramName + " | " + xmlFile;
+            if (xmlFile=="")
+                this.Text = "Untitled";
+            else
+                this.Text = xmlFile;
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -868,6 +883,126 @@ namespace Tinplate
                 ExportData(saveFileDialog1.FileName);
         }
 
+        private void MakePDF(string FileName)
+        {
+            iTextSharp.text.Document doc = new iTextSharp.text.Document(iTextSharp.text.PageSize.A4, 70f, 70f, 70f, 70f);
+            iTextSharp.text.pdf.PdfWriter writer = iTextSharp.text.pdf.PdfWriter.GetInstance(doc, new FileStream(FileName, FileMode.Create));
+
+            doc.Open();
+
+            try
+            {
+                iTextSharp.text.Paragraph paragraph;
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    var TitleColour = new iTextSharp.text.BaseColor(70, 0, 0);
+                    iTextSharp.text.Font titleFont = iTextSharp.text.FontFactory.GetFont("Arial", 24, TitleColour);
+                    iTextSharp.text.Paragraph title = new iTextSharp.text.Paragraph("Report created by " + ProgramName + Version, titleFont);
+                    title.Alignment = iTextSharp.text.Element.ALIGN_CENTER;
+                    doc.Add(title);
+
+                    paragraph = new iTextSharp.text.Paragraph(" ");
+                    doc.Add(paragraph);
+                    paragraph = new iTextSharp.text.Paragraph("User's Name:      " + textBox1.Text.ToString());
+                    doc.Add(paragraph);
+                    paragraph = new iTextSharp.text.Paragraph("Sample Code:      " + textBox2.Text.ToString());
+                    doc.Add(paragraph);
+                    paragraph = new iTextSharp.text.Paragraph("Date and Time:      " + textBox4.Text.ToString());
+                    doc.Add(paragraph);
+
+
+                    chart1.SaveImage(stream, ChartImageFormat.Png);
+                    Image img = Image.FromStream(stream);
+                    iTextSharp.text.Image png = iTextSharp.text.Image.GetInstance(img, iTextSharp.text.BaseColor.WHITE);
+
+                    png.ScaleAbsoluteHeight(doc.PageSize.Height/3f);
+                    png.ScaleAbsoluteWidth(doc.PageSize.Width/1.2f);
+
+                    //Resize image depend upon your need
+                    //jpg.ScaleToFit(140f, 120f);
+
+                    //Give space before image
+                    //jpg.SpacingBefore = 10f;
+
+                    //Give some space after the image
+                    png.SpacingAfter = 1f;
+
+                    png.Alignment = iTextSharp.text.Element.ALIGN_CENTER;
+                    doc.Add(png);
+                }
+
+                bool AddHeader = true;
+                if (AddHeader)
+                {
+                    paragraph = new iTextSharp.text.Paragraph("       Input parameters");
+                    doc.Add(paragraph);
+                    paragraph = new iTextSharp.text.Paragraph(" ");
+                    doc.Add(paragraph);
+                    iTextSharp.text.pdf.PdfPTable intable = new iTextSharp.text.pdf.PdfPTable(2);
+                    intable.AddCell("Current");
+                    intable.AddCell(numericUpDown1.Value.ToString() + "(mA)");
+                    if (checkBox2.Checked)
+                    {
+                        intable.AddCell("Real Current*");
+                        intable.AddCell(numericUpDown3.Value.ToString() + "(mA)");
+                    }
+                    intable.AddCell("Total Time");
+                    intable.AddCell(numericUpDown2.Value.ToString() + "(s)");
+                    intable.AddCell("Sampling Interval");
+                    intable.AddCell(numericUpDown6.Value.ToString() + "(ms)");
+                    intable.AddCell("t1");
+                    intable.AddCell(UD_T1.Value.ToString("0.000") + "(s)");
+                    intable.AddCell("t2");
+                    intable.AddCell(UD_T2.Value.ToString("0.000") + "(s)");
+                    intable.AddCell("Sample Area");
+                    intable.AddCell(numericUpDown10.Value.ToString() + "(cm^2)");
+                    intable.AddCell("Free Tin");
+                    intable.AddCell(FreeTin.Text.ToString() + "(g m^-2)");
+                    intable.AddCell("Alloy Tin");
+                    intable.AddCell(AlloyTin.Text.ToString() + "(g m^-2)");
+                    intable.AddCell("Total Tin");
+                    intable.AddCell(TotalTin.Text.ToString() + "(g m^-2)");
+
+                    doc.Add(intable);
+
+                    if (checkBox2.Checked)
+                    {
+                        paragraph = new iTextSharp.text.Paragraph("        *Real current is used for calculations");
+                        doc.Add(paragraph);
+                    }
+
+                    doc.NewPage();
+                    paragraph = new iTextSharp.text.Paragraph(" ");
+                    doc.Add(paragraph);
+                    paragraph = new iTextSharp.text.Paragraph("       Table of data");
+                    doc.Add(paragraph);
+                    paragraph = new iTextSharp.text.Paragraph(" ");
+                    doc.Add(paragraph);
+
+                }
+
+                iTextSharp.text.pdf.PdfPTable table = new iTextSharp.text.pdf.PdfPTable(2);
+                table.AddCell("Time (sec)");
+                table.AddCell("Voltage (volt)");
+
+                foreach (DataRow row in userData1.Tables["Data"].Rows)
+                {
+                    table.AddCell(row["Time"].ToString());
+                    table.AddCell(row["Voltage"].ToString());
+                }
+                
+                doc.Add(table);
+            }
+            catch (Exception ex)
+            { }
+
+            finally
+            {
+                doc.Close();
+                Process.Start(FileName);
+            }
+        }
+
         private void ExportData(string FileName, bool AddHeader = false)
         {
             StreamWriter FileProtocol = new StreamWriter(FileName);
@@ -882,7 +1017,7 @@ namespace Tinplate
                 FileProtocol.Write("Sampling Interval:\t" + numericUpDown6.Value.ToString() + "(ms)\n");
 
                 FileProtocol.Write("t1:\t" + UD_T1.Value.ToString("0.000") + "(s)\n");
-                FileProtocol.Write("t2:\t" + UD_T1.Value.ToString("0.000") + "(s)\n");
+                FileProtocol.Write("t2:\t" + UD_T2.Value.ToString("0.000") + "(s)\n");
 
                 if (checkBox2.Checked)
                 {
@@ -1148,7 +1283,8 @@ namespace Tinplate
 
             FreeTin.Text = freetin.ToString("0.0");
             AlloyTin.Text = alloytin.ToString("0.0");
-            TotalTin.Text = (freetin + alloytin).ToString("0.0");
+            Decimal totaltin = Convert.ToDecimal(FreeTin.Text) + Convert.ToDecimal(AlloyTin.Text);
+            TotalTin.Text = (totaltin).ToString("0.0");
         }
 
         private void FindLine(int iTangential, int j, out double x1, out double y1, out double x2, out double y2, out double yAtCurvature)
@@ -1593,7 +1729,7 @@ namespace Tinplate
                         double newVmax = OffsetRemovalProc_Vmax - offsetV;
                         double newVmin = OffsetRemovalProc_Vmin - offsetV;
                         double gainI= 0.1/ newImax;
-                        double gainV = 0.12 / newVmax;
+                        double gainV = 0.1 / newVmax;
 
                         decimal offsetV_dec = Convert.ToDecimal(offsetV);
                         decimal gainV_dec = Convert.ToDecimal(gainV * 100);
@@ -2106,45 +2242,45 @@ namespace Tinplate
         private void numericUpDown10_ValueChanged(object sender, EventArgs e)
         {   
             tinSampleSettings1.Tables["Coefficients"].Rows[0]["SampleArea"] = numericUpDown10.Value; //in cm^2
-            tinSampleSettings1.WriteXml(TinSampleSettingsxml);
+           // tinSampleSettings1.WriteXml(TinSampleSettingsxml);
             UpdateTin();
         }
 
         private void numericUpDown11_ValueChanged(object sender, EventArgs e)
         {
             tinSampleSettings1.Tables["Coefficients"].Rows[0]["CorrectionCoef"] = numericUpDown11.Value;
-            tinSampleSettings1.WriteXml(TinSampleSettingsxml);
+           // tinSampleSettings1.WriteXml(TinSampleSettingsxml);
             UpdateTin();
         }
 
         private void numericUpDown4_ValueChanged(object sender, EventArgs e)
         {
-            tinSampleSettings1.Tables["Coefficients"].Rows[0]["SetCurrentOffset"] = numericUpDown4.Value;
-            tinSampleSettings1.WriteXml(TinSampleSettingsxml);
+            //tinSampleSettings1.Tables["Coefficients"].Rows[0]["SetCurrentOffset"] = numericUpDown4.Value;
+            //tinSampleSettings1.WriteXml(TinSampleSettingsxml);
         }
 
         private void numericUpDown5_ValueChanged(object sender, EventArgs e)
         {
             //tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadVoltageOffset"] = numericUpDown5.Value;
-            tinSampleSettings1.WriteXml(TinSampleSettingsxml);
+            //tinSampleSettings1.WriteXml(TinSampleSettingsxml);
         }
 
         private void numericUpDown8_ValueChanged(object sender, EventArgs e)
         {
             //tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadVoltageGain"] = numericUpDown8.Value;
-            tinSampleSettings1.WriteXml(TinSampleSettingsxml);
+            //tinSampleSettings1.WriteXml(TinSampleSettingsxml);
         }
 
         private void numericUpDown7_ValueChanged(object sender, EventArgs e)
         {
             //tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadCurrentOffset"] = numericUpDown7.Value;
-            tinSampleSettings1.WriteXml(TinSampleSettingsxml);
+            //tinSampleSettings1.WriteXml(TinSampleSettingsxml);
         }
 
         private void numericUpDown9_ValueChanged(object sender, EventArgs e)
         {
             //tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadCurrentGain"] = numericUpDown9.Value;
-            tinSampleSettings1.WriteXml(TinSampleSettingsxml);
+            //tinSampleSettings1.WriteXml(TinSampleSettingsxml);
         }
         private void tinSampleSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -2179,13 +2315,31 @@ namespace Tinplate
             button5.Visible = true;
             button7.Visible = true;
             panel6.Size = new Size(panel6.Size.Width, 790);
+
+            useDummyToolStripMenuItem.Enabled = true;
+            offsetRemovalToolStripMenuItem.Enabled = true;
+            offsetRemovalToolStripMenuItem1.Enabled = true;
+            galvanostatToolStripMenuItem.Enabled = true;
+            saveSettingsAsToolStripMenuItem.Enabled = true;
+            saveSettingsToolStripMenuItem.Enabled = true;
+            saveSettingsToDeviceToolStripMenuItem.Enabled = true;
+            loadSettingsFromDeviceToolStripMenuItem.Enabled = true;
+            loadSettingsFromFileToolStripMenuItem.Enabled = true;
+            saveDeviceSettingsAsToolStripMenuItem.Enabled = true;
+            settingsToolStripMenuItem1.Enabled = true;
+            resetSettingsToolStripMenuItem.Enabled = true;
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
-            saveFileDialog1.Filter = "Data files (*.dat)|*.dat";
+            saveFileDialog1.Filter = "Data files (*.dat)|*.dat|PDF files (.pdf)|*.pdf";
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-                ExportData(saveFileDialog1.FileName, true);
+            {
+                if (saveFileDialog1.FilterIndex == 1)
+                    ExportData(saveFileDialog1.FileName, true);
+                else if (saveFileDialog1.FilterIndex == 2)
+                    MakePDF(saveFileDialog1.FileName);
+            }
         }
 
         bool isOffsetRemovalProc;
@@ -2254,6 +2408,16 @@ namespace Tinplate
             pg.AIV_old();
         }
 
+        private void coefficientsBindingSource_CurrentChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            tinSampleSettings1.WriteXml(TinSampleSettingsxml);
+        }
+
         private void AdminLogout()
         {
             IsAdmin = false;
@@ -2263,6 +2427,19 @@ namespace Tinplate
             button5.Visible = false;
             button7.Visible = false;
             panel6.Size = new Size(panel6.Size.Width, 478);
+
+            useDummyToolStripMenuItem.Enabled = false;
+            offsetRemovalToolStripMenuItem.Enabled = false;
+            offsetRemovalToolStripMenuItem1.Enabled = false;
+            galvanostatToolStripMenuItem.Enabled = false;
+            saveSettingsAsToolStripMenuItem.Enabled = false;
+            saveSettingsToolStripMenuItem.Enabled = false;
+            saveSettingsToDeviceToolStripMenuItem.Enabled = false;
+            loadSettingsFromDeviceToolStripMenuItem.Enabled = false;
+            loadSettingsFromFileToolStripMenuItem.Enabled = false;
+            saveDeviceSettingsAsToolStripMenuItem.Enabled = false;
+            settingsToolStripMenuItem1.Enabled = false;
+            resetSettingsToolStripMenuItem.Enabled = false;
         }
 
 

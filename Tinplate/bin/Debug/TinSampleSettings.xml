@@ -4,9 +4,9 @@
     <CorrectionCoef>0.65</CorrectionCoef>
     <SampleArea>20.428</SampleArea>
     <SetCurrentOffset>0</SetCurrentOffset>
-    <ReadVoltageOffset>-0.00192697876304546</ReadVoltageOffset>
-    <ReadVoltageGain>98.5968369406994</ReadVoltageGain>
-    <ReadCurrentOffset>2.18112611048499</ReadCurrentOffset>
-    <ReadCurrentGain>141.950495241536</ReadCurrentGain>
+    <ReadVoltageOffset>0</ReadVoltageOffset>
+    <ReadVoltageGain>100</ReadVoltageGain>
+    <ReadCurrentOffset>0</ReadCurrentOffset>
+    <ReadCurrentGain>100</ReadCurrentGain>
   </Coefficients>
 </TinSampleSettings>

@@ -31,3 +31,6 @@ C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\bin\Debug\PGStatLibrary.pdb
 C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\obj\Debug\Tinplate.csproj.CopyComplete
 C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\obj\Debug\Tinplate.exe
 C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\obj\Debug\Tinplate.pdb
+C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\bin\Debug\itextsharp.dll
+C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\bin\Debug\itextsharp.xml

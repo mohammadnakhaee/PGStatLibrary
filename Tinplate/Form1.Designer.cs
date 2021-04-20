@@ -373,7 +373,7 @@
             // 
             // numericUpDown9
             // 
-            this.numericUpDown9.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "ReadCurrentGain", true));
+            this.numericUpDown9.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "ReadCurrentGain", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.numericUpDown9.DecimalPlaces = 1;
             this.numericUpDown9.Location = new System.Drawing.Point(183, 258);
             this.numericUpDown9.Maximum = new decimal(new int[] {
@@ -400,6 +400,7 @@
             // 
             this.coefficientsBindingSource.DataMember = "Coefficients";
             this.coefficientsBindingSource.DataSource = this.tinSampleSettings1;
+            this.coefficientsBindingSource.CurrentChanged += new System.EventHandler(this.coefficientsBindingSource_CurrentChanged);
             // 
             // tinSampleSettings1
             // 
@@ -427,7 +428,7 @@
             // 
             // numericUpDown8
             // 
-            this.numericUpDown8.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "ReadVoltageGain", true));
+            this.numericUpDown8.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "ReadVoltageGain", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.numericUpDown8.DecimalPlaces = 1;
             this.numericUpDown8.Location = new System.Drawing.Point(183, 189);
             this.numericUpDown8.Maximum = new decimal(new int[] {
@@ -471,7 +472,7 @@
             // 
             // numericUpDown7
             // 
-            this.numericUpDown7.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "ReadCurrentOffset", true));
+            this.numericUpDown7.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "ReadCurrentOffset", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.numericUpDown7.DecimalPlaces = 3;
             this.numericUpDown7.Increment = new decimal(new int[] {
             1,
@@ -510,7 +511,7 @@
             // 
             // numericUpDown5
             // 
-            this.numericUpDown5.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "ReadVoltageOffset", true));
+            this.numericUpDown5.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "ReadVoltageOffset", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.numericUpDown5.DecimalPlaces = 3;
             this.numericUpDown5.Increment = new decimal(new int[] {
             1,
@@ -1967,6 +1968,7 @@
             this.Name = "Form1";
             this.Text = "Tinplate";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Shown += new System.EventHandler(this.Form1_Shown);
             this.panel1.ResumeLayout(false);
