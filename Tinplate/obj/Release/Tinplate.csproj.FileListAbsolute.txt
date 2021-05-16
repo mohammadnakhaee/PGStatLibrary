@@ -15,9 +15,6 @@ C:\Users\mohammad\source\repos\PGStatLibrary\Tinplate\obj\Release\Tinplate.exe
 C:\Users\mohammad\source\repos\PGStatLibrary\Tinplate\obj\Release\Tinplate.pdb
 C:\Users\mohammad\source\repos\PGStatLibrary\Tinplate\bin\Release\PGStatLibrary.xml
 C:\Users\mohammad\source\repos\PGStatLibrary\Tinplate\obj\Release\Tinplate.csprojAssemblyReference.cache
-C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\bin\Release\Tinplate.exe.config
-C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\bin\Release\Tinplate.exe
-C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\bin\Release\Tinplate.pdb
 C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\bin\Release\BouncyCastle.Crypto.dll
 C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\bin\Release\itextsharp.dll
 C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\bin\Release\PGStatLibrary.dll
@@ -34,5 +31,9 @@ C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\obj\Release\Tinplate.WaitingFo
 C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\obj\Release\Tinplate.csproj.GenerateResource.cache
 C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\obj\Release\Tinplate.csproj.CoreCompileInputs.cache
 C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\obj\Release\Tinplate.csproj.CopyComplete
-C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\obj\Release\Tinplate.exe
-C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\obj\Release\Tinplate.pdb
+C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\obj\Release\Tinplate.AboutBox.resources
+C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\bin\Release\STMS.exe.config
+C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\bin\Release\STMS.exe
+C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\bin\Release\STMS.pdb
+C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\obj\Release\STMS.exe
+C:\Users\DELL\source\repos\PGStatLibrary\Tinplate\obj\Release\STMS.pdb

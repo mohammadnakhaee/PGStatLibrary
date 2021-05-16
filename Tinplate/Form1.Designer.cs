@@ -42,6 +42,11 @@
             this.userData1 = new Tinplate.UserData();
             this.label45 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.label48 = new System.Windows.Forms.Label();
+            this.numericUpDown15 = new System.Windows.Forms.NumericUpDown();
+            this.coefficientsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.tinSampleSettings1 = new Tinplate.TinSampleSettings();
+            this.label49 = new System.Windows.Forms.Label();
             this.numericUpDown14 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown13 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown12 = new System.Windows.Forms.NumericUpDown();
@@ -186,17 +191,15 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.doubleclicktimer = new System.Windows.Forms.Timer(this.components);
             this.userData = new Tinplate.UserData();
-            this.label48 = new System.Windows.Forms.Label();
-            this.numericUpDown15 = new System.Windows.Forms.NumericUpDown();
-            this.label49 = new System.Windows.Forms.Label();
-            this.coefficientsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.tinSampleSettings1 = new Tinplate.TinSampleSettings();
             this.panel1.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.inputsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userData1)).BeginInit();
             this.groupBox7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.coefficientsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tinSampleSettings1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown14)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12)).BeginInit();
@@ -229,9 +232,6 @@
             this.panel4.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userData)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.coefficientsBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tinSampleSettings1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -360,6 +360,60 @@
             this.groupBox7.TabIndex = 18;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Offsets";
+            // 
+            // label48
+            // 
+            this.label48.AutoSize = true;
+            this.label48.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.label48.Location = new System.Drawing.Point(309, 59);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(20, 17);
+            this.label48.TabIndex = 43;
+            this.label48.Text = "%";
+            // 
+            // numericUpDown15
+            // 
+            this.numericUpDown15.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "SetCurrentGain", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.numericUpDown15.DecimalPlaces = 1;
+            this.numericUpDown15.Location = new System.Drawing.Point(183, 56);
+            this.numericUpDown15.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDown15.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown15.Name = "numericUpDown15";
+            this.numericUpDown15.Size = new System.Drawing.Size(120, 24);
+            this.numericUpDown15.TabIndex = 42;
+            this.numericUpDown15.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // coefficientsBindingSource
+            // 
+            this.coefficientsBindingSource.DataMember = "Coefficients";
+            this.coefficientsBindingSource.DataSource = this.tinSampleSettings1;
+            this.coefficientsBindingSource.CurrentChanged += new System.EventHandler(this.coefficientsBindingSource_CurrentChanged);
+            // 
+            // tinSampleSettings1
+            // 
+            this.tinSampleSettings1.DataSetName = "TinSampleSettings";
+            this.tinSampleSettings1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Location = new System.Drawing.Point(29, 59);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(122, 18);
+            this.label49.TabIndex = 41;
+            this.label49.Text = "Set Current Gain:";
             // 
             // numericUpDown14
             // 
@@ -1996,8 +2050,9 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // saveFileDialog1
             // 
@@ -2025,60 +2080,6 @@
             this.userData.DataSetName = "UserData";
             this.userData.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
-            // label48
-            // 
-            this.label48.AutoSize = true;
-            this.label48.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label48.Location = new System.Drawing.Point(309, 59);
-            this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(20, 17);
-            this.label48.TabIndex = 43;
-            this.label48.Text = "%";
-            // 
-            // numericUpDown15
-            // 
-            this.numericUpDown15.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "SetCurrentGain", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.numericUpDown15.DecimalPlaces = 1;
-            this.numericUpDown15.Location = new System.Drawing.Point(183, 56);
-            this.numericUpDown15.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.numericUpDown15.Minimum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            -2147483648});
-            this.numericUpDown15.Name = "numericUpDown15";
-            this.numericUpDown15.Size = new System.Drawing.Size(120, 24);
-            this.numericUpDown15.TabIndex = 42;
-            this.numericUpDown15.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            // 
-            // label49
-            // 
-            this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(29, 59);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(122, 18);
-            this.label49.TabIndex = 41;
-            this.label49.Text = "Set Current Gain:";
-            // 
-            // coefficientsBindingSource
-            // 
-            this.coefficientsBindingSource.DataMember = "Coefficients";
-            this.coefficientsBindingSource.DataSource = this.tinSampleSettings1;
-            this.coefficientsBindingSource.CurrentChanged += new System.EventHandler(this.coefficientsBindingSource_CurrentChanged);
-            // 
-            // tinSampleSettings1
-            // 
-            this.tinSampleSettings1.DataSetName = "TinSampleSettings";
-            this.tinSampleSettings1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2105,6 +2106,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.userData1)).EndInit();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.coefficientsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tinSampleSettings1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown14)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12)).EndInit();
@@ -2147,9 +2151,6 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userData)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.coefficientsBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tinSampleSettings1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

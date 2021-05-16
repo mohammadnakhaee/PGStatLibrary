@@ -7,7 +7,7 @@
     <ProjectGuid>{1B0A47FF-BC66-480F-A2B9-441BE77E57BA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Tinplate</RootNamespace>
-    <AssemblyName>Tinplate</AssemblyName>
+    <AssemblyName>STMS</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -70,6 +70,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="AdminPassForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -136,6 +142,9 @@
     <Compile Include="WaitingForm.Designer.cs">
       <DependentUpon>WaitingForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AdminPassForm.resx">
       <DependentUpon>AdminPassForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -257,6 +266,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\about.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

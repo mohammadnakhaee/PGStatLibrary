@@ -18,8 +18,8 @@ namespace Tinplate
 {
     public partial class Form1 : Form
     {
-        string ProgramName = "STMS";
-        string Version = "100.0.0.1";
+        public static string ProgramName = "STMS";
+        public static string Version = "100.0.0.1";
         public static PGStat pg;
         public static bool isFormSetting = false;
         bool ProcessKilled = false;
@@ -2458,6 +2458,12 @@ namespace Tinplate
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             tinSampleSettings1.WriteXml(TinSampleSettingsxml);
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutBox d = new AboutBox();
+            d.ShowDialog();
         }
 
         private void AdminLogout()
