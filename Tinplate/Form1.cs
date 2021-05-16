@@ -33,7 +33,7 @@ namespace Tinplate
         {
             InitializeComponent();
             SetCustomBorder();
-            AdminLogout();
+            
 
             pg = new PGStat(); //Create an object of PGStat class
 
@@ -48,7 +48,7 @@ namespace Tinplate
             pg.PG_EVT_OffsetRemovalStarted += Pg_PG_EVT_OffsetRemovalStarted;
             pg.SetNotificationVerbosity(1);
             pg.PG_EVT_AProcessFinished += Pg_PG_EVT_AProcessFinished;
-            int settingsver = pg.LoadSettings("C:/Users/DELL/source/repos/PGStatLibrary/Tinplate/bin/settings.bin");
+            int settingsver = pg.LoadSettings("./settings.bin");
 
             if (settingsver == 0)
                 MessageBox.Show("The setting file was not found!");
@@ -65,14 +65,7 @@ namespace Tinplate
             DataRow r0 = t0.NewRow();
             tinSampleSettings1.Tables["Coefficients"].Rows.Add(r0);
 
-            tinSampleSettings1.Tables["Coefficients"].Rows[0]["CorrectionCoef"] = (decimal)(0.65);
-            tinSampleSettings1.Tables["Coefficients"].Rows[0]["SampleArea"] = (decimal)(20.428); //in cm^2
-
-            tinSampleSettings1.Tables["Coefficients"].Rows[0]["SetCurrentOffset"] = (decimal)(0);
-            tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadVoltageOffset"] = (decimal)(0);
-            tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadVoltageGain"] = (decimal)(100);
-            tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadCurrentOffset"] = (decimal)(0);
-            tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadCurrentGain"] = (decimal)(100);
+            FillDeafault();
 
             if (File.Exists(TinSampleSettingsxml))
             {
@@ -81,6 +74,17 @@ namespace Tinplate
             }
             else
                 tinSampleSettings1.WriteXml(TinSampleSettingsxml);
+
+            try
+            {
+                SyncWithControl();
+            }
+            catch
+            {
+                FillDeafault();
+                tinSampleSettings1.WriteXml(TinSampleSettingsxml);
+                SyncWithControl();
+            }
 
             DataTable t1 = userData1.Tables["Inputs"];
             DataRow r1 = t1.NewRow();
@@ -92,12 +96,44 @@ namespace Tinplate
             waitingform.Text = "Offset Removal";
             waitingform.ControlBox = false;
             waitingform.Owner = this;
-#if DEBUG
-            tinSampleSettingsToolStripMenuItem.Text = "Logout Admin";
-            AdminLogin();
-#endif//moosa
+
+            AdminLogout();
+            //#if DEBUG
+            //            tinSampleSettingsToolStripMenuItem.Text = "Logout Admin";
+            //            AdminLogin();
+            //#endif//moosa
             InitializeFigure();
             UpdateTitle();
+        }
+
+        private void FillDeafault()
+        {
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["CorrectionCoef"] = (decimal)(0.65);
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["SampleArea"] = (decimal)(20.428); //in cm^2
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["SetCurrentOffset"] = (decimal)(0);
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["SetCurrentGain"] = (decimal)(100);
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadVoltageOffset"] = (decimal)(0);
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadVoltageGain"] = (decimal)(100);
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadCurrentOffset"] = (decimal)(0);
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadCurrentGain"] = (decimal)(100);
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["VFilter"] = (decimal)(3);
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["IFilter"] = (decimal)(2);
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["PostFilter"] = (decimal)(2);
+        }
+
+        private void SyncWithControl()
+        {
+            numericUpDown11.Value = Convert.ToDecimal(tinSampleSettings1.Tables["Coefficients"].Rows[0]["CorrectionCoef"]);
+            numericUpDown10.Value = Convert.ToDecimal(tinSampleSettings1.Tables["Coefficients"].Rows[0]["SampleArea"]);
+            numericUpDown4.Value = Convert.ToDecimal(tinSampleSettings1.Tables["Coefficients"].Rows[0]["SetCurrentOffset"]);
+            numericUpDown15.Value = Convert.ToDecimal(tinSampleSettings1.Tables["Coefficients"].Rows[0]["SetCurrentGain"]);
+            numericUpDown5.Value = Convert.ToDecimal(tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadVoltageOffset"]);
+            numericUpDown8.Value = Convert.ToDecimal(tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadVoltageGain"]);
+            numericUpDown7.Value = Convert.ToDecimal(tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadCurrentOffset"]);
+            numericUpDown9.Value = Convert.ToDecimal(tinSampleSettings1.Tables["Coefficients"].Rows[0]["ReadCurrentGain"]);
+            numericUpDown12.Value = Convert.ToDecimal(tinSampleSettings1.Tables["Coefficients"].Rows[0]["VFilter"]);
+            numericUpDown13.Value = Convert.ToDecimal(tinSampleSettings1.Tables["Coefficients"].Rows[0]["IFilter"]);
+            numericUpDown14.Value = Convert.ToDecimal(tinSampleSettings1.Tables["Coefficients"].Rows[0]["PostFilter"]);
         }
 
         private void SetCustomBorder()
@@ -507,7 +543,7 @@ namespace Tinplate
         private void PG_OnConnecting(object sender, EventArgs e)
         {
             StatusLabel.Text = "Device not found";
-            StatusLabel.ForeColor = Color.Red;
+            StatusLabel.ForeColor = Color.FromArgb(192,0,0);
             pingLED.BackgroundImage = new Bitmap(Properties.Resources.greenbuttonoff);
             pingstatus = false;
         }
@@ -607,14 +643,16 @@ namespace Tinplate
 
             richTextBox1.Clear();
 
-            int settingsver = pg.LoadSettings("C:/Users/DELL/source/repos/PGStatLibrary/Tinplate/bin/settings.bin");
+            int settingsver = pg.LoadSettings("./settings.bin");
 
             pg.PGmode(3);
 
             int nData = (int)(1000.0 * (int)numericUpDown2.Value / (int)numericUpDown6.Value) + 1;
 
-            pg.IV_Input.Initial_Potential = -((double)numericUpDown1.Value + (double)numericUpDown4.Value); //Current + set current offset
-            pg.IV_Input.Final_Potential = -((double)numericUpDown1.Value + (double)numericUpDown4.Value);
+            double SetCurrentOffset = Convert.ToDouble(tinSampleSettings1.Tables["Coefficients"].Rows[0]["SetCurrentOffset"]);
+            double SetCurrentGain = Convert.ToDouble(tinSampleSettings1.Tables["Coefficients"].Rows[0]["SetCurrentGain"]);
+            pg.IV_Input.Initial_Potential = -((double)numericUpDown1.Value + SetCurrentOffset) * SetCurrentGain / 100.0; //Current + set current offset
+            pg.IV_Input.Final_Potential = pg.IV_Input.Initial_Potential; //The same as Initial_Potential
             pg.IV_Input.Step = nData;
             //pg.IV_Input.Ideal_Voltage = 0;
             pg.IV_Input.Voltage_Range_Mode = comboBox1.SelectedIndex;
@@ -628,6 +666,9 @@ namespace Tinplate
             pg.IV_Input.Voltage_Filter = 0;
             pg.IV_Input.Is_Relative_Reference = false;
             pg.IV_Input.IsCalculateOffsetBeforeStart = false;
+            pg.IV_Input.VFilter = (int)numericUpDown12.Value;
+            pg.IV_Input.IFilter = (int)numericUpDown13.Value;
+            pg.IV_Input.PostFilter = (int)numericUpDown14.Value;
             pg.AIV_old();
         }
 
@@ -830,7 +871,7 @@ namespace Tinplate
 
         private void saveSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            pg.SaveSettings("C:/Users/DELL/source/repos/PGStatLibrary/Tinplate/bin/settings.bin");
+            pg.SaveSettings("./settings.bin");
         }
 
         private void saveSettingsAsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -849,8 +890,8 @@ namespace Tinplate
 
         private void loadSettingsFromDeviceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            pg.LoadSettingsFromDevice("C:/Users/DELL/source/repos/PGStatLibrary/Tinplate/bin/microsettings.bin");
-            pg.LoadSettings("C:/Users/DELL/source/repos/PGStatLibrary/Tinplate/bin/microsettings.bin");
+            pg.LoadSettingsFromDevice("./microsettings.bin");
+            pg.LoadSettings("./microsettings.bin");
             
         }
 
@@ -861,7 +902,7 @@ namespace Tinplate
 
         private void saveSettingsToDeviceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            pg.MicroSaveSettings("C:/Users/DELL/source/repos/PGStatLibrary/Tinplate/bin/settings.bin");
+            pg.MicroSaveSettings("./settings.bin");
         }
 
         private void saveDeviceSettingsAsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1269,6 +1310,7 @@ namespace Tinplate
             if (!IsFittingFound) return;
             double t1 = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["t1"]);
             double t2 = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["t2"]);
+            t2 = t2 - t1;
             double CorrectionCoef = Convert.ToDouble(numericUpDown11.Value);
             double SampleArea = Convert.ToDouble(numericUpDown10.Value);
             double C = 0.0185*SampleArea;
@@ -1281,10 +1323,10 @@ namespace Tinplate
             double freetin = I_A * t1 * C;
             double alloytin = CorrectionCoef * I_A * t2 * C;
 
-            FreeTin.Text = freetin.ToString("0.0");
-            AlloyTin.Text = alloytin.ToString("0.0");
+            FreeTin.Text = freetin.ToString("0.00");
+            AlloyTin.Text = alloytin.ToString("0.00");
             Decimal totaltin = Convert.ToDecimal(FreeTin.Text) + Convert.ToDecimal(AlloyTin.Text);
-            TotalTin.Text = (totaltin).ToString("0.0");
+            TotalTin.Text = (totaltin).ToString("0.00");
         }
 
         private void FindLine(int iTangential, int j, out double x1, out double y1, out double x2, out double y2, out double yAtCurvature)
@@ -2241,14 +2283,14 @@ namespace Tinplate
 
         private void numericUpDown10_ValueChanged(object sender, EventArgs e)
         {   
-            tinSampleSettings1.Tables["Coefficients"].Rows[0]["SampleArea"] = numericUpDown10.Value; //in cm^2
+            //tinSampleSettings1.Tables["Coefficients"].Rows[0]["SampleArea"] = numericUpDown10.Value; //in cm^2
            // tinSampleSettings1.WriteXml(TinSampleSettingsxml);
             UpdateTin();
         }
 
         private void numericUpDown11_ValueChanged(object sender, EventArgs e)
         {
-            tinSampleSettings1.Tables["Coefficients"].Rows[0]["CorrectionCoef"] = numericUpDown11.Value;
+            //tinSampleSettings1.Tables["Coefficients"].Rows[0]["CorrectionCoef"] = numericUpDown11.Value;
            // tinSampleSettings1.WriteXml(TinSampleSettingsxml);
             UpdateTin();
         }
@@ -2354,7 +2396,7 @@ namespace Tinplate
             isOffsetRemovalProc = true;
             
 
-            int settingsver = pg.LoadSettings("C:/Users/DELL/source/repos/PGStatLibrary/Tinplate/bin/settings.bin");
+            int settingsver = pg.LoadSettings("./settings.bin");
 
             /*pg.ClearBuffer();
             double[] output = pg.ivset(0);

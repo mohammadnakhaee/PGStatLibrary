@@ -7,3 +7,12 @@ C:\Users\mohammad\source\repos\PGStatLibrary\PGStatLibrary\obj\Release\PGStatLib
 C:\Users\mohammad\source\repos\PGStatLibrary\PGStatLibrary\obj\Release\PGStatLibrary.dll
 C:\Users\mohammad\source\repos\PGStatLibrary\PGStatLibrary\obj\Release\PGStatLibrary.pdb
 C:\Users\mohammad\source\repos\PGStatLibrary\PGStatLibrary\obj\Release\PGStatLibrary.csprojAssemblyReference.cache
+C:\Users\DELL\source\repos\PGStatLibrary\PGStatLibrary\bin\Release\PGStatLibrary.xml
+C:\Users\DELL\source\repos\PGStatLibrary\PGStatLibrary\bin\Release\PGStatLibrary.dll
+C:\Users\DELL\source\repos\PGStatLibrary\PGStatLibrary\bin\Release\PGStatLibrary.pdb
+C:\Users\DELL\source\repos\PGStatLibrary\PGStatLibrary\obj\Release\PGStatLibrary.csprojAssemblyReference.cache
+C:\Users\DELL\source\repos\PGStatLibrary\PGStatLibrary\obj\Release\PGStatLibrary.Properties.Resources.resources
+C:\Users\DELL\source\repos\PGStatLibrary\PGStatLibrary\obj\Release\PGStatLibrary.csproj.GenerateResource.cache
+C:\Users\DELL\source\repos\PGStatLibrary\PGStatLibrary\obj\Release\PGStatLibrary.csproj.CoreCompileInputs.cache
+C:\Users\DELL\source\repos\PGStatLibrary\PGStatLibrary\obj\Release\PGStatLibrary.dll
+C:\Users\DELL\source\repos\PGStatLibrary\PGStatLibrary\obj\Release\PGStatLibrary.pdb

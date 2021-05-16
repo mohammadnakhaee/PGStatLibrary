@@ -42,12 +42,14 @@
             this.userData1 = new Tinplate.UserData();
             this.label45 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.numericUpDown14 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown13 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown12 = new System.Windows.Forms.NumericUpDown();
+            this.label46 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
             this.label37 = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
             this.numericUpDown9 = new System.Windows.Forms.NumericUpDown();
-            this.coefficientsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.tinSampleSettings1 = new Tinplate.TinSampleSettings();
             this.label36 = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
             this.numericUpDown8 = new System.Windows.Forms.NumericUpDown();
@@ -184,15 +186,21 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.doubleclicktimer = new System.Windows.Forms.Timer(this.components);
             this.userData = new Tinplate.UserData();
+            this.label48 = new System.Windows.Forms.Label();
+            this.numericUpDown15 = new System.Windows.Forms.NumericUpDown();
+            this.label49 = new System.Windows.Forms.Label();
+            this.coefficientsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.tinSampleSettings1 = new Tinplate.TinSampleSettings();
             this.panel1.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.inputsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userData1)).BeginInit();
             this.groupBox7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown14)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.coefficientsBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tinSampleSettings1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
@@ -221,6 +229,9 @@
             this.panel4.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userData)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.coefficientsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tinSampleSettings1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -247,7 +258,7 @@
             // 
             // panel7
             // 
-            this.panel7.BackColor = System.Drawing.Color.DimGray;
+            this.panel7.BackColor = System.Drawing.Color.Silver;
             this.panel7.Controls.Add(this.label8);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel7.Location = new System.Drawing.Point(0, 790);
@@ -318,6 +329,13 @@
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.label48);
+            this.groupBox7.Controls.Add(this.numericUpDown15);
+            this.groupBox7.Controls.Add(this.label49);
+            this.groupBox7.Controls.Add(this.numericUpDown14);
+            this.groupBox7.Controls.Add(this.numericUpDown13);
+            this.groupBox7.Controls.Add(this.numericUpDown12);
+            this.groupBox7.Controls.Add(this.label46);
             this.groupBox7.Controls.Add(this.label38);
             this.groupBox7.Controls.Add(this.label37);
             this.groupBox7.Controls.Add(this.label35);
@@ -338,34 +356,82 @@
             this.groupBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox7.Location = new System.Drawing.Point(21, 477);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(359, 291);
+            this.groupBox7.Size = new System.Drawing.Size(359, 307);
             this.groupBox7.TabIndex = 18;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Offsets";
             // 
+            // numericUpDown14
+            // 
+            this.numericUpDown14.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "PostFilter", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.numericUpDown14.Location = new System.Drawing.Point(183, 276);
+            this.numericUpDown14.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDown14.Name = "numericUpDown14";
+            this.numericUpDown14.Size = new System.Drawing.Size(120, 24);
+            this.numericUpDown14.TabIndex = 40;
+            // 
+            // numericUpDown13
+            // 
+            this.numericUpDown13.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "IFilter", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.numericUpDown13.Location = new System.Drawing.Point(183, 249);
+            this.numericUpDown13.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDown13.Name = "numericUpDown13";
+            this.numericUpDown13.Size = new System.Drawing.Size(120, 24);
+            this.numericUpDown13.TabIndex = 39;
+            // 
+            // numericUpDown12
+            // 
+            this.numericUpDown12.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "VFilter", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.numericUpDown12.Location = new System.Drawing.Point(183, 221);
+            this.numericUpDown12.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDown12.Name = "numericUpDown12";
+            this.numericUpDown12.Size = new System.Drawing.Size(120, 24);
+            this.numericUpDown12.TabIndex = 38;
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.Location = new System.Drawing.Point(73, 278);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(79, 18);
+            this.label46.TabIndex = 37;
+            this.label46.Text = "Post Filter:";
+            // 
             // label38
             // 
             this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(53, 30);
+            this.label38.Location = new System.Drawing.Point(101, 251);
             this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(252, 18);
+            this.label38.Size = new System.Drawing.Size(51, 18);
             this.label38.TabIndex = 36;
-            this.label38.Text = "-----------------Set Offsets-----------------";
+            this.label38.Text = "I Filter:";
             // 
             // label37
             // 
             this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(54, 122);
+            this.label37.Location = new System.Drawing.Point(94, 224);
             this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(254, 18);
+            this.label37.Size = new System.Drawing.Size(57, 18);
             this.label37.TabIndex = 35;
-            this.label37.Text = "-------------Read-Out Offsets-------------";
+            this.label37.Text = "V Filter:";
             // 
             // label35
             // 
             this.label35.AutoSize = true;
             this.label35.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label35.Location = new System.Drawing.Point(309, 260);
+            this.label35.Location = new System.Drawing.Point(309, 188);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(20, 17);
             this.label35.TabIndex = 34;
@@ -375,7 +441,7 @@
             // 
             this.numericUpDown9.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "ReadCurrentGain", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.numericUpDown9.DecimalPlaces = 1;
-            this.numericUpDown9.Location = new System.Drawing.Point(183, 258);
+            this.numericUpDown9.Location = new System.Drawing.Point(183, 184);
             this.numericUpDown9.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -396,21 +462,10 @@
             0});
             this.numericUpDown9.ValueChanged += new System.EventHandler(this.numericUpDown9_ValueChanged);
             // 
-            // coefficientsBindingSource
-            // 
-            this.coefficientsBindingSource.DataMember = "Coefficients";
-            this.coefficientsBindingSource.DataSource = this.tinSampleSettings1;
-            this.coefficientsBindingSource.CurrentChanged += new System.EventHandler(this.coefficientsBindingSource_CurrentChanged);
-            // 
-            // tinSampleSettings1
-            // 
-            this.tinSampleSettings1.DataSetName = "TinSampleSettings";
-            this.tinSampleSettings1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(56, 260);
+            this.label36.Location = new System.Drawing.Point(56, 187);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(96, 18);
             this.label36.TabIndex = 32;
@@ -420,7 +475,7 @@
             // 
             this.label33.AutoSize = true;
             this.label33.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label33.Location = new System.Drawing.Point(309, 191);
+            this.label33.Location = new System.Drawing.Point(309, 124);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(20, 17);
             this.label33.TabIndex = 31;
@@ -430,7 +485,7 @@
             // 
             this.numericUpDown8.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "ReadVoltageGain", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.numericUpDown8.DecimalPlaces = 1;
-            this.numericUpDown8.Location = new System.Drawing.Point(183, 189);
+            this.numericUpDown8.Location = new System.Drawing.Point(183, 120);
             this.numericUpDown8.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -454,7 +509,7 @@
             // label34
             // 
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(57, 189);
+            this.label34.Location = new System.Drawing.Point(57, 120);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(96, 18);
             this.label34.TabIndex = 29;
@@ -464,7 +519,7 @@
             // 
             this.label31.AutoSize = true;
             this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label31.Location = new System.Drawing.Point(309, 225);
+            this.label31.Location = new System.Drawing.Point(309, 159);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(38, 17);
             this.label31.TabIndex = 28;
@@ -479,7 +534,7 @@
             0,
             0,
             65536});
-            this.numericUpDown7.Location = new System.Drawing.Point(183, 223);
+            this.numericUpDown7.Location = new System.Drawing.Point(183, 156);
             this.numericUpDown7.Minimum = new decimal(new int[] {
             100,
             0,
@@ -493,7 +548,7 @@
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(47, 223);
+            this.label32.Location = new System.Drawing.Point(47, 158);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(105, 18);
             this.label32.TabIndex = 26;
@@ -503,7 +558,7 @@
             // 
             this.label29.AutoSize = true;
             this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label29.Location = new System.Drawing.Point(309, 158);
+            this.label29.Location = new System.Drawing.Point(309, 96);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(27, 17);
             this.label29.TabIndex = 25;
@@ -518,7 +573,7 @@
             0,
             0,
             65536});
-            this.numericUpDown5.Location = new System.Drawing.Point(183, 156);
+            this.numericUpDown5.Location = new System.Drawing.Point(183, 93);
             this.numericUpDown5.Maximum = new decimal(new int[] {
             10,
             0,
@@ -537,7 +592,7 @@
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(47, 156);
+            this.label30.Location = new System.Drawing.Point(47, 93);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(105, 18);
             this.label30.TabIndex = 23;
@@ -547,7 +602,7 @@
             // 
             this.label28.AutoSize = true;
             this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label28.Location = new System.Drawing.Point(309, 65);
+            this.label28.Location = new System.Drawing.Point(309, 28);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(38, 17);
             this.label28.TabIndex = 22;
@@ -556,7 +611,23 @@
             // numericUpDown4
             // 
             this.numericUpDown4.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "SetCurrentOffset", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.numericUpDown4.Location = new System.Drawing.Point(183, 63);
+            this.numericUpDown4.DecimalPlaces = 3;
+            this.numericUpDown4.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.numericUpDown4.Location = new System.Drawing.Point(183, 26);
+            this.numericUpDown4.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDown4.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
             this.numericUpDown4.Name = "numericUpDown4";
             this.numericUpDown4.Size = new System.Drawing.Size(120, 24);
             this.numericUpDown4.TabIndex = 1;
@@ -565,7 +636,7 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(23, 65);
+            this.label27.Location = new System.Drawing.Point(23, 28);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(131, 18);
             this.label27.TabIndex = 0;
@@ -893,7 +964,7 @@
             // 
             // panel8
             // 
-            this.panel8.BackColor = System.Drawing.Color.DimGray;
+            this.panel8.BackColor = System.Drawing.Color.Silver;
             this.panel8.Controls.Add(this.label2);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel8.Location = new System.Drawing.Point(0, 0);
@@ -960,7 +1031,7 @@
             // 
             // numericUpDown11
             // 
-            this.numericUpDown11.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "CorrectionCoef", true));
+            this.numericUpDown11.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "CorrectionCoef", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.numericUpDown11.DecimalPlaces = 3;
             this.numericUpDown11.Increment = new decimal(new int[] {
             1,
@@ -1018,7 +1089,7 @@
             // 
             // numericUpDown10
             // 
-            this.numericUpDown10.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "SampleArea", true));
+            this.numericUpDown10.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "SampleArea", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.numericUpDown10.DecimalPlaces = 3;
             this.numericUpDown10.Increment = new decimal(new int[] {
             1,
@@ -1954,6 +2025,60 @@
             this.userData.DataSetName = "UserData";
             this.userData.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
+            // label48
+            // 
+            this.label48.AutoSize = true;
+            this.label48.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.label48.Location = new System.Drawing.Point(309, 59);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(20, 17);
+            this.label48.TabIndex = 43;
+            this.label48.Text = "%";
+            // 
+            // numericUpDown15
+            // 
+            this.numericUpDown15.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "SetCurrentGain", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.numericUpDown15.DecimalPlaces = 1;
+            this.numericUpDown15.Location = new System.Drawing.Point(183, 56);
+            this.numericUpDown15.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDown15.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown15.Name = "numericUpDown15";
+            this.numericUpDown15.Size = new System.Drawing.Size(120, 24);
+            this.numericUpDown15.TabIndex = 42;
+            this.numericUpDown15.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Location = new System.Drawing.Point(29, 59);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(122, 18);
+            this.label49.TabIndex = 41;
+            this.label49.Text = "Set Current Gain:";
+            // 
+            // coefficientsBindingSource
+            // 
+            this.coefficientsBindingSource.DataMember = "Coefficients";
+            this.coefficientsBindingSource.DataSource = this.tinSampleSettings1;
+            this.coefficientsBindingSource.CurrentChanged += new System.EventHandler(this.coefficientsBindingSource_CurrentChanged);
+            // 
+            // tinSampleSettings1
+            // 
+            this.tinSampleSettings1.DataSetName = "TinSampleSettings";
+            this.tinSampleSettings1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1980,9 +2105,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.userData1)).EndInit();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown14)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.coefficientsBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tinSampleSettings1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
@@ -2021,6 +2147,9 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userData)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.coefficientsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tinSampleSettings1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2144,8 +2273,6 @@
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.NumericUpDown numericUpDown4;
         private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.Label label38;
-        private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.NumericUpDown numericUpDown9;
         private System.Windows.Forms.Label label36;
@@ -2180,6 +2307,15 @@
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Label label45;
         private System.Windows.Forms.ToolStripMenuItem offsetRemovalToolStripMenuItem1;
+        private System.Windows.Forms.NumericUpDown numericUpDown14;
+        private System.Windows.Forms.NumericUpDown numericUpDown13;
+        private System.Windows.Forms.NumericUpDown numericUpDown12;
+        private System.Windows.Forms.Label label46;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.Label label48;
+        private System.Windows.Forms.NumericUpDown numericUpDown15;
+        private System.Windows.Forms.Label label49;
     }
 }
 

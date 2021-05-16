@@ -491,6 +491,9 @@ namespace PGStatLibrary
             /// Digital low pass filter.
             /// </summary>
             public int Digital_Filter;
+            public int VFilter;
+            public int IFilter;
+            public int PostFilter;
         }
 
         /// <summary>
@@ -1008,7 +1011,7 @@ namespace PGStatLibrary
             if (SendAndReceiveOK(order)) Lastvfilter = value;
         }
         /// <summary>
-        /// This function changes the voltage filter.<para />
+        /// This function changes the post filter.<para />
         /// 0:<para />
         /// 1:<para />
         /// 2:
@@ -2719,7 +2722,7 @@ namespace PGStatLibrary
             PG_EVT_AProcessStarted?.Invoke(this, e1);
             SetStatus("IV process is started ...");
             int cntMax = IV_Input.Step;
-            int MyVFilter = 2; int MyIFilter = 2;
+            int MyVFilter = IV_Input.VFilter; int MyIFilter = IV_Input.IFilter;
             //PGmode(CV_Input.PGmode);
             //if (CV_Input.PGmode == 3){ MyVFilter = 2; MyIFilter = 0; }
             vfilter(MyVFilter);
@@ -2742,8 +2745,10 @@ namespace PGStatLibrary
             zeroset(Myzeroset);
             //vdcmlp(IV_Input.Voltage_Multiplier_Mode);
             idcmlp(0);// IV_Input.Current_Multiplier_Mode);
-            postfilter(2);//moosa
-            vfilter(3);
+            //postfilter(2);//moosa
+            postfilter(IV_Input.PostFilter);//moosa
+            //vfilter(3);
+            vfilter(MyVFilter);
             double ThisIV_Voffset = 0;
             double ThisIV_Ioffset = 0;
 

@@ -293,6 +293,14 @@ namespace Tinplate {
             
             private global::System.Data.DataColumn columnReadCurrentGain;
             
+            private global::System.Data.DataColumn columnVFilter;
+            
+            private global::System.Data.DataColumn columnIFilter;
+            
+            private global::System.Data.DataColumn columnPostFilter;
+            
+            private global::System.Data.DataColumn columnSetCurrentGain;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public CoefficientsDataTable() {
@@ -384,6 +392,38 @@ namespace Tinplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn VFilterColumn {
+                get {
+                    return this.columnVFilter;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn IFilterColumn {
+                get {
+                    return this.columnIFilter;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn PostFilterColumn {
+                get {
+                    return this.columnPostFilter;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn SetCurrentGainColumn {
+                get {
+                    return this.columnSetCurrentGain;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -419,7 +459,7 @@ namespace Tinplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public CoefficientsRow AddCoefficientsRow(decimal CorrectionCoef, decimal SampleArea, decimal SetCurrentOffset, decimal ReadVoltageOffset, decimal ReadVoltageGain, decimal ReadCurrentOffset, decimal ReadCurrentGain) {
+            public CoefficientsRow AddCoefficientsRow(decimal CorrectionCoef, decimal SampleArea, decimal SetCurrentOffset, decimal ReadVoltageOffset, decimal ReadVoltageGain, decimal ReadCurrentOffset, decimal ReadCurrentGain, decimal VFilter, decimal IFilter, decimal PostFilter, decimal SetCurrentGain) {
                 CoefficientsRow rowCoefficientsRow = ((CoefficientsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         CorrectionCoef,
@@ -428,7 +468,11 @@ namespace Tinplate {
                         ReadVoltageOffset,
                         ReadVoltageGain,
                         ReadCurrentOffset,
-                        ReadCurrentGain};
+                        ReadCurrentGain,
+                        VFilter,
+                        IFilter,
+                        PostFilter,
+                        SetCurrentGain};
                 rowCoefficientsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowCoefficientsRow);
                 return rowCoefficientsRow;
@@ -458,6 +502,10 @@ namespace Tinplate {
                 this.columnReadVoltageGain = base.Columns["ReadVoltageGain"];
                 this.columnReadCurrentOffset = base.Columns["ReadCurrentOffset"];
                 this.columnReadCurrentGain = base.Columns["ReadCurrentGain"];
+                this.columnVFilter = base.Columns["VFilter"];
+                this.columnIFilter = base.Columns["IFilter"];
+                this.columnPostFilter = base.Columns["PostFilter"];
+                this.columnSetCurrentGain = base.Columns["SetCurrentGain"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -477,6 +525,14 @@ namespace Tinplate {
                 base.Columns.Add(this.columnReadCurrentOffset);
                 this.columnReadCurrentGain = new global::System.Data.DataColumn("ReadCurrentGain", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnReadCurrentGain);
+                this.columnVFilter = new global::System.Data.DataColumn("VFilter", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnVFilter);
+                this.columnIFilter = new global::System.Data.DataColumn("IFilter", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnIFilter);
+                this.columnPostFilter = new global::System.Data.DataColumn("PostFilter", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPostFilter);
+                this.columnSetCurrentGain = new global::System.Data.DataColumn("SetCurrentGain", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSetCurrentGain);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -731,6 +787,70 @@ namespace Tinplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public decimal VFilter {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableCoefficients.VFilterColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'VFilter\' in table \'Coefficients\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCoefficients.VFilterColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public decimal IFilter {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableCoefficients.IFilterColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'IFilter\' in table \'Coefficients\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCoefficients.IFilterColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public decimal PostFilter {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableCoefficients.PostFilterColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'PostFilter\' in table \'Coefficients\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCoefficients.PostFilterColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public decimal SetCurrentGain {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableCoefficients.SetCurrentGainColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'SetCurrentGain\' in table \'Coefficients\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCoefficients.SetCurrentGainColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsCorrectionCoefNull() {
                 return this.IsNull(this.tableCoefficients.CorrectionCoefColumn);
             }
@@ -811,6 +931,54 @@ namespace Tinplate {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetReadCurrentGainNull() {
                 this[this.tableCoefficients.ReadCurrentGainColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsVFilterNull() {
+                return this.IsNull(this.tableCoefficients.VFilterColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetVFilterNull() {
+                this[this.tableCoefficients.VFilterColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsIFilterNull() {
+                return this.IsNull(this.tableCoefficients.IFilterColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetIFilterNull() {
+                this[this.tableCoefficients.IFilterColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsPostFilterNull() {
+                return this.IsNull(this.tableCoefficients.PostFilterColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetPostFilterNull() {
+                this[this.tableCoefficients.PostFilterColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsSetCurrentGainNull() {
+                return this.IsNull(this.tableCoefficients.SetCurrentGainColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetSetCurrentGainNull() {
+                this[this.tableCoefficients.SetCurrentGainColumn] = global::System.Convert.DBNull;
             }
         }
         

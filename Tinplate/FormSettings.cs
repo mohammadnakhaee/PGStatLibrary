@@ -34,14 +34,14 @@ namespace Tinplate
         private void BtnSave_Click(object sender, EventArgs e)
         {
             //Settings
-            Form1.pg.SaveSettings("C:/Users/DELL/source/repos/PGStatLibrary/Tinplate/bin/settings.bin");
+            Form1.pg.SaveSettings("./settings.bin");
             //MessageBox.Show("micro save");
-            Form1.pg.MicroSaveSettings("C:/Users/DELL/source/repos/PGStatLibrary/Tinplate/bin/settings.bin");
+            Form1.pg.MicroSaveSettings("./settings.bin");
         }
 
         private void FormSettings_Load(object sender, EventArgs e)
         {
-            Form1.pg.LoadSettings("C:/Users/DELL/source/repos/PGStatLibrary/Tinplate/bin/settings.bin");
+            Form1.pg.LoadSettings("./settings.bin");
             FillForm();
         }
 
