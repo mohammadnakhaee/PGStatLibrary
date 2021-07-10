@@ -140,12 +140,15 @@
             this.btn_choos_t2 = new System.Windows.Forms.Button();
             this.UD_T2 = new System.Windows.Forms.NumericUpDown();
             this.label17 = new System.Windows.Forms.Label();
-            this.AutoSelectTime = new System.Windows.Forms.Button();
             this.CurvatureMethod = new System.Windows.Forms.RadioButton();
             this.btn_choos_t1 = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.UD_T1 = new System.Windows.Forms.NumericUpDown();
+            this.label50 = new System.Windows.Forms.Label();
+            this.CTRL_nSPLine = new System.Windows.Forms.NumericUpDown();
+            this.AutoSelectTime = new System.Windows.Forms.Button();
+            this.Refresh = new System.Windows.Forms.Button();
             this.panel9 = new System.Windows.Forms.Panel();
             this.StatusLabel = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -240,6 +243,7 @@
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UD_T2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UD_T1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CTRL_nSPLine)).BeginInit();
             this.panel9.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
@@ -1583,12 +1587,15 @@
             this.tableLayoutPanel1.Controls.Add(this.btn_choos_t2, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.UD_T2, 3, 1);
             this.tableLayoutPanel1.Controls.Add(this.label17, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.AutoSelectTime, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.CurvatureMethod, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.btn_choos_t1, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.label16, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.label18, 4, 0);
             this.tableLayoutPanel1.Controls.Add(this.UD_T1, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label50, 2, 2);
+            this.tableLayoutPanel1.Controls.Add(this.CTRL_nSPLine, 3, 2);
+            this.tableLayoutPanel1.Controls.Add(this.AutoSelectTime, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.Refresh, 4, 2);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 26);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
@@ -1667,21 +1674,6 @@
             this.label17.TabIndex = 5;
             this.label17.Text = "t2:";
             // 
-            // AutoSelectTime
-            // 
-            this.AutoSelectTime.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.AutoSelectTime.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Maroon;
-            this.AutoSelectTime.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.AutoSelectTime.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.AutoSelectTime.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.AutoSelectTime.Location = new System.Drawing.Point(3, 71);
-            this.AutoSelectTime.Name = "AutoSelectTime";
-            this.AutoSelectTime.Size = new System.Drawing.Size(149, 30);
-            this.AutoSelectTime.TabIndex = 16;
-            this.AutoSelectTime.Text = "Auto Select Time";
-            this.AutoSelectTime.UseVisualStyleBackColor = true;
-            this.AutoSelectTime.Click += new System.EventHandler(this.AutoSelectTime_Click);
-            // 
             // CurvatureMethod
             // 
             this.CurvatureMethod.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -1748,6 +1740,65 @@
             this.UD_T1.Size = new System.Drawing.Size(114, 24);
             this.UD_T1.TabIndex = 0;
             this.UD_T1.ValueChanged += new System.EventHandler(this.UD_T1_ValueChanged);
+            // 
+            // label50
+            // 
+            this.label50.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label50.AutoSize = true;
+            this.label50.Location = new System.Drawing.Point(277, 77);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(35, 18);
+            this.label50.TabIndex = 19;
+            this.label50.Text = "n fit:";
+            // 
+            // CTRL_nSPLine
+            // 
+            this.CTRL_nSPLine.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.CTRL_nSPLine.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.inputsBindingSource, "nSPLine", true));
+            this.CTRL_nSPLine.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.CTRL_nSPLine.Location = new System.Drawing.Point(318, 74);
+            this.CTRL_nSPLine.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            this.CTRL_nSPLine.Name = "CTRL_nSPLine";
+            this.CTRL_nSPLine.Size = new System.Drawing.Size(114, 24);
+            this.CTRL_nSPLine.TabIndex = 20;
+            // 
+            // AutoSelectTime
+            // 
+            this.AutoSelectTime.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.AutoSelectTime.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Maroon;
+            this.AutoSelectTime.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.AutoSelectTime.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.AutoSelectTime.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.AutoSelectTime.Location = new System.Drawing.Point(3, 71);
+            this.AutoSelectTime.Name = "AutoSelectTime";
+            this.AutoSelectTime.Size = new System.Drawing.Size(149, 30);
+            this.AutoSelectTime.TabIndex = 16;
+            this.AutoSelectTime.Text = "Auto Select Time";
+            this.AutoSelectTime.UseVisualStyleBackColor = true;
+            this.AutoSelectTime.Click += new System.EventHandler(this.AutoSelectTime_Click);
+            // 
+            // Refresh
+            // 
+            this.Refresh.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.Refresh.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Maroon;
+            this.Refresh.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.Refresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Refresh.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.Refresh.Location = new System.Drawing.Point(438, 71);
+            this.Refresh.Name = "Refresh";
+            this.Refresh.Size = new System.Drawing.Size(116, 30);
+            this.Refresh.TabIndex = 21;
+            this.Refresh.Text = "Refresh";
+            this.Refresh.UseVisualStyleBackColor = true;
+            this.Refresh.Click += new System.EventHandler(this.button9_Click);
             // 
             // panel9
             // 
@@ -2207,7 +2258,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -2310,6 +2361,7 @@
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UD_T2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.UD_T1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CTRL_nSPLine)).EndInit();
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -2492,6 +2544,9 @@
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.Panel panel13;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label label50;
+        private System.Windows.Forms.NumericUpDown CTRL_nSPLine;
+        private System.Windows.Forms.Button Refresh;
     }
 }
 

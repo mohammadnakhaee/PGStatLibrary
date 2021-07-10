@@ -12,7 +12,7 @@
   <xs:element name="UserData" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="UserData" msprop:Generator_UserDSName="UserData">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="Data" msprop:Generator_TableClassName="DataDataTable" msprop:Generator_TableVarName="tableData" msprop:Generator_TablePropName="Data" msprop:Generator_RowDeletingName="DataRowDeleting" msprop:Generator_RowChangingName="DataRowChanging" msprop:Generator_RowEvHandlerName="DataRowChangeEventHandler" msprop:Generator_RowDeletedName="DataRowDeleted" msprop:Generator_UserTableName="Data" msprop:Generator_RowChangedName="DataRowChanged" msprop:Generator_RowEvArgName="DataRowChangeEvent" msprop:Generator_RowClassName="DataRow">
+        <xs:element name="Data" msprop:Generator_TableClassName="DataDataTable" msprop:Generator_TableVarName="tableData" msprop:Generator_RowChangedName="DataRowChanged" msprop:Generator_TablePropName="Data" msprop:Generator_RowDeletingName="DataRowDeleting" msprop:Generator_RowChangingName="DataRowChanging" msprop:Generator_RowEvHandlerName="DataRowChangeEventHandler" msprop:Generator_RowDeletedName="DataRowDeleted" msprop:Generator_RowClassName="DataRow" msprop:Generator_UserTableName="Data" msprop:Generator_RowEvArgName="DataRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Time" msprop:Generator_ColumnVarNameInTable="columnTime" msprop:Generator_ColumnPropNameInRow="Time" msprop:Generator_ColumnPropNameInTable="TimeColumn" msprop:Generator_UserColumnName="Time" type="xs:double" minOccurs="0" />
@@ -20,7 +20,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Fitting" msprop:Generator_TableClassName="FittingDataTable" msprop:Generator_TableVarName="tableFitting" msprop:Generator_TablePropName="Fitting" msprop:Generator_RowDeletingName="FittingRowDeleting" msprop:Generator_RowChangingName="FittingRowChanging" msprop:Generator_RowEvHandlerName="FittingRowChangeEventHandler" msprop:Generator_RowDeletedName="FittingRowDeleted" msprop:Generator_UserTableName="Fitting" msprop:Generator_RowChangedName="FittingRowChanged" msprop:Generator_RowEvArgName="FittingRowChangeEvent" msprop:Generator_RowClassName="FittingRow">
+        <xs:element name="Fitting" msprop:Generator_TableClassName="FittingDataTable" msprop:Generator_TableVarName="tableFitting" msprop:Generator_RowChangedName="FittingRowChanged" msprop:Generator_TablePropName="Fitting" msprop:Generator_RowDeletingName="FittingRowDeleting" msprop:Generator_RowChangingName="FittingRowChanging" msprop:Generator_RowEvHandlerName="FittingRowChangeEventHandler" msprop:Generator_RowDeletedName="FittingRowDeleted" msprop:Generator_RowClassName="FittingRow" msprop:Generator_UserTableName="Fitting" msprop:Generator_RowEvArgName="FittingRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Time" msprop:Generator_ColumnVarNameInTable="columnTime" msprop:Generator_ColumnPropNameInRow="Time" msprop:Generator_ColumnPropNameInTable="TimeColumn" msprop:Generator_UserColumnName="Time" type="xs:double" minOccurs="0" />
@@ -28,7 +28,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Derivatives1" msprop:Generator_TableClassName="Derivatives1DataTable" msprop:Generator_TableVarName="tableDerivatives1" msprop:Generator_RowChangedName="Derivatives1RowChanged" msprop:Generator_TablePropName="Derivatives1" msprop:Generator_RowDeletingName="Derivatives1RowDeleting" msprop:Generator_RowChangingName="Derivatives1RowChanging" msprop:Generator_RowEvHandlerName="Derivatives1RowChangeEventHandler" msprop:Generator_RowDeletedName="Derivatives1RowDeleted" msprop:Generator_RowClassName="Derivatives1Row" msprop:Generator_UserTableName="Derivatives1" msprop:Generator_RowEvArgName="Derivatives1RowChangeEvent">
+        <xs:element name="Derivatives1" msprop:Generator_TableClassName="Derivatives1DataTable" msprop:Generator_TableVarName="tableDerivatives1" msprop:Generator_TablePropName="Derivatives1" msprop:Generator_RowDeletingName="Derivatives1RowDeleting" msprop:Generator_RowChangingName="Derivatives1RowChanging" msprop:Generator_RowEvHandlerName="Derivatives1RowChangeEventHandler" msprop:Generator_RowDeletedName="Derivatives1RowDeleted" msprop:Generator_UserTableName="Derivatives1" msprop:Generator_RowChangedName="Derivatives1RowChanged" msprop:Generator_RowEvArgName="Derivatives1RowChangeEvent" msprop:Generator_RowClassName="Derivatives1Row">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Time" msprop:Generator_ColumnVarNameInTable="columnTime" msprop:Generator_ColumnPropNameInRow="Time" msprop:Generator_ColumnPropNameInTable="TimeColumn" msprop:Generator_UserColumnName="Time" type="xs:double" minOccurs="0" />
@@ -36,7 +36,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Derivatives2" msprop:Generator_TableClassName="Derivatives2DataTable" msprop:Generator_TableVarName="tableDerivatives2" msprop:Generator_RowChangedName="Derivatives2RowChanged" msprop:Generator_TablePropName="Derivatives2" msprop:Generator_RowDeletingName="Derivatives2RowDeleting" msprop:Generator_RowChangingName="Derivatives2RowChanging" msprop:Generator_RowEvHandlerName="Derivatives2RowChangeEventHandler" msprop:Generator_RowDeletedName="Derivatives2RowDeleted" msprop:Generator_RowClassName="Derivatives2Row" msprop:Generator_UserTableName="Derivatives2" msprop:Generator_RowEvArgName="Derivatives2RowChangeEvent">
+        <xs:element name="Derivatives2" msprop:Generator_TableClassName="Derivatives2DataTable" msprop:Generator_TableVarName="tableDerivatives2" msprop:Generator_TablePropName="Derivatives2" msprop:Generator_RowDeletingName="Derivatives2RowDeleting" msprop:Generator_RowChangingName="Derivatives2RowChanging" msprop:Generator_RowEvHandlerName="Derivatives2RowChangeEventHandler" msprop:Generator_RowDeletedName="Derivatives2RowDeleted" msprop:Generator_UserTableName="Derivatives2" msprop:Generator_RowChangedName="Derivatives2RowChanged" msprop:Generator_RowEvArgName="Derivatives2RowChangeEvent" msprop:Generator_RowClassName="Derivatives2Row">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Time" msprop:Generator_ColumnVarNameInTable="columnTime" msprop:Generator_ColumnPropNameInRow="Time" msprop:Generator_ColumnPropNameInTable="TimeColumn" msprop:Generator_UserColumnName="Time" type="xs:double" minOccurs="0" />
@@ -44,7 +44,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Derivatives3" msprop:Generator_TableClassName="Derivatives3DataTable" msprop:Generator_TableVarName="tableDerivatives3" msprop:Generator_RowChangedName="Derivatives3RowChanged" msprop:Generator_TablePropName="Derivatives3" msprop:Generator_RowDeletingName="Derivatives3RowDeleting" msprop:Generator_RowChangingName="Derivatives3RowChanging" msprop:Generator_RowEvHandlerName="Derivatives3RowChangeEventHandler" msprop:Generator_RowDeletedName="Derivatives3RowDeleted" msprop:Generator_RowClassName="Derivatives3Row" msprop:Generator_UserTableName="Derivatives3" msprop:Generator_RowEvArgName="Derivatives3RowChangeEvent">
+        <xs:element name="Derivatives3" msprop:Generator_TableClassName="Derivatives3DataTable" msprop:Generator_TableVarName="tableDerivatives3" msprop:Generator_TablePropName="Derivatives3" msprop:Generator_RowDeletingName="Derivatives3RowDeleting" msprop:Generator_RowChangingName="Derivatives3RowChanging" msprop:Generator_RowEvHandlerName="Derivatives3RowChangeEventHandler" msprop:Generator_RowDeletedName="Derivatives3RowDeleted" msprop:Generator_UserTableName="Derivatives3" msprop:Generator_RowChangedName="Derivatives3RowChanged" msprop:Generator_RowEvArgName="Derivatives3RowChangeEvent" msprop:Generator_RowClassName="Derivatives3Row">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Time" msprop:Generator_ColumnVarNameInTable="columnTime" msprop:Generator_ColumnPropNameInRow="Time" msprop:Generator_ColumnPropNameInTable="TimeColumn" msprop:Generator_UserColumnName="Time" type="xs:double" minOccurs="0" />
@@ -52,7 +52,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Derivatives4" msprop:Generator_TableClassName="Derivatives4DataTable" msprop:Generator_TableVarName="tableDerivatives4" msprop:Generator_RowChangedName="Derivatives4RowChanged" msprop:Generator_TablePropName="Derivatives4" msprop:Generator_RowDeletingName="Derivatives4RowDeleting" msprop:Generator_RowChangingName="Derivatives4RowChanging" msprop:Generator_RowEvHandlerName="Derivatives4RowChangeEventHandler" msprop:Generator_RowDeletedName="Derivatives4RowDeleted" msprop:Generator_RowClassName="Derivatives4Row" msprop:Generator_UserTableName="Derivatives4" msprop:Generator_RowEvArgName="Derivatives4RowChangeEvent">
+        <xs:element name="Derivatives4" msprop:Generator_TableClassName="Derivatives4DataTable" msprop:Generator_TableVarName="tableDerivatives4" msprop:Generator_TablePropName="Derivatives4" msprop:Generator_RowDeletingName="Derivatives4RowDeleting" msprop:Generator_RowChangingName="Derivatives4RowChanging" msprop:Generator_RowEvHandlerName="Derivatives4RowChangeEventHandler" msprop:Generator_RowDeletedName="Derivatives4RowDeleted" msprop:Generator_UserTableName="Derivatives4" msprop:Generator_RowChangedName="Derivatives4RowChanged" msprop:Generator_RowEvArgName="Derivatives4RowChangeEvent" msprop:Generator_RowClassName="Derivatives4Row">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Time" msprop:Generator_ColumnVarNameInTable="columnTime" msprop:Generator_ColumnPropNameInRow="Time" msprop:Generator_ColumnPropNameInTable="TimeColumn" msprop:Generator_UserColumnName="Time" type="xs:double" minOccurs="0" />
@@ -60,7 +60,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Inputs" msprop:Generator_TableClassName="InputsDataTable" msprop:Generator_TableVarName="tableInputs" msprop:Generator_TablePropName="Inputs" msprop:Generator_RowDeletingName="InputsRowDeleting" msprop:Generator_RowChangingName="InputsRowChanging" msprop:Generator_RowEvHandlerName="InputsRowChangeEventHandler" msprop:Generator_RowDeletedName="InputsRowDeleted" msprop:Generator_UserTableName="Inputs" msprop:Generator_RowChangedName="InputsRowChanged" msprop:Generator_RowEvArgName="InputsRowChangeEvent" msprop:Generator_RowClassName="InputsRow">
+        <xs:element name="Inputs" msprop:Generator_TableClassName="InputsDataTable" msprop:Generator_TableVarName="tableInputs" msprop:Generator_RowChangedName="InputsRowChanged" msprop:Generator_TablePropName="Inputs" msprop:Generator_RowDeletingName="InputsRowDeleting" msprop:Generator_RowChangingName="InputsRowChanging" msprop:Generator_RowEvHandlerName="InputsRowChangeEventHandler" msprop:Generator_RowDeletedName="InputsRowDeleted" msprop:Generator_RowClassName="InputsRow" msprop:Generator_UserTableName="Inputs" msprop:Generator_RowEvArgName="InputsRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="UserName" msprop:Generator_ColumnVarNameInTable="columnUserName" msprop:Generator_ColumnPropNameInRow="UserName" msprop:Generator_ColumnPropNameInTable="UserNameColumn" msprop:Generator_UserColumnName="UserName" type="xs:string" minOccurs="0" />
@@ -88,10 +88,11 @@
               <xs:element name="IsUsingFittingTimes" msprop:Generator_ColumnVarNameInTable="columnIsUsingFittingTimes" msprop:Generator_ColumnPropNameInRow="IsUsingFittingTimes" msprop:Generator_ColumnPropNameInTable="IsUsingFittingTimesColumn" msprop:Generator_UserColumnName="IsUsingFittingTimes" type="xs:boolean" minOccurs="0" />
               <xs:element name="FittingMethod" msprop:Generator_ColumnVarNameInTable="columnFittingMethod" msprop:Generator_ColumnPropNameInRow="FittingMethod" msprop:Generator_ColumnPropNameInTable="FittingMethodColumn" msprop:Generator_UserColumnName="FittingMethod" type="xs:string" minOccurs="0" />
               <xs:element name="DateAndTime" msprop:Generator_ColumnVarNameInTable="columnDateAndTime" msprop:Generator_ColumnPropNameInRow="DateAndTime" msprop:Generator_ColumnPropNameInTable="DateAndTimeColumn" msprop:Generator_UserColumnName="DateAndTime" type="xs:string" minOccurs="0" />
+              <xs:element name="nSPLine" msprop:Generator_ColumnVarNameInTable="columnnSPLine" msprop:Generator_ColumnPropNameInRow="nSPLine" msprop:Generator_ColumnPropNameInTable="nSPLineColumn" msprop:Generator_UserColumnName="nSPLine" type="xs:decimal" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="T1" msprop:Generator_TableClassName="T1DataTable" msprop:Generator_TableVarName="tableT1" msprop:Generator_TablePropName="T1" msprop:Generator_RowDeletingName="T1RowDeleting" msprop:Generator_RowChangingName="T1RowChanging" msprop:Generator_RowEvHandlerName="T1RowChangeEventHandler" msprop:Generator_RowDeletedName="T1RowDeleted" msprop:Generator_UserTableName="T1" msprop:Generator_RowChangedName="T1RowChanged" msprop:Generator_RowEvArgName="T1RowChangeEvent" msprop:Generator_RowClassName="T1Row">
+        <xs:element name="T1" msprop:Generator_TableClassName="T1DataTable" msprop:Generator_TableVarName="tableT1" msprop:Generator_RowChangedName="T1RowChanged" msprop:Generator_TablePropName="T1" msprop:Generator_RowDeletingName="T1RowDeleting" msprop:Generator_RowChangingName="T1RowChanging" msprop:Generator_RowEvHandlerName="T1RowChangeEventHandler" msprop:Generator_RowDeletedName="T1RowDeleted" msprop:Generator_RowClassName="T1Row" msprop:Generator_UserTableName="T1" msprop:Generator_RowEvArgName="T1RowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Time" msprop:Generator_ColumnVarNameInTable="columnTime" msprop:Generator_ColumnPropNameInRow="Time" msprop:Generator_ColumnPropNameInTable="TimeColumn" msprop:Generator_UserColumnName="Time" type="xs:double" minOccurs="0" />
@@ -99,7 +100,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="T2" msprop:Generator_TableClassName="T2DataTable" msprop:Generator_TableVarName="tableT2" msprop:Generator_TablePropName="T2" msprop:Generator_RowDeletingName="T2RowDeleting" msprop:Generator_RowChangingName="T2RowChanging" msprop:Generator_RowEvHandlerName="T2RowChangeEventHandler" msprop:Generator_RowDeletedName="T2RowDeleted" msprop:Generator_UserTableName="T2" msprop:Generator_RowChangedName="T2RowChanged" msprop:Generator_RowEvArgName="T2RowChangeEvent" msprop:Generator_RowClassName="T2Row">
+        <xs:element name="T2" msprop:Generator_TableClassName="T2DataTable" msprop:Generator_TableVarName="tableT2" msprop:Generator_RowChangedName="T2RowChanged" msprop:Generator_TablePropName="T2" msprop:Generator_RowDeletingName="T2RowDeleting" msprop:Generator_RowChangingName="T2RowChanging" msprop:Generator_RowEvHandlerName="T2RowChangeEventHandler" msprop:Generator_RowDeletedName="T2RowDeleted" msprop:Generator_RowClassName="T2Row" msprop:Generator_UserTableName="T2" msprop:Generator_RowEvArgName="T2RowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Time" msprop:Generator_ColumnVarNameInTable="columnTime" msprop:Generator_ColumnPropNameInRow="Time" msprop:Generator_ColumnPropNameInTable="TimeColumn" msprop:Generator_UserColumnName="Time" type="xs:double" minOccurs="0" />

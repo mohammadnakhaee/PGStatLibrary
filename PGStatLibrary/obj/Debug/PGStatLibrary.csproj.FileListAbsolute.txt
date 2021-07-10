@@ -5,7 +5,6 @@ C:\Users\mohammad\source\repos\PGStatLibrary\PGStatLibrary\obj\Debug\PGStatLibra
 C:\Users\mohammad\source\repos\PGStatLibrary\PGStatLibrary\obj\Debug\PGStatLibrary.csproj.CoreCompileInputs.cache
 C:\Users\mohammad\source\repos\PGStatLibrary\PGStatLibrary\obj\Debug\PGStatLibrary.dll
 C:\Users\mohammad\source\repos\PGStatLibrary\PGStatLibrary\obj\Debug\PGStatLibrary.pdb
-C:\Users\mohammad\source\repos\PGStatLibrary\PGStatLibrary\obj\Debug\PGStatLibrary.csprojAssemblyReference.cache
 C:\Users\DELL\source\repos\PGStatLibrary\PGStatLibrary\bin\Debug\PGStatLibrary.dll
 C:\Users\DELL\source\repos\PGStatLibrary\PGStatLibrary\bin\Debug\PGStatLibrary.pdb
 C:\Users\DELL\source\repos\PGStatLibrary\PGStatLibrary\obj\Debug\PGStatLibrary.Properties.Resources.resources

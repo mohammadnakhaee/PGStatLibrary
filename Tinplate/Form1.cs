@@ -18,6 +18,7 @@ namespace Tinplate
 {
     public partial class Form1 : Form
     {
+        public UserData CompatibleDefaultUserData = new UserData();
         public static string ProgramName = "STMS";
         public static string Version = "100.0.0.1";
         public static PGStat pg;
@@ -746,6 +747,14 @@ namespace Tinplate
             userData1.Tables["Inputs"].Rows[0]["IsFittingFound"] = false;
             userData1.Tables["Inputs"].Rows[0]["t1"] = 0;
             userData1.Tables["Inputs"].Rows[0]["t2"] = 0;
+            userData1.Tables["Inputs"].Rows[0]["nSPLine"] = 350;
+
+            ///////////////////////////////////Add any new default value above this part////////////////////////////////////////////
+            /////This is to ensure that we can load older file versions in newer app versions
+            CompatibleDefaultUserData.Clear();
+            userData1.WriteXml("./EmptyProject.xml");
+            CompatibleDefaultUserData.ReadXml("./EmptyProject.xml", XmlReadMode.IgnoreSchema);
+            ///////////////////////////////////Add any new default value above this part////////////////////////////////////////////
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -787,23 +796,7 @@ namespace Tinplate
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openFileDialog1.Filter = "XML file (*.xml)|*.xml";
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                xmlFile = openFileDialog1.FileName;
-                userData1.Clear();
-                userData1.ReadXml(xmlFile, XmlReadMode.ReadSchema);
-                //string t1 = userData1.Tables["Inputs"].Rows[0][0].ToString();
-                UpdateTitle();
-                chart1.Series["Data"].Points.DataBindXY(userData1.Tables["Data"].Rows, "Time", userData1.Tables["Data"].Rows, "Voltage");
-                chart1.Series["Fitting"].Points.DataBindXY(userData1.Tables["Fitting"].Rows, "Time", userData1.Tables["Fitting"].Rows, "Voltage");
-                chart1.Series["Derivatives1"].Points.DataBindXY(userData1.Tables["Derivatives1"].Rows, "Time", userData1.Tables["Derivatives1"].Rows, "Voltage");
-                chart1.Series["Derivatives2"].Points.DataBindXY(userData1.Tables["Derivatives2"].Rows, "Time", userData1.Tables["Derivatives2"].Rows, "Voltage");
-                chart1.Series["Derivatives3"].Points.DataBindXY(userData1.Tables["Derivatives3"].Rows, "Time", userData1.Tables["Derivatives3"].Rows, "Voltage");
-                chart1.Series["Derivatives4"].Points.DataBindXY(userData1.Tables["Derivatives4"].Rows, "Time", userData1.Tables["Derivatives4"].Rows, "Voltage");
-                chart1.Series["T1"].Points.DataBindXY(userData1.Tables["T1"].Rows, "Time", userData1.Tables["T1"].Rows, "Voltage");
-                chart1.Series["T2"].Points.DataBindXY(userData1.Tables["T2"].Rows, "Time", userData1.Tables["T2"].Rows, "Voltage");
-            }
+            OpenXMLFile();
         }
 
         private void CreateRecovery()
@@ -1087,13 +1080,49 @@ namespace Tinplate
 
         private void button4_Click(object sender, EventArgs e)
         {
+            OpenXMLFile();
+        }
+
+        private void ValidateOlderXMLFiles()
+        {
+            /*int itable = -1;
+            foreach (DataTable table in userData1.Tables)
+            {
+                itable++;
+                int irow = -1;
+                foreach (DataRow row in table.Rows)
+                {
+                    irow++;
+                    foreach (DataColumn column in table.Columns)
+                    {
+                        object item = row[column];
+                        if (item is DBNull)
+                            userData1.Tables[itable].Rows[irow][column.ColumnName] = CompatibleDefaultUserData.Tables[itable].Rows[irow][column.ColumnName];
+                    }
+                }
+            }*/
+
+            foreach (DataColumn column in userData1.Tables["Inputs"].Columns)
+            {
+                object item = userData1.Tables["Inputs"].Rows[0][column];
+                if (item is DBNull)
+                    userData1.Tables["Inputs"].Rows[0][column.ColumnName] = CompatibleDefaultUserData.Tables["Inputs"].Rows[0][column.ColumnName];
+            }
+        }
+
+        private void OpenXMLFile()
+        {
             openFileDialog1.Filter = "XML file (*.xml)|*.xml";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 inLoadingProccess = true;
                 xmlFile = openFileDialog1.FileName;
+                int nspline1 = Convert.ToInt32(userData1.Tables["Inputs"].Rows[0]["nSPLine"]);
                 userData1.Clear();
-                userData1.ReadXml(xmlFile, XmlReadMode.ReadSchema);
+                userData1.ReadXml(xmlFile, XmlReadMode.IgnoreSchema);
+
+                ValidateOlderXMLFiles();
+                int nspline2 = Convert.ToInt32(userData1.Tables["Inputs"].Rows[0]["nSPLine"]);
                 double t1 = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["t1"]);
                 double t2 = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["t2"]);
                 bool DummyIsUsingFittingTimes = Convert.ToBoolean(userData1.Tables["Inputs"].Rows[0]["IsUsingFittingTimes"]);
@@ -1184,8 +1213,12 @@ namespace Tinplate
                 if (inLoadingProccess) return;
                 this.Invoke(new Action(() =>
                 {
+                    this.UD_T1.ValueChanged -= new System.EventHandler(this.UD_T1_ValueChanged);
+                    this.UD_T2.ValueChanged -= new System.EventHandler(this.UD_T2_ValueChanged);
                     UD_T1.Value = (decimal)(Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["t1"]));
                     UD_T2.Value = (decimal)(Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["t2"]));
+                    this.UD_T1.ValueChanged += new System.EventHandler(this.UD_T1_ValueChanged);
+                    this.UD_T2.ValueChanged += new System.EventHandler(this.UD_T2_ValueChanged);
                 }));
 
                 bool IsFittingFound = Convert.ToBoolean(userData1.Tables["Inputs"].Rows[0]["IsFittingFound"]);
@@ -1193,7 +1226,7 @@ namespace Tinplate
                 double Interval = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["Interval"]);
                 int nData = userData1.Tables["Data"].Rows.Count;
                 //int nData = (int)(1000.0 * Time / Interval) + 1;
-                int nDataFitting = nData * 3;
+                int nDataFitting = nData;
                 double dt = Time / (nDataFitting - 1);
 
                 userData1.Tables["Fitting"].Clear();
@@ -1239,7 +1272,6 @@ namespace Tinplate
                             p.Color = chart1.Series["Fitting"].Color;
                         }));
                     }
-
                 }
 
                 if (IsFittingFound)
@@ -1256,7 +1288,7 @@ namespace Tinplate
                     int curvature2 = Convert.ToInt32(userData1.Tables["Inputs"].Rows[0]["curvature2"]);
 
 
-                    for (int it = 0; it < nDataSpline; it++)
+                    for (int it = 0; it < nData; it++)
                         userData1.Tables["Fitting"].Rows.Add(tArray[it], f[it]);
 
                     userData1.Tables["T1"].Rows.Add(t1, f[curvature1]);
@@ -1265,22 +1297,22 @@ namespace Tinplate
                     if (TangentialMethod.Checked && IsUsingFittingTimes)
                     {
                         double x1, y1, x2, y2, yAtCurvature;
-                        FindLine(center1, curvature1, out x1, out y1, out x2, out y2, out yAtCurvature);
+                        FindLine(center1, curvature1, nDataFitting, out x1, out y1, out x2, out y2, out yAtCurvature);
                         userData1.Tables["Derivatives1"].Rows.Add(x1, y1);
                         userData1.Tables["Derivatives1"].Rows.Add(x2, y2);
 
                         int ixTangential;
                         FindTangential(tArray[curvature1], yAtCurvature, curvature1 + 4, center2, out ixTangential);
-                        FindLine(ixTangential, curvature1, out x1, out y1, out x2, out y2, out yAtCurvature);
+                        FindLine(ixTangential, curvature1, nDataFitting, out x1, out y1, out x2, out y2, out yAtCurvature);
                         userData1.Tables["Derivatives2"].Rows.Add(x1, y1);
                         userData1.Tables["Derivatives2"].Rows.Add(x2, y2);
 
-                        FindLine(center2, curvature2, out x1, out y1, out x2, out y2, out yAtCurvature);
+                        FindLine(center2, curvature2, nDataFitting, out x1, out y1, out x2, out y2, out yAtCurvature);
                         userData1.Tables["Derivatives3"].Rows.Add(x1, y1);
                         userData1.Tables["Derivatives3"].Rows.Add(x2, y2);
 
                         FindTangential(tArray[curvature2], yAtCurvature, curvature2 + 4, iEndOfValidInterval, out ixTangential);
-                        FindLine(ixTangential, curvature2, out x1, out y1, out x2, out y2, out yAtCurvature);
+                        FindLine(ixTangential, curvature2, nDataFitting, out x1, out y1, out x2, out y2, out yAtCurvature);
                         userData1.Tables["Derivatives4"].Rows.Add(x1, y1);
                         userData1.Tables["Derivatives4"].Rows.Add(x2, y2);
                     }
@@ -1329,7 +1361,7 @@ namespace Tinplate
             TotalTin.Text = (totaltin).ToString("0.00");
         }
 
-        private void FindLine(int iTangential, int j, out double x1, out double y1, out double x2, out double y2, out double yAtCurvature)
+        private void FindLine(int iTangential, int j, int nData, out double x1, out double y1, out double x2, out double y2, out double yAtCurvature)
         {
             double DeltaInt = j - iTangential;
             int DeltaLeft = (int)(DeltaInt * 0.7);
@@ -1341,11 +1373,11 @@ namespace Tinplate
 
             int ix1 = iTangential - DeltaLeft;
             if (ix1 < 0) ix1 = 0;
-            if (ix1 > nDataSpline - 1) ix1 = nDataSpline - 1;
+            if (ix1 > nData - 1) ix1 = nData - 1;
 
             int ix2 = j + DeltaRight;
             if (ix2 < 0) ix2 = 0;
-            if (ix2 > nDataSpline - 1) ix2 = nDataSpline - 1;
+            if (ix2 > nData - 1) ix2 = nData - 1;
 
             x1 = tArray[ix1];
             y1 = m * (x1 - x0) + y0;
@@ -1444,8 +1476,8 @@ namespace Tinplate
             { }
 
             //int nData = (int)(nData0 / 10);
-            int nData = 350;
-            nDataSpline = nData;
+            int nData = nData0;
+            nDataSpline = (int)CTRL_nSPLine.Value;
             tArray = new double[nData];
             f = new double[nData];
             df = new double[nData];
@@ -1819,6 +1851,8 @@ namespace Tinplate
 
             nData0 = userData1.Tables["Data"].Rows.Count;
             if (nData0 == 0) return;
+
+            chart1.Series["Data"].Points.DataBindXY(userData1.Tables["Data"].Rows, "Time", userData1.Tables["Data"].Rows, "Voltage");
 
             double[] t0 = new double[nData0];
             double[] f0 = new double[nData0];
@@ -2464,6 +2498,11 @@ namespace Tinplate
         {
             AboutBox d = new AboutBox();
             d.ShowDialog();
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            ProccessData();
         }
 
         private void AdminLogout()

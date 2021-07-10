@@ -2175,6 +2175,8 @@ namespace Tinplate {
             
             private global::System.Data.DataColumn columnDateAndTime;
             
+            private global::System.Data.DataColumn columnnSPLine;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public InputsDataTable() {
@@ -2410,6 +2412,14 @@ namespace Tinplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn nSPLineColumn {
+                get {
+                    return this.columnnSPLine;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2470,7 +2480,8 @@ namespace Tinplate {
                         bool IsUsingCustomCurrent, 
                         bool IsUsingFittingTimes, 
                         string FittingMethod, 
-                        string DateAndTime) {
+                        string DateAndTime, 
+                        decimal nSPLine) {
                 InputsRow rowInputsRow = ((InputsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         UserName,
@@ -2497,7 +2508,8 @@ namespace Tinplate {
                         IsUsingCustomCurrent,
                         IsUsingFittingTimes,
                         FittingMethod,
-                        DateAndTime};
+                        DateAndTime,
+                        nSPLine};
                 rowInputsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowInputsRow);
                 return rowInputsRow;
@@ -2545,6 +2557,7 @@ namespace Tinplate {
                 this.columnIsUsingFittingTimes = base.Columns["IsUsingFittingTimes"];
                 this.columnFittingMethod = base.Columns["FittingMethod"];
                 this.columnDateAndTime = base.Columns["DateAndTime"];
+                this.columnnSPLine = base.Columns["nSPLine"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2600,6 +2613,8 @@ namespace Tinplate {
                 base.Columns.Add(this.columnFittingMethod);
                 this.columnDateAndTime = new global::System.Data.DataColumn("DateAndTime", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDateAndTime);
+                this.columnnSPLine = new global::System.Data.DataColumn("nSPLine", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnnSPLine);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4090,6 +4105,22 @@ namespace Tinplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public decimal nSPLine {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableInputs.nSPLineColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'nSPLine\' in table \'Inputs\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableInputs.nSPLineColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsUserNameNull() {
                 return this.IsNull(this.tableInputs.UserNameColumn);
             }
@@ -4386,6 +4417,18 @@ namespace Tinplate {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetDateAndTimeNull() {
                 this[this.tableInputs.DateAndTimeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsnSPLineNull() {
+                return this.IsNull(this.tableInputs.nSPLineColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetnSPLineNull() {
+                this[this.tableInputs.nSPLineColumn] = global::System.Convert.DBNull;
             }
         }
         
