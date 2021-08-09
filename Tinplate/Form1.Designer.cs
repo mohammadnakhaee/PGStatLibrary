@@ -201,6 +201,7 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.doubleclicktimer = new System.Windows.Forms.Timer(this.components);
             this.userData = new Tinplate.UserData();
+            this.ChartRefereshTimer = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -832,7 +833,7 @@
             0});
             this.numericUpDown6.Location = new System.Drawing.Point(183, 93);
             this.numericUpDown6.Maximum = new decimal(new int[] {
-            10000,
+            2000,
             0,
             0,
             0});
@@ -849,6 +850,8 @@
             0,
             0,
             0});
+            this.numericUpDown6.ValueChanged += new System.EventHandler(this.Input_Validating);
+            this.numericUpDown6.Validating += new System.ComponentModel.CancelEventHandler(this.Input_Validating);
             // 
             // label15
             // 
@@ -951,13 +954,15 @@
             this.numericUpDown2.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.inputsBindingSource, "Time", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.numericUpDown2.Location = new System.Drawing.Point(183, 61);
             this.numericUpDown2.Maximum = new decimal(new int[] {
-            10000,
+            19994,
             0,
             0,
             0});
             this.numericUpDown2.Name = "numericUpDown2";
             this.numericUpDown2.Size = new System.Drawing.Size(120, 24);
             this.numericUpDown2.TabIndex = 14;
+            this.numericUpDown2.ValueChanged += new System.EventHandler(this.Input_Validating);
+            this.numericUpDown2.Validating += new System.ComponentModel.CancelEventHandler(this.Input_Validating);
             // 
             // label5
             // 
@@ -1266,7 +1271,7 @@
             // 
             this.numericUpDown11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numericUpDown11.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.coefficientsBindingSource, "CorrectionCoef", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.numericUpDown11.DecimalPlaces = 3;
+            this.numericUpDown11.DecimalPlaces = 4;
             this.numericUpDown11.Increment = new decimal(new int[] {
             1,
             0,
@@ -1766,9 +1771,19 @@
             0,
             0,
             0});
+            this.CTRL_nSPLine.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             this.CTRL_nSPLine.Name = "CTRL_nSPLine";
             this.CTRL_nSPLine.Size = new System.Drawing.Size(114, 24);
             this.CTRL_nSPLine.TabIndex = 20;
+            this.CTRL_nSPLine.Value = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
             // 
             // AutoSelectTime
             // 
@@ -2288,6 +2303,11 @@
             this.userData.DataSetName = "UserData";
             this.userData.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
+            // ChartRefereshTimer
+            // 
+            this.ChartRefereshTimer.Interval = 300;
+            this.ChartRefereshTimer.Tick += new System.EventHandler(this.ChartRefereshTimer_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2547,6 +2567,7 @@
         private System.Windows.Forms.Label label50;
         private System.Windows.Forms.NumericUpDown CTRL_nSPLine;
         private System.Windows.Forms.Button Refresh;
+        private System.Windows.Forms.Timer ChartRefereshTimer;
     }
 }
 

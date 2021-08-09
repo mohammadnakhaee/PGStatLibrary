@@ -30,6 +30,8 @@ namespace Tinplate
         DataRow DataEmptyRow;
         string TinSampleSettingsxml = "./TinSampleSettings.xml";
         public bool IsAdmin = false;
+        public int n_refresh_data_log = 1;
+
         public Form1()
         {
             InitializeComponent();
@@ -109,7 +111,7 @@ namespace Tinplate
 
         private void FillDeafault()
         {
-            tinSampleSettings1.Tables["Coefficients"].Rows[0]["CorrectionCoef"] = (decimal)(0.65);
+            tinSampleSettings1.Tables["Coefficients"].Rows[0]["CorrectionCoef"] = (decimal)(0.6666);
             tinSampleSettings1.Tables["Coefficients"].Rows[0]["SampleArea"] = (decimal)(20.428); //in cm^2
             tinSampleSettings1.Tables["Coefficients"].Rows[0]["SetCurrentOffset"] = (decimal)(0);
             tinSampleSettings1.Tables["Coefficients"].Rows[0]["SetCurrentGain"] = (decimal)(100);
@@ -389,7 +391,7 @@ namespace Tinplate
 
             chart1.Series.Add("Data");
             chart1.Series["Data"].ChartType = SeriesChartType.Point;
-            chart1.Series["Data"].MarkerStyle = MarkerStyle.Circle;
+            chart1.Series["Data"].MarkerStyle = MarkerStyle.None;
             chart1.Series["Data"].Color = Color.Maroon;
             //chart1.DataSource = userData1.Tables["Data"];
 
@@ -509,11 +511,10 @@ namespace Tinplate
 
         private void AddPointToData(double x, double y)
         {
-            this.Invoke(new Action(() =>
-            {
+            //this.Invoke(new Action(() =>
+            //{
                 userData1.Tables["Data"].Rows.Add(x, y);
-                chart1.Series["Data"].Points.DataBindXY(userData1.Tables["Data"].Rows, "Time", userData1.Tables["Data"].Rows, "Voltage");
-            }));
+            //}));
         }
 
         private void AddEmptyRowToData()
@@ -527,10 +528,13 @@ namespace Tinplate
             {
                 int linenumber = richTextBox1.Lines.Count();
                 if (linenumber == 0) linenumber = 1;
-                richTextBox1.AppendText((linenumber).ToString() + ":  " + value);
-                richTextBox1.SelectionStart = richTextBox1.Text.Length;
-                richTextBox1.ScrollToCaret();
-                //richTextBox1.Refresh();
+                if (linenumber % n_refresh_data_log == 1)
+                {
+                    richTextBox1.AppendText((linenumber).ToString() + ":  " + value);
+                    richTextBox1.SelectionStart = richTextBox1.Text.Length;
+                    richTextBox1.ScrollToCaret();
+                    //richTextBox1.Refresh();
+                }
             }));
         }
 
@@ -649,7 +653,7 @@ namespace Tinplate
             pg.PGmode(3);
 
             int nData = (int)(1000.0 * (int)numericUpDown2.Value / (int)numericUpDown6.Value) + 1;
-
+            n_refresh_data_log = (int)(nData * 5 / 100);
             double SetCurrentOffset = Convert.ToDouble(tinSampleSettings1.Tables["Coefficients"].Rows[0]["SetCurrentOffset"]);
             double SetCurrentGain = Convert.ToDouble(tinSampleSettings1.Tables["Coefficients"].Rows[0]["SetCurrentGain"]);
             pg.IV_Input.Initial_Potential = -((double)numericUpDown1.Value + SetCurrentOffset) * SetCurrentGain / 100.0; //Current + set current offset
@@ -671,6 +675,7 @@ namespace Tinplate
             pg.IV_Input.IFilter = (int)numericUpDown13.Value;
             pg.IV_Input.PostFilter = (int)numericUpDown14.Value;
             pg.AIV_old();
+            ChartRefereshTimer.Start();
         }
 
 
@@ -728,8 +733,8 @@ namespace Tinplate
             textBox1.Text = "";
             textBox2.Text = "";
             numericUpDown1.Value = 100;
-            numericUpDown2.Value = 30;
-            numericUpDown6.Value = 500;
+            numericUpDown2.Value = 200;
+            numericUpDown6.Value = 100;
             checkBox1.Checked = true;
             String SharifSolarPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SharifSolar");
             bool exists = System.IO.Directory.Exists(SharifSolarPath);
@@ -747,7 +752,7 @@ namespace Tinplate
             userData1.Tables["Inputs"].Rows[0]["IsFittingFound"] = false;
             userData1.Tables["Inputs"].Rows[0]["t1"] = 0;
             userData1.Tables["Inputs"].Rows[0]["t2"] = 0;
-            userData1.Tables["Inputs"].Rows[0]["nSPLine"] = 350;
+            userData1.Tables["Inputs"].Rows[0]["nSPLine"] = 500;
 
             ///////////////////////////////////Add any new default value above this part////////////////////////////////////////////
             /////This is to ensure that we can load older file versions in newer app versions
@@ -1345,7 +1350,8 @@ namespace Tinplate
             t2 = t2 - t1;
             double CorrectionCoef = Convert.ToDouble(numericUpDown11.Value);
             double SampleArea = Convert.ToDouble(numericUpDown10.Value);
-            double C = 0.0185*SampleArea;
+            //double C = 0.0185*SampleArea;   //old one
+            double C = 6.1517 / SampleArea;
             double I_mA = Convert.ToDouble(userData1.Tables["Inputs"].Rows[0]["Current"]);
             bool IsUsingCustomCurrent = checkBox2.Checked;
             if (IsUsingCustomCurrent)
@@ -1490,10 +1496,17 @@ namespace Tinplate
             int info;
             alglib.spline1dfitreport rep;
             alglib.spline1dinterpolant splinefit;
-            alglib.spline1dfitpenalized(t0, f0, (int)(nDataSpline/2), 0.1, out info, out splinefit, out rep);
-            
-            for (i = 0; i < nData; i++)
-                alglib.spline1ddiff(splinefit, tArray[i], out f[i], out df[i], out d2f[i]);
+            try
+            {
+                alglib.spline1dfitpenalized(t0, f0, (int)(nDataSpline / 2), 0.1, out info, out splinefit, out rep);
+                for (i = 0; i < nData; i++)
+                    alglib.spline1ddiff(splinefit, tArray[i], out f[i], out df[i], out d2f[i]);
+            }
+            catch
+            {
+                MessageBox.Show("Unable to fit the data!");
+            }
+
 
             /*int nsmooth = 1;
             for (i = 0; i < nData; i++)
@@ -1772,6 +1785,8 @@ namespace Tinplate
                     radioButton3.Checked = false;
                     radioButton1.Checked = true;
 
+                    ChartRefereshTimer.Stop();
+
                     ProccessData();
 
                     if (checkBox1.Checked)
@@ -1930,7 +1945,14 @@ namespace Tinplate
 
             int info;
             alglib.matinvreport rep;
-            alglib.rmatrixinverse(ref M, out info, out rep);
+            try
+            {
+                alglib.rmatrixinverse(ref M, out info, out rep);
+            }
+            catch
+            {
+                MessageBox.Show("Unable to fit!");
+            }
 
             double[] XdY = new double[nParameters];
             for (int iParameters = 0; iParameters < nParameters; iParameters++)
@@ -2302,6 +2324,7 @@ namespace Tinplate
         {
             pg.KillProcess();
             ProcessKilled = true;
+            ChartRefereshTimer.Stop();
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
@@ -2503,6 +2526,61 @@ namespace Tinplate
         private void button9_Click(object sender, EventArgs e)
         {
             ProccessData();
+        }
+
+        private void ChartRefereshTimer_Tick(object sender, EventArgs e)
+        {
+            this.Invoke(new Action(() =>
+            {
+                chart1.Series["Data"].Points.DataBindXY(userData1.Tables["Data"].Rows, "Time", userData1.Tables["Data"].Rows, "Voltage");
+            }));
+        }
+
+        private void Input_Validating(object sender, CancelEventArgs e)
+        {
+            Input_Validating();
+        }
+
+        private void Input_Validating(object sender, EventArgs e)
+        {
+            Input_Validating();
+        }
+
+        private void Input_Validating()
+        {
+            int nmin = 10;
+            int nmax = 2000;
+            double time = 1000 * (double)numericUpDown2.Value; //ms
+            double dt = (double)numericUpDown6.Value; //ms
+            int n = (int)(time / dt) + 1;
+            if (n < nmin)
+            {
+                int newn = nmin;
+                double newdt = time / (newn - 1);
+
+                if (newdt < 1)
+                {
+                    newdt = 1;
+                    double newtime = newdt * (newn - 1);
+                    numericUpDown2.Value = (decimal)Math.Floor(newtime / 1000);
+                }
+
+                numericUpDown6.Value = (decimal)(newdt);
+            }
+            else if (n > nmax)
+            {
+                int newn = nmax;
+                double newdt = time / (newn - 1);
+
+                if (newdt > 2000)
+                {
+                    newdt = 2000;
+                    double newtime = newdt * (newn - 1);
+                    numericUpDown2.Value = (decimal)Math.Floor(newtime / 1000);
+                }
+
+                numericUpDown6.Value = (decimal)(newdt);
+            }
         }
 
         private void AdminLogout()
