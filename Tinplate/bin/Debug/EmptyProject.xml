@@ -1,0 +1,20 @@
+<?xml version="1.0" standalone="yes"?>
+<UserData xmlns="http://tempuri.org/UserData.xsd">
+  <Inputs>
+    <UserName />
+    <SampleCode />
+    <Current>100</Current>
+    <Time>200</Time>
+    <AutoSave>true</AutoSave>
+    <AutoSavePath>C:\Users\DELL\Documents\SharifSolar</AutoSavePath>
+    <VRange>1</VRange>
+    <IRange>1</IRange>
+    <Interval>100</Interval>
+    <t1>0</t1>
+    <t2>0</t2>
+    <IsFittingFound>false</IsFittingFound>
+    <CustomCurrent>100</CustomCurrent>
+    <IsUsingCustomCurrent>false</IsUsingCustomCurrent>
+    <nSPLine>500</nSPLine>
+  </Inputs>
+</UserData>

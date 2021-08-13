@@ -24,3 +24,16 @@ C:\Users\DELL\source\repos\PGStatLibrary\PGStatCallingApp\obj\Debug\PGStatCallin
 C:\Users\DELL\source\repos\PGStatLibrary\PGStatCallingApp\obj\Debug\PGStatCallingApp.csproj.CopyComplete
 C:\Users\DELL\source\repos\PGStatLibrary\PGStatCallingApp\obj\Debug\PGStatCallingApp.exe
 C:\Users\DELL\source\repos\PGStatLibrary\PGStatCallingApp\obj\Debug\PGStatCallingApp.pdb
+C:\Users\DELL\Documents\GitProjects\PGStatLibrary\PGStatCallingApp\bin\Debug\PGStatCallingApp.exe.config
+C:\Users\DELL\Documents\GitProjects\PGStatLibrary\PGStatCallingApp\bin\Debug\PGStatCallingApp.exe
+C:\Users\DELL\Documents\GitProjects\PGStatLibrary\PGStatCallingApp\bin\Debug\PGStatCallingApp.pdb
+C:\Users\DELL\Documents\GitProjects\PGStatLibrary\PGStatCallingApp\bin\Debug\PGStatLibrary.dll
+C:\Users\DELL\Documents\GitProjects\PGStatLibrary\PGStatCallingApp\bin\Debug\PGStatLibrary.pdb
+C:\Users\DELL\Documents\GitProjects\PGStatLibrary\PGStatCallingApp\obj\Debug\PGStatCallingApp.csprojAssemblyReference.cache
+C:\Users\DELL\Documents\GitProjects\PGStatLibrary\PGStatCallingApp\obj\Debug\PGStatCallingApp.Form1.resources
+C:\Users\DELL\Documents\GitProjects\PGStatLibrary\PGStatCallingApp\obj\Debug\PGStatCallingApp.Properties.Resources.resources
+C:\Users\DELL\Documents\GitProjects\PGStatLibrary\PGStatCallingApp\obj\Debug\PGStatCallingApp.csproj.GenerateResource.cache
+C:\Users\DELL\Documents\GitProjects\PGStatLibrary\PGStatCallingApp\obj\Debug\PGStatCallingApp.csproj.CoreCompileInputs.cache
+C:\Users\DELL\Documents\GitProjects\PGStatLibrary\PGStatCallingApp\obj\Debug\PGStatCallingApp.csproj.CopyComplete
+C:\Users\DELL\Documents\GitProjects\PGStatLibrary\PGStatCallingApp\obj\Debug\PGStatCallingApp.exe
+C:\Users\DELL\Documents\GitProjects\PGStatLibrary\PGStatCallingApp\obj\Debug\PGStatCallingApp.pdb

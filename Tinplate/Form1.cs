@@ -526,15 +526,13 @@ namespace Tinplate
         {
             this.Invoke(new Action(() =>
             {
-                int linenumber = richTextBox1.Lines.Count();
-                if (linenumber == 0) linenumber = 1;
-                if (linenumber % n_refresh_data_log == 1)
-                {
-                    richTextBox1.AppendText((linenumber).ToString() + ":  " + value);
-                    richTextBox1.SelectionStart = richTextBox1.Text.Length;
-                    richTextBox1.ScrollToCaret();
-                    //richTextBox1.Refresh();
-                }
+                int linenumber = userData1.Tables["Data"].Rows.Count;
+                //if (linenumber == 0) linenumber = 1;
+                richTextBox1.AppendText((linenumber).ToString() + ":  " + value);
+                richTextBox1.SelectionStart = richTextBox1.Text.Length;
+                richTextBox1.ScrollToCaret();
+                //richTextBox1.Refresh();
+               
             }));
         }
 
@@ -1714,7 +1712,7 @@ namespace Tinplate
                         imaxCurv2 = i; break;
                     }
             }
-
+            
             userData1.Tables["Inputs"].Rows[0]["IsFittingFound"] = true;
             IsUsingFittingTimes = true;
             userData1.Tables["Inputs"].Rows[0]["IsUsingFittingTimes"] = IsUsingFittingTimes;
@@ -1867,8 +1865,10 @@ namespace Tinplate
             nData0 = userData1.Tables["Data"].Rows.Count;
             if (nData0 == 0) return;
 
-            chart1.Series["Data"].Points.DataBindXY(userData1.Tables["Data"].Rows, "Time", userData1.Tables["Data"].Rows, "Voltage");
-
+            this.Invoke(new Action(() =>
+            {
+                chart1.Series["Data"].Points.DataBindXY(userData1.Tables["Data"].Rows, "Time", userData1.Tables["Data"].Rows, "Voltage");
+            }));
             double[] t0 = new double[nData0];
             double[] f0 = new double[nData0];
             int i = 0;

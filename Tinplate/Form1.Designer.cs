@@ -260,9 +260,9 @@
             this.panel1.Controls.Add(this.panel7);
             this.panel1.Controls.Add(this.panel6);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(1544, 24);
+            this.panel1.Location = new System.Drawing.Point(904, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(380, 918);
+            this.panel1.Size = new System.Drawing.Size(380, 907);
             this.panel1.TabIndex = 0;
             // 
             // richTextBox1
@@ -271,7 +271,7 @@
             this.richTextBox1.Location = new System.Drawing.Point(0, 823);
             this.richTextBox1.Margin = new System.Windows.Forms.Padding(2);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(376, 91);
+            this.richTextBox1.Size = new System.Drawing.Size(376, 80);
             this.richTextBox1.TabIndex = 18;
             this.richTextBox1.Text = "";
             // 
@@ -1073,9 +1073,9 @@
             this.panel2.Controls.Add(this.tableLayoutPanel2);
             this.panel2.Controls.Add(this.panel9);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 745);
+            this.panel2.Location = new System.Drawing.Point(0, 734);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1544, 197);
+            this.panel2.Size = new System.Drawing.Size(904, 197);
             this.panel2.TabIndex = 1;
             // 
             // tableLayoutPanel2
@@ -1094,7 +1094,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1534, 152);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(894, 152);
             this.tableLayoutPanel2.TabIndex = 6;
             // 
             // groupBox4
@@ -1110,7 +1110,7 @@
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.groupBox4.Location = new System.Drawing.Point(3, 3);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(178, 146);
+            this.groupBox4.Size = new System.Drawing.Size(101, 146);
             this.groupBox4.TabIndex = 2;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Connection";
@@ -1209,9 +1209,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox6.Controls.Add(this.tableLayoutPanel3);
             this.groupBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.groupBox6.Location = new System.Drawing.Point(762, 3);
+            this.groupBox6.Location = new System.Drawing.Point(445, 3);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(769, 146);
+            this.groupBox6.Size = new System.Drawing.Size(446, 146);
             this.groupBox6.TabIndex = 5;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Tin";
@@ -1251,7 +1251,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(752, 104);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(429, 104);
             this.tableLayoutPanel3.TabIndex = 35;
             // 
             // checkBox2
@@ -1259,9 +1259,9 @@
             this.checkBox2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.checkBox2.AutoSize = true;
             this.checkBox2.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.inputsBindingSource, "IsUsingCustomCurrent", true));
-            this.checkBox2.Location = new System.Drawing.Point(98, 6);
+            this.checkBox2.Location = new System.Drawing.Point(3, 6);
             this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(145, 22);
+            this.checkBox2.Size = new System.Drawing.Size(103, 22);
             this.checkBox2.TabIndex = 16;
             this.checkBox2.Text = "Use Real Current:";
             this.checkBox2.UseVisualStyleBackColor = true;
@@ -1277,7 +1277,7 @@
             0,
             0,
             65536});
-            this.numericUpDown11.Location = new System.Drawing.Point(249, 74);
+            this.numericUpDown11.Location = new System.Drawing.Point(112, 74);
             this.numericUpDown11.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -1302,7 +1302,7 @@
             // 
             this.label42.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(147, 42);
+            this.label42.Location = new System.Drawing.Point(10, 42);
             this.label42.Name = "label42";
             this.label42.Size = new System.Drawing.Size(96, 18);
             this.label42.TabIndex = 29;
@@ -1312,9 +1312,9 @@
             // 
             this.label47.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(125, 77);
+            this.label47.Location = new System.Drawing.Point(24, 68);
             this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(118, 18);
+            this.label47.Size = new System.Drawing.Size(82, 36);
             this.label47.TabIndex = 33;
             this.label47.Text = "Correction Coef:";
             // 
@@ -1324,7 +1324,7 @@
             this.numericUpDown3.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.inputsBindingSource, "CustomCurrent", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.numericUpDown3.DecimalPlaces = 1;
             this.numericUpDown3.Enabled = false;
-            this.numericUpDown3.Location = new System.Drawing.Point(249, 5);
+            this.numericUpDown3.Location = new System.Drawing.Point(112, 5);
             this.numericUpDown3.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -1350,7 +1350,7 @@
             0,
             0,
             65536});
-            this.numericUpDown10.Location = new System.Drawing.Point(249, 39);
+            this.numericUpDown10.Location = new System.Drawing.Point(112, 39);
             this.numericUpDown10.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -1375,7 +1375,7 @@
             // 
             this.label23.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(332, 8);
+            this.label23.Location = new System.Drawing.Point(195, 8);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(40, 18);
             this.label23.TabIndex = 19;
@@ -1385,16 +1385,16 @@
             // 
             this.label20.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(477, 8);
+            this.label20.Location = new System.Drawing.Point(246, 0);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(66, 18);
+            this.label20.Size = new System.Drawing.Size(38, 34);
             this.label20.TabIndex = 11;
             this.label20.Text = "Free Tin:";
             // 
             // FreeTin
             // 
             this.FreeTin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.FreeTin.Location = new System.Drawing.Point(549, 5);
+            this.FreeTin.Location = new System.Drawing.Point(290, 5);
             this.FreeTin.Name = "FreeTin";
             this.FreeTin.ReadOnly = true;
             this.FreeTin.Size = new System.Drawing.Size(83, 24);
@@ -1403,7 +1403,7 @@
             // TotalTin
             // 
             this.TotalTin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.TotalTin.Location = new System.Drawing.Point(549, 74);
+            this.TotalTin.Location = new System.Drawing.Point(290, 74);
             this.TotalTin.Name = "TotalTin";
             this.TotalTin.ReadOnly = true;
             this.TotalTin.Size = new System.Drawing.Size(83, 24);
@@ -1413,16 +1413,16 @@
             // 
             this.label21.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(476, 42);
+            this.label21.Location = new System.Drawing.Point(245, 34);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(67, 18);
+            this.label21.Size = new System.Drawing.Size(39, 34);
             this.label21.TabIndex = 12;
             this.label21.Text = "Alloy Tin:";
             // 
             // AlloyTin
             // 
             this.AlloyTin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.AlloyTin.Location = new System.Drawing.Point(549, 39);
+            this.AlloyTin.Location = new System.Drawing.Point(290, 39);
             this.AlloyTin.Name = "AlloyTin";
             this.AlloyTin.ReadOnly = true;
             this.AlloyTin.Size = new System.Drawing.Size(83, 24);
@@ -1432,9 +1432,9 @@
             // 
             this.label22.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(474, 77);
+            this.label22.Location = new System.Drawing.Point(245, 68);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(69, 18);
+            this.label22.Size = new System.Drawing.Size(39, 36);
             this.label22.TabIndex = 14;
             this.label22.Text = "Total Tin:";
             // 
@@ -1445,9 +1445,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel10.Controls.Add(this.label43);
             this.panel10.Controls.Add(this.label44);
-            this.panel10.Location = new System.Drawing.Point(332, 37);
+            this.panel10.Location = new System.Drawing.Point(195, 37);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(108, 28);
+            this.panel10.Size = new System.Drawing.Size(44, 28);
             this.panel10.TabIndex = 35;
             // 
             // label43
@@ -1476,9 +1476,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel11.Controls.Add(this.label39);
             this.panel11.Controls.Add(this.label24);
-            this.panel11.Location = new System.Drawing.Point(638, 3);
+            this.panel11.Location = new System.Drawing.Point(379, 3);
             this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(111, 28);
+            this.panel11.Size = new System.Drawing.Size(47, 28);
             this.panel11.TabIndex = 36;
             // 
             // label39
@@ -1507,9 +1507,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel12.Controls.Add(this.label40);
             this.panel12.Controls.Add(this.label41);
-            this.panel12.Location = new System.Drawing.Point(638, 37);
+            this.panel12.Location = new System.Drawing.Point(379, 37);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(111, 28);
+            this.panel12.Size = new System.Drawing.Size(47, 28);
             this.panel12.TabIndex = 37;
             // 
             // label40
@@ -1538,9 +1538,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel13.Controls.Add(this.label25);
             this.panel13.Controls.Add(this.label26);
-            this.panel13.Location = new System.Drawing.Point(638, 71);
+            this.panel13.Location = new System.Drawing.Point(379, 71);
             this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(111, 30);
+            this.panel13.Size = new System.Drawing.Size(47, 30);
             this.panel13.TabIndex = 38;
             // 
             // label25
@@ -1569,9 +1569,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.tableLayoutPanel1);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.groupBox3.Location = new System.Drawing.Point(187, 3);
+            this.groupBox3.Location = new System.Drawing.Point(110, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(569, 146);
+            this.groupBox3.Size = new System.Drawing.Size(329, 146);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Fitting";
@@ -1607,7 +1607,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(557, 104);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(317, 104);
             this.tableLayoutPanel1.TabIndex = 19;
             // 
             // TangentialMethod
@@ -1617,7 +1617,7 @@
             this.TangentialMethod.Checked = true;
             this.TangentialMethod.Location = new System.Drawing.Point(3, 6);
             this.TangentialMethod.Name = "TangentialMethod";
-            this.TangentialMethod.Size = new System.Drawing.Size(147, 22);
+            this.TangentialMethod.Size = new System.Drawing.Size(91, 22);
             this.TangentialMethod.TabIndex = 17;
             this.TangentialMethod.TabStop = true;
             this.TangentialMethod.Text = "Tangential Method";
@@ -1628,7 +1628,7 @@
             // 
             this.label19.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(438, 42);
+            this.label19.Location = new System.Drawing.Point(249, 42);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(26, 18);
             this.label19.TabIndex = 7;
@@ -1641,7 +1641,7 @@
             this.btn_choos_t2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_choos_t2.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btn_choos_t2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_choos_t2.Location = new System.Drawing.Point(228, 39);
+            this.btn_choos_t2.Location = new System.Drawing.Point(117, 39);
             this.btn_choos_t2.Name = "btn_choos_t2";
             this.btn_choos_t2.Size = new System.Drawing.Size(24, 24);
             this.btn_choos_t2.TabIndex = 9;
@@ -1658,14 +1658,19 @@
             0,
             0,
             65536});
-            this.UD_T2.Location = new System.Drawing.Point(318, 39);
+            this.UD_T2.Location = new System.Drawing.Point(181, 39);
             this.UD_T2.Maximum = new decimal(new int[] {
             100000,
             0,
             0,
             0});
+            this.UD_T2.Minimum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            -2147483648});
             this.UD_T2.Name = "UD_T2";
-            this.UD_T2.Size = new System.Drawing.Size(114, 24);
+            this.UD_T2.Size = new System.Drawing.Size(62, 24);
             this.UD_T2.TabIndex = 1;
             this.UD_T2.ValueChanged += new System.EventHandler(this.UD_T2_ValueChanged);
             // 
@@ -1673,7 +1678,7 @@
             // 
             this.label17.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(288, 42);
+            this.label17.Location = new System.Drawing.Point(151, 42);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(24, 18);
             this.label17.TabIndex = 5;
@@ -1685,7 +1690,7 @@
             this.CurvatureMethod.AutoSize = true;
             this.CurvatureMethod.Location = new System.Drawing.Point(3, 40);
             this.CurvatureMethod.Name = "CurvatureMethod";
-            this.CurvatureMethod.Size = new System.Drawing.Size(144, 22);
+            this.CurvatureMethod.Size = new System.Drawing.Size(91, 22);
             this.CurvatureMethod.TabIndex = 18;
             this.CurvatureMethod.Text = "Curvature Method";
             this.CurvatureMethod.UseVisualStyleBackColor = true;
@@ -1697,7 +1702,7 @@
             this.btn_choos_t1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_choos_t1.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btn_choos_t1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_choos_t1.Location = new System.Drawing.Point(228, 5);
+            this.btn_choos_t1.Location = new System.Drawing.Point(117, 5);
             this.btn_choos_t1.Name = "btn_choos_t1";
             this.btn_choos_t1.Size = new System.Drawing.Size(24, 24);
             this.btn_choos_t1.TabIndex = 8;
@@ -1708,7 +1713,7 @@
             // 
             this.label16.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(288, 8);
+            this.label16.Location = new System.Drawing.Point(151, 8);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(24, 18);
             this.label16.TabIndex = 4;
@@ -1719,7 +1724,7 @@
             // 
             this.label18.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(438, 8);
+            this.label18.Location = new System.Drawing.Point(249, 8);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(26, 18);
             this.label18.TabIndex = 6;
@@ -1735,14 +1740,19 @@
             0,
             0,
             65536});
-            this.UD_T1.Location = new System.Drawing.Point(318, 5);
+            this.UD_T1.Location = new System.Drawing.Point(181, 5);
             this.UD_T1.Maximum = new decimal(new int[] {
             100000,
             0,
             0,
             0});
+            this.UD_T1.Minimum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            -2147483648});
             this.UD_T1.Name = "UD_T1";
-            this.UD_T1.Size = new System.Drawing.Size(114, 24);
+            this.UD_T1.Size = new System.Drawing.Size(62, 24);
             this.UD_T1.TabIndex = 0;
             this.UD_T1.ValueChanged += new System.EventHandler(this.UD_T1_ValueChanged);
             // 
@@ -1750,9 +1760,9 @@
             // 
             this.label50.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label50.AutoSize = true;
-            this.label50.Location = new System.Drawing.Point(277, 77);
+            this.label50.Location = new System.Drawing.Point(152, 68);
             this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(35, 18);
+            this.label50.Size = new System.Drawing.Size(23, 36);
             this.label50.TabIndex = 19;
             this.label50.Text = "n fit:";
             // 
@@ -1765,7 +1775,7 @@
             0,
             0,
             0});
-            this.CTRL_nSPLine.Location = new System.Drawing.Point(318, 74);
+            this.CTRL_nSPLine.Location = new System.Drawing.Point(181, 74);
             this.CTRL_nSPLine.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -1777,7 +1787,7 @@
             0,
             0});
             this.CTRL_nSPLine.Name = "CTRL_nSPLine";
-            this.CTRL_nSPLine.Size = new System.Drawing.Size(114, 24);
+            this.CTRL_nSPLine.Size = new System.Drawing.Size(62, 24);
             this.CTRL_nSPLine.TabIndex = 20;
             this.CTRL_nSPLine.Value = new decimal(new int[] {
             500,
@@ -1794,7 +1804,7 @@
             this.AutoSelectTime.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.AutoSelectTime.Location = new System.Drawing.Point(3, 71);
             this.AutoSelectTime.Name = "AutoSelectTime";
-            this.AutoSelectTime.Size = new System.Drawing.Size(149, 30);
+            this.AutoSelectTime.Size = new System.Drawing.Size(91, 30);
             this.AutoSelectTime.TabIndex = 16;
             this.AutoSelectTime.Text = "Auto Select Time";
             this.AutoSelectTime.UseVisualStyleBackColor = true;
@@ -1807,9 +1817,9 @@
             this.Refresh.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.Refresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Refresh.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.Refresh.Location = new System.Drawing.Point(438, 71);
+            this.Refresh.Location = new System.Drawing.Point(249, 71);
             this.Refresh.Name = "Refresh";
-            this.Refresh.Size = new System.Drawing.Size(116, 30);
+            this.Refresh.Size = new System.Drawing.Size(65, 30);
             this.Refresh.TabIndex = 21;
             this.Refresh.Text = "Refresh";
             this.Refresh.UseVisualStyleBackColor = true;
@@ -1822,7 +1832,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel9.Location = new System.Drawing.Point(0, 162);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(1542, 33);
+            this.panel9.Size = new System.Drawing.Size(902, 33);
             this.panel9.TabIndex = 1;
             // 
             // StatusLabel
@@ -1845,7 +1855,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 24);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1544, 721);
+            this.panel3.Size = new System.Drawing.Size(904, 710);
             this.panel3.TabIndex = 2;
             // 
             // chart1
@@ -1884,7 +1894,7 @@
             this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(0, 50);
             this.chart1.Name = "chart1";
-            this.chart1.Size = new System.Drawing.Size(1544, 635);
+            this.chart1.Size = new System.Drawing.Size(904, 624);
             this.chart1.TabIndex = 4;
             this.chart1.Text = "chart1";
             this.chart1.SelectionRangeChanged += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.CursorEventArgs>(this.chart1_SelectionRangeChanged);
@@ -1897,9 +1907,9 @@
             // panel5
             // 
             this.panel5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel5.Location = new System.Drawing.Point(0, 685);
+            this.panel5.Location = new System.Drawing.Point(0, 674);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(1544, 36);
+            this.panel5.Size = new System.Drawing.Size(904, 36);
             this.panel5.TabIndex = 2;
             // 
             // panel4
@@ -1915,7 +1925,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1544, 50);
+            this.panel4.Size = new System.Drawing.Size(904, 50);
             this.panel4.TabIndex = 1;
             // 
             // button8
@@ -2034,7 +2044,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1924, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1284, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -2288,10 +2298,10 @@
             // progressBar1
             // 
             this.progressBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.progressBar1.Location = new System.Drawing.Point(0, 942);
+            this.progressBar1.Location = new System.Drawing.Point(0, 931);
             this.progressBar1.Margin = new System.Windows.Forms.Padding(5);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(1924, 10);
+            this.progressBar1.Size = new System.Drawing.Size(1284, 10);
             this.progressBar1.TabIndex = 2;
             // 
             // doubleclicktimer
@@ -2312,7 +2322,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1924, 952);
+            this.ClientSize = new System.Drawing.Size(1284, 941);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
